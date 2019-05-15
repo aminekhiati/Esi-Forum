@@ -1,87 +1,88 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+from django.urls import reverse
 
 # Create your models here.
 
-class Utilisateur (models.Model):
-    idu = models.IntegerField(primary_key=True)
 
-    def __str__(self):
-        return self.idu
 
-class Compte (models.Model):
-    idu = models.IntegerField(primary_key=True)
-    nom_utilisateur = models.CharField(max_length=30)
-    email = models.EmailField()
-    password = models.CharField(max_length=30)
 
-    def __str__(self):
-        return self.nom_utilisateur
 
 class Profile (models.Model):
-    idpr = models.IntegerField(primary_key=True)
-    nom = models.CharField(max_length=30)
-    prenom = models.CharField(max_length=30)
-    date_naissance = models.DateField
-    numero_telephone = models.IntegerField
-    role = models.CharField(max_length=30)
-    promotion = models.CharField(max_length=30)
+
+    ROLE = (
+        ('etudiant', 'Etudiant'),
+        ('enseignant', 'Enseignant'),
+        ('moderateur','Moderateur')
+    )
+
+    PROMO = (
+        ('1cpi', '1CPI'),
+        ('2cpi', '2CPI'),
+        ('1cs', '1CS'),
+        ('2cs', '2CS'),
+        ('3cs', '3CS'),
+    )
+
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    date_naissance = models.DateField()
+    numero_telephone = models.IntegerField()
+    role = models.CharField(choices=ROLE,default='etudiant',max_length=10)
+    promotion = models.CharField(choices=PROMO,default='1cpi',max_length=3)
     bio = models.TextField()
+    slug = models.SlugField(max_length=250,unique =True)
+
+    def get_absolute_url(self):
+        return reverse('Esi_Forum:Main',
+        args=[self.role,
+              self.user.username,
+              self.slug])
 
     def __str__(self):
-        return self.nom+' '+self.prenom
+        return 'le nom : {} et le prénom : {}'.format(self.user.username,self.user.lastname)
 
-class Administration (models.Model):
-    ida = models.IntegerField(primary_key=True)
-
-    def __str__(self):
-        return self.ida
 
 class Publication(models.Model) :
-    idp = models.IntegerField(primary_key=True)
-    date = models.DateField()
+
+    date_de_publication = models.DateField(auto_now_add=True)
+    date_de_modification= models.DateField(auto_now=True)
     section = models.CharField(max_length=30)
     text = models.TextField()
-    upvote = models.IntegerField
+    upvote = models.IntegerField()
     titre = models.CharField(max_length=30)
-    idu = models.ForeignKey(Utilisateur,on_delete=models.CASCADE)
-    ida = models.ForeignKey(Administration,on_delete=models.CASCADE)
+    lauteur = models.ForeignKey(User,on_delete=models.CASCADE,related_name='publications')
+    ''' photo = models.ImageField() '''
 
     def __str__(self):
         return self.titre
+
+    class Meta:
+        ordering = ('-upvote',)
 
 class Commentaire(models.Model):
-    idc = models.IntegerField(primary_key=True)
-    date = models.DateField()
-    section = models.CharField(max_length=30)
+
+    date_de_commentaire = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
     text = models.TextField()
-    upvote = models.IntegerField
-    titre = models.CharField(max_length=30)
-    idu = models.ForeignKey(Utilisateur,on_delete=models.CASCADE)
-    ida = models.ForeignKey(Administration,on_delete=models.CASCADE)
-    idp = models.ForeignKey(Publication,on_delete=models.CASCADE)
+    upvote = models.IntegerField()
+    
 
     def __str__(self):
-        return self.titre
+        return self.pk
 
-class Moderateur (models.Model):
-    idm = models.IntegerField(primary_key=True)
-    ida = models.ForeignKey(Administration,on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.id
-
-class Publication_enrigistre(models.Model):
+'''class Publication_enrigistre(models.Model):
     idpe = models.IntegerField(primary_key=True)
     idu = models.ForeignKey(Utilisateur,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.idpe
+        return self.idpe 
 
 class Publication_archivee(models.Model):
     idpa =models.IntegerField(primary_key=True)
 
     def __str__(self):
-        return self.idpa
+        return self.idpa 
 
 class Fichier_attachee (models.Model):
     idfa = models.IntegerField(primary_key=True)
@@ -89,7 +90,7 @@ class Fichier_attachee (models.Model):
     idc = models.ForeignKey(Commentaire,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.idfa
+        return self.idfa ''' 
 
 class Statistiques (models.Model):
     ids = models.IntegerField(primary_key=True)
