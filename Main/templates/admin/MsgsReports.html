@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin - Messages & Reports</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/user.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 sidebar-dash">
+                <h3 class="mb-4" id="logo-dash">Dashboard</h3>
+                <div id="line-dash"></div>
+                <div>
+                    <ul>
+                        <li>
+                            <span class="fa fa-tachometer-alt icons"></span>
+                            <a href="#" class="menu-item">Dashboard</a></li>
+                        <li>
+                            <span class="fa fa-users-cog icons"></span>
+                            <a href="#" class="menu-item">Usergroups</a></li>
+                        <li>
+                            <span class="fa fa-users icons"></span>
+                            <a href="#" class="menu-item">Users</a></li>
+                        <li>
+                            <span class="fa fa-comments icons"></span>
+                            <a href="#" class="menu-item"> Sections</a></li>
+                        <li>
+                            <span class="fa fa-envelope icons"></span>
+                            <a href="#" class="menu-item"> Messages</a></li>
+                        <li>
+                            <span class="fa fa-sticky-note icons"></span>
+                            <a href="#" class="menu-item"> Reports</a></li>
+                        <li>
+                            <span class="fa fa-cog icons"></span>
+                            <a href="#" class="menu-item">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-10 pl-0">
+                <nav class="navbar navbar-expand" role="dashboard">
+                    <a class="navbar-brand"> Messages & Reports</a>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item float-right">
+                             <label class="field a-field a-field_a1 page__field pt-0 mr-4">
+                                        <input class="field__input a-field__input" type="text" placeholder="Search" value="">
+                                        <span class="a-field__label-wrap">
+                                                <span class="fa fa-search float-right mt-2 mr-3"></span>
+                                        </span>
+                                        
+                                    </label>
+                        </li> 
+                        <li class="nav-item float-right mt-2">
+                            <a href="#" class="mr-4 menu-item">Account</a>
+                        </li>
+                        <li class="nav-item float-right mt-2">
+                            <a href="#" class="mr-4 ml-4 menu-item">Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="row ml-4">
+                        <div class="col-4">
+                                <div id="members">
+                                    <small class="float-left mt-1 ml-1">Messages</small>
+                                    <div class="text-dash">
+                                50 <span class="fa fa-envelope"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                                <div id="total-topics">
+                                    <small class="float-left mt-1 ml-1">Reports</small>
+                                    <div class="text-dash">
+                                302 <span class="fa fa-sticky-note"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div id="online">
+                                <small class="float-left mt-1 ml-1">Trash</small>
+                                <div class="text-dash">
+                                        14 <span class="fa fa-trash"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="row ml-4">
+                    <div class="col-md-6 mt-4">
+                        <div class="box mt-4 text-center">
+                            <p style="text-align:center;">Messages</p>
+                            <span class="table-caption">
+                                read them now. </span>
+                        </div>
+                        <div class="tab">
+                            <table>
+                                <tr>
+                                    <th>From</th>
+                                    <th>Subject</th>
+                                    <th>Read</th>
+                                </tr>
+                                <tr class="cursor" data-toggle="modal" data-target="#msgPop">
+                                    <td>n.benzeghli@esi-sba.dz</td>
+                                    <td>Will you marry me?</td>
+                                    <td><span class="fa fa-envelope-open icons"></span></td>
+                                </tr>
+                                <tr class="cursor" data-toggle="modal" data-target="#msgPop">
+                                    <td>k.bourahla@esi-sba.dz</td>
+                                    <td>Yes i will!</td>
+                                    <td><span class="fa fa-envelope-open icons"></span></td>
+                                </tr>
+                                <tr class="cursor" data-toggle="modal" data-target="#msgPop">
+                                    <td>h.khiati@esi-sba.dz</td>
+                                    <td>Congratulation</td>
+                                    <td><span class="fa fa-envelope icons"></span></td>
+                                </tr>
+                            </table>
+                            <div class="pages text-center mt-2">
+                                    <nav class="navbar navbar-default"  role="doc-pagelist">
+                                        <div class="navbar">
+                                            <ul class="nav nav-pills text-center">
+                                                <li class="nav-item mr-2">
+                                                    <a class="nav-link active "href="#" > 1</a>
+                                                </li>
+                                                <li class="nav-item mr-2">
+                                                    <a class="nav-link" id="active" href="#" > 2</a>
+                                                   </li>
+                                                <li class="nav-item mr-2">
+                                                    <a class="nav-link " id="active" href="#" > 3</a>
+                                                  </li>
+                                                <li class="nav-item mr-2 mt-2">
+                                                  <strong>...</strong>
+                                                </li>
+                                                <li class="nav-item mr-2">
+                                                    <a class="nav-link " id="active" href="#" > 99</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="modal fade" id="msgPop" tabindex="-1" role="dialog" aria-labelledby="msgPopLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="msgPopLabel">Will you marry me?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span class="fa fa-user icons"></span> n.benzeghli@esi-sba.dz &nbsp;
+                                        <div class="float-right">
+                                                <span class="fa fa-calendar-alt icons"></span> 2019-05-17 17:45
+                                        </div>
+                                        <hr>
+                                        Message : 
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <hr>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary">Delete</button>
+                                      <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                            <div class="box mt-4 text-center">
+                                <p style="text-align:center;">Reports</p>
+                                <span class="table-caption">
+                                    check what users has reported. </span>
+                            </div>
+                            <div class="tab">
+                                <table>
+                                    <tr>
+                                        <th>From</th>
+                                        <th>Subject</th>
+                                        <th>Read</th>
+                                    </tr>
+                                    <tr class="cursor" data-toggle="modal" data-target="#reportPop">
+                                        <td>n.benzeghli@esi-sba.dz</td>
+                                        <td>Insulting</td>
+                                        <td><span class="fa fa-envelope-open icons"></span></td>
+                                    </tr>
+                                    <tr class="cursor" data-toggle="modal" data-target="#reportPop">
+                                        <td>k.bourahla@esi-sba.dz</td>
+                                        <td>Yes i will!</td>
+                                        <td><span class="fa fa-envelope-open icons"></span></td>
+                                    </tr>
+                                    <tr class="cursor" data-toggle="modal" data-target="#reportPop">
+                                        <td>h.khiati@esi-sba.dz</td>
+                                        <td>Congratulation</td>
+                                        <td><span class="fa fa-envelope icons"></span></td>
+                                    </tr>
+                                </table>
+                                <div class="modal fade" id="reportPop" tabindex="-1" role="dialog" aria-labelledby="reportPopLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="reportPopLabel">Insulting</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <span class="fa fa-user icons"></span> n.benzeghli@esi-sba.dz
+                                          <div class="float-right">
+                                                <span class="fa fa-calendar-alt icons"></span> 2019-05-17 17:45
+                                          </div>
+                                          <hr>
+                                          User : k.bourahla <br>
+                                          Reason : 
+                                          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                          <hr>
+                                          Profile <a href="#" ><span class="fa fa-external-link-alt icons"></span></a>&nbsp; | &nbsp;
+                                          Topic <a href="#" ><span class="fa fa-external-link-alt icons"></span></a>
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary">Delete</button>
+                                          <button type="button" class="btn btn-danger" data-dismiss="modal">OK</button>
+                                    </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="pages text-center mt-2">
+                                        <nav class="navbar navbar-default"  role="doc-pagelist">
+                                            <div class="navbar">
+                                                <ul class="nav nav-pills text-center">
+                                                    <li class="nav-item mr-2">
+                                                        <a class="nav-link active "href="#" > 1</a>
+                                                    </li>
+                                                    <li class="nav-item mr-2">
+                                                        <a class="nav-link" id="active" href="#" > 2</a>
+                                                       </li>
+                                                    <li class="nav-item mr-2">
+                                                        <a class="nav-link " id="active" href="#" > 3</a>
+                                                      </li>
+                                                    <li class="nav-item mr-2 mt-2">
+                                                      <strong>...</strong>
+                                                    </li>
+                                                    <li class="nav-item mr-2">
+                                                        <a class="nav-link " id="active" href="#" > 99</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                
+                <footer class="footer">
+                        <a href="#" class="menu-item mr-4">ESI-SBA</a>
+                        <a href="#" class="menu-item ml-4 mr-4">FORUM</a>
+                        <a href="#" class="menu-item ml-4 mr-4">ABOUT US</a>
+                        
+                        <span class="">&copy; Copyright 2019 | Powered by Root-Dev with 
+                            <span class="fa fa-heart icons"></span> & lot of <span class="fa fa-coffee text-warning"></span>
+                        </span>
+                    </footer>
+            </div>
+        </div>
+    </div>
+
+</html>

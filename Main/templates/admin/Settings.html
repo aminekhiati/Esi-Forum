@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin - Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/user.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Iceberg" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 sidebar-dash">
+                <h3 class="mb-4" id="logo-dash">Dashboard</h3>
+                <div id="line-dash"></div>
+                <div>
+                    <ul>
+                        <li>
+                            <span class="fa fa-tachometer-alt icons"></span>
+                            <a href="#" class="menu-item">Dashboard</a></li>
+                        <li>
+                            <span class="fa fa-users-cog icons"></span>
+                            <a href="#" class="menu-item">Usergroups</a></li>
+                        <li>
+                            <span class="fa fa-users icons"></span>
+                            <a href="#" class="menu-item">Users</a></li>
+                        <li>
+                            <span class="fa fa-comments icons"></span>
+                            <a href="#" class="menu-item"> Sections</a></li>
+                        <li>
+                            <span class="fa fa-envelope icons"></span>
+                            <a href="#" class="menu-item"> Messages</a></li>
+                        <li>
+                            <span class="fa fa-sticky-note icons"></span>
+                            <a href="#" class="menu-item"> Reports</a></li>
+                        <li>
+                            <span class="fa fa-cog icons"></span>
+                            <a href="#" class="menu-item">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-10 pl-0">
+                <nav class="navbar navbar-expand" role="dashboard">
+                    <a class="navbar-brand"> Settings</a>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item float-right">
+                             <label class="field a-field a-field_a1 page__field pt-0 mr-4">
+                                        <input class="field__input a-field__input" type="text" placeholder="Search" value="">
+                                        <span class="a-field__label-wrap">
+                                                <span class="fa fa-search float-right mt-2 mr-3"></span>
+                                        </span>
+                                        
+                                    </label>
+                        </li> 
+                        <li class="nav-item float-right mt-2">
+                            <a href="#" class="mr-4 menu-item">Account</a>
+                        </li>
+                        <li class="nav-item float-right mt-2">
+                            <a href="#" class="mr-4 ml-4 menu-item">Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="row ml-4">
+                    <div class="col-md-8">
+                        <div class="box mt-4 text-center">
+                            <p style="text-align:center;">General Settings</p>
+                            <span class="table-caption">
+                                edit and modify your settings. </span>
+                        </div>
+                        <div class="tab text-center">
+                                <label class="field a-field a-field_a1 page__field mt-4">
+                                        <input class="field__input a-field__input" placeholder="ESI FORUMS" value="">
+                                        <span class="a-field__label-wrap">
+                                            <span class="a-field__label">Forum Name</span>
+                                            <span class="fa fa-signature float-right mt-2 mr-3 icons"></span>
+                                        </span>
+                                </label>&nbsp; &nbsp;
+                                <label class="field a-field a-field_a1 page__field mt-4">
+                                        <input class="field__input a-field__input" placeholder="15" value="">
+                                        <span class="a-field__label-wrap">
+                                            <span class="a-field__label">Number of posts to display</span>
+                                            <span class="fa fa-address-card float-right mt-2 mr-3 icons"></span>
+                                        </span>
+                                </label><br>
+                                <label class="field a-field a-field_a1 page__field float-left ml-2 mr-2">
+                                        <input class="field__input a-field__input" placeholder="special for esi sba" value="">
+                                        <span class="a-field__label-wrap">
+                                            <span class="a-field__label">Forum Description</span>
+                                            <span class="fa fa-signature float-right mt-2 mr-3 icons"></span>
+                                        </span>
+                                </label>&nbsp; &nbsp;
+                                <input type="checkbox" id="perm1" />
+                                <label for="perm1"  style="margin-right:15%; margin-top: 6%;">Maintenance Mode</label><br>
+                                <br>
+                                <span class="float-left ml-2 mt-2">Order by : 
+                                        <select class="selectpicker">
+                                                <option selected>Last Post</option>
+                                                <option value="1">First Post</option>
+                                        </select>  
+                                </span>
+                                <label class="field a-field a-field_a1 page__field pt-0">
+                                        <input class="field__input a-field__input" placeholder="1MB" value="">
+                                        <span class="a-field__label-wrap">
+                                            <span class="a-field__label">Maximum attachement size</span>
+                                            <span class="fa fa-file float-right mt-2 mr-3 icons"></span>
+                                        </span>
+                                </label>
+                                <button class="btn btn-danger float-right mt-2">Save</button>
+                                <br><br>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mt-4">
+                            <div class="tab" style="margin-top:50px;">
+                                <h4><span class="fa fa-image icons"></span> Slides</h4>
+                                    <div id="slideImages" class="carousel slide" data-ride="carousel">
+                                            <div class="carousel-inner">
+                                              <div class="carousel-item active">
+                                                <img class="d-block w-100" src="../images/slide/slide2.jpg" alt="First slide">
+                                                <button class="btn btn-danger float-right mt-2"><span class="fa fa-trash"></span></button>
+                                              </div>
+                                              <div class="carousel-item">
+                                                <img class="d-block w-100" src="../images/slide/slide2.jpg" alt="Second slide">
+                                                <button class="btn btn-danger float-right mt-2"><span class="fa fa-trash"></span></button>
+                                              </div>
+                                            </div>
+                                            <a class="carousel-control-prev" href="#slideImages" role="button" data-slide="prev">
+                                              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                              <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#slideImages" role="button" data-slide="next">
+                                              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                              <span class="sr-only">Next</span>
+                                            </a>
+                                          </div>
+                                        <form class="mt-2">
+                                            <div class="custom-file" id="customFile">
+                                                <input type="file" class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp">
+                                                <label class="custom-file-label" for="exampleInputFile">
+                                                    Add new slide
+                                                </label>
+                                            </div>
+                                            <button class="btn btn-danger float-right mt-2" type="submit"><span class="fa fa-upload"></span> Upload</button>
+                                            <br><br>
+                                        </form>
+                            </div>
+                        </div>
+                </div>
+                <footer class="footer">
+                        <a href="#" class="menu-item mr-4">ESI-SBA</a>
+                        <a href="#" class="menu-item ml-4 mr-4">FORUM</a>
+                        <a href="#" class="menu-item ml-4 mr-4">ABOUT US</a>
+                        
+                        <span class="">&copy; Copyright 2019 | Powered by Root-Dev with 
+                            <span class="fa fa-heart icons"></span> & lot of <span class="fa fa-coffee text-warning"></span>
+                        </span>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+</html>
