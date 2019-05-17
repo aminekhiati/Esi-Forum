@@ -66,7 +66,7 @@ class Publication(models.Model) :
 
 class Commentaire(models.Model):
 
-    commentaire = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
+    commentaire = models.ForeignKey(Publication,related_name="comments",on_delete=models.CASCADE)
     commented_by = models.ForeignKey(User,on_delete=models.CASCADE, related_name="commentes")
     text = models.TextField(null=True,blank=True)
     upvote = models.IntegerField()
