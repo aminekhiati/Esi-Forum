@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.utils import timezone
 from django.urls import reverse
 
 # Create your models here.
+
 
 
 
@@ -16,6 +16,8 @@ class Profile (models.Model):
         ('enseignant', 'Enseignant'),
         ('moderateur','Moderateur')
     )
+    
+    
 
     PROMO = (
         ('1cpi', '1CPI'),
@@ -25,17 +27,17 @@ class Profile (models.Model):
         ('3cs', '3CS'),
     )
 
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='userprofile')
+    role = models.CharField(choices=ROLE,default='etudiant',max_length=10)
     date_naissance = models.DateField()
     numero_telephone = models.IntegerField()
-    role = models.CharField(choices=ROLE,default='etudiant',max_length=10)
     promotion = models.CharField(choices=PROMO,default='1cpi',max_length=3)
     bio = models.TextField()
     slug = models.SlugField(max_length=250,unique =True)
 
     def get_absolute_url(self):
         return reverse('Esi_Forum:Main',
-        args=[self.role,
+        args=[self.user.role,
               self.user.username,
               self.slug])
 
@@ -62,18 +64,21 @@ class Publication(models.Model) :
 
 class Commentaire(models.Model):
 
-    date_de_commentaire = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
-    text = models.TextField()
+    commentaire = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
+    commented_by = models.ForeignKey(User,on_delete=models.CASCADE, related_name="commentes")
+    text = models.TextField(null=True,blank=True)
     upvote = models.IntegerField()
+    date_de_commentaire =  models.DateField(auto_now_add=True)
+    tag_utilisateur = models.ManyToManyField(User, related_name="tag_users")
     
 
     def __str__(self):
         return self.pk
 
 
-'''class Publication_enrigistre(models.Model):
+class Publication_enrigistre(models.Model):
     idpe = models.IntegerField(primary_key=True)
-    idu = models.ForeignKey(Utilisateur,on_delete=models.CASCADE)
+    idu = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.idpe 
@@ -90,7 +95,7 @@ class Fichier_attachee (models.Model):
     idc = models.ForeignKey(Commentaire,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.idfa ''' 
+        return self.idfa 
 
 class Statistiques (models.Model):
     ids = models.IntegerField(primary_key=True)
