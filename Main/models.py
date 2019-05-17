@@ -51,7 +51,7 @@ class Publication(models.Model) :
     date_de_modification= models.DateField(auto_now=True)
     section = models.CharField(max_length=30)
     text = models.TextField()
-    upvote = models.IntegerField()
+    upvote = models.IntegerField(default=0)
     titre = models.CharField(max_length=30)
     lauteur = models.ForeignKey(User,on_delete=models.CASCADE,related_name='publications')
     ''' photo = models.ImageField() ''' 
