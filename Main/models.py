@@ -51,10 +51,12 @@ class Publication(models.Model) :
     date_de_modification= models.DateField(auto_now=True)
     section = models.CharField(max_length=30)
     text = models.TextField()
-    upvote = models.IntegerField()
+    upvote = models.IntegerField(default=0)
     titre = models.CharField(max_length=30)
     lauteur = models.ForeignKey(User,on_delete=models.CASCADE,related_name='publications')
-    ''' photo = models.ImageField() '''
+    ''' photo = models.ImageField() ''' 
+    ''' categorie = models.ForeignKey()'''
+    
 
     def __str__(self):
         return self.titre
@@ -64,7 +66,7 @@ class Publication(models.Model) :
 
 class Commentaire(models.Model):
 
-    commentaire = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
+    commentaire = models.ForeignKey(Publication,related_name="comments",on_delete=models.CASCADE)
     commented_by = models.ForeignKey(User,on_delete=models.CASCADE, related_name="commentes")
     text = models.TextField(null=True,blank=True)
     upvote = models.IntegerField()

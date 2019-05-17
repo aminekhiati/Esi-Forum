@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin - Usersgroups</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../css/user.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Iceberg" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/js/bootstrap-select.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-2 sidebar-dash">
+                <h3 class="mb-4" id="logo-dash">Dashboard</h3>
+                <div id="line-dash"></div>
+                <div>
+                    <ul>
+                        <li>
+                            <span class="fa fa-tachometer-alt icons"></span>
+                            <a href="#" class="menu-item">Dashboard</a></li>
+                        <li>
+                            <span class="fa fa-users-cog icons"></span>
+                            <a href="#" class="menu-item">Usergroups</a></li>
+                        <li>
+                            <span class="fa fa-users icons"></span>
+                            <a href="#" class="menu-item">Users</a></li>
+                        <li>
+                            <span class="fa fa-comments icons"></span>
+                            <a href="#" class="menu-item"> Sections</a></li>
+                        <li>
+                            <span class="fa fa-envelope icons"></span>
+                            <a href="#" class="menu-item"> Messages</a></li>
+                        <li>
+                            <span class="fa fa-sticky-note icons"></span>
+                            <a href="#" class="menu-item"> Reports</a></li>
+                        <li>
+                            <span class="fa fa-cog icons"></span>
+                            <a href="#" class="menu-item">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-10 pl-0">
+                <nav class="navbar navbar-expand" role="dashboard">
+                    <a class="navbar-brand"> Usersgroups</a>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item float-right">
+                             <label class="field a-field a-field_a1 page__field pt-0 mr-4">
+                                        <input class="field__input a-field__input" type="text" placeholder="Search" value="">
+                                        <span class="a-field__label-wrap">
+                                                <span class="fa fa-search float-right mt-2 mr-3"></span>
+                                        </span>
+                                        
+                                    </label>
+                        </li> 
+                        <li class="nav-item float-right mt-2">
+                            <a href="#" class="mr-4 menu-item">Account</a>
+                        </li>
+                        <li class="nav-item float-right mt-2">
+                            <a href="#" class="mr-4 ml-4 menu-item">Logout</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="row ml-4">
+                    <div class="col-md-8 mt-4 col-center">
+                            <div class="float-right">
+                                    <div class="row">
+                                        <div class="col">
+                                                <div class="col-12 mt-4 ml-1">
+                                                        <button class="btn-new float-right mb-4" data-toggle="modal" data-target="#addPop">
+                                                            <span class="fa fa-plus"></span> Add New</button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        <div class="box mt-4 text-center">
+                            <p style="text-align:center;" class="ml-4">Usersgroups</p>
+                            <span class="table-caption ml-4">
+                                edit , delete , add groups </span>
+                        </div>
+                        <div class="tab">
+                            <table>
+                                <tr>
+                                    <th>Group Name</th>
+                                    <th><span class="fa fa-user icons"></th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>Administrators</td>
+                                    <td>2</td>
+                                    <td><a href="#" role="button" data-toggle="modal" data-target="#editPop"><span class="fa fa-pen icons mr-4"></span></a>
+                                        <a href="#" role="button" data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons mr-4"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Moderators</td>
+                                    <td>15</td>
+                                    <td><a href="#" role="button" data-toggle="modal" data-target="#editPop"><span class="fa fa-pen icons mr-4"></span></a>
+                                        <a href="#" role="button" data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons mr-4"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Professors</td>
+                                    <td>30</td>
+                                    <td><a href="#" role="button" data-toggle="modal" data-target="#editPop"><span class="fa fa-pen icons mr-4"></span></a>
+                                        <a href="#" role="button" data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons mr-4"></span></td>
+                                </tr>
+                                <tr>
+                                    <td>Students</td>
+                                    <td>602</td>
+                                    <td><a href="#" role="button" data-toggle="modal" data-target="#editPop"><span class="fa fa-pen icons mr-4"></span></a>
+                                        <a href="#" role="button" data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons mr-4"></span></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="modal fade" id="deletePop" tabindex="-1" role="dialog" aria-labelledby="deletePopLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="deletePopLabel">Alert</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body text-danger">
+                                      Are you sure you want to delete this group?
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                      <button type="button" class="btn btn-danger">Delete</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                        
+                              <div class="modal fade" id="editPop" tabindex="-1" role="dialog" aria-labelledby="editPopLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="editPopLabel">Edit Group</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="float-left" style="margin-bottom:10%;">
+                                                <label class="field a-field a-field_a1 page__field mt-4 mr-4">
+                                                    <input class="field__input a-field__input" placeholder="ex. students" value="">
+                                                    <span class="a-field__label-wrap">
+                                                        <span class="a-field__label">Name</span>
+                                                    </span>
+                                                </label>
+                                            </div>
+                                                <h5>Permissions</h5>
+                                                <div class="permissions">
+                                                        <input type="checkbox" id="perm1" checked="checked" />
+                                                        <label for="perm1">Read Topics</label>
+                                                        <br>
+                                                        <input type="checkbox" id="perm2" checked="checked" />
+                                                        <label for="perm2">Write Topics</label>
+                                                        <br>
+                                                        <input type="checkbox" id="perm3" checked="checked" />
+                                                        <label for="perm3">Moderation</label>
+                                                        <br>
+                                                        <input type="checkbox" id="perm4" checked="checked" />
+                                                        <label for="perm4">Administration</label>
+                                                </div>     
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                          <button type="button" class="btn btn-danger">Save</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="modal fade" id="addPop" tabindex="-1" role="dialog" aria-labelledby="addPopLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="addPopLabel">Add Group</h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="float-left" style="margin-bottom:10%;">
+                                                    <label class="field a-field a-field_a1 page__field mt-4 mr-4">
+                                                        <input class="field__input a-field__input" placeholder="ex. students" value="">
+                                                        <span class="a-field__label-wrap">
+                                                            <span class="a-field__label">Name</span>
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                                    <h5>Permissions</h5>
+                                                    <div class="permissions">
+                                                            <input type="checkbox" id="p1" checked="checked" />
+                                                            <label for="p1">Read Topics</label>
+                                                            <br>
+                                                            <input type="checkbox" id="p2" checked="checked" />
+                                                            <label for="p2">Write Topics</label>
+                                                            <br>
+                                                            <input type="checkbox" id="p3" checked="checked" />
+                                                            <label for="p3">Moderation</label>
+                                                            <br>
+                                                            <input type="checkbox" id="p4" checked="checked" />
+                                                            <label for="p4">Administration</label>
+                                                    </div>     
+                                            </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                              <button type="button" class="btn btn-danger">Add</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                    </div>
+                </div>
+                <footer class="footer">
+                        <a href="#" class="menu-item mr-4">ESI-SBA</a>
+                        <a href="#" class="menu-item ml-4 mr-4">FORUM</a>
+                        <a href="#" class="menu-item ml-4 mr-4">ABOUT US</a>
+                        
+                        <span class="">&copy; Copyright 2019 | Powered by Root-Dev with 
+                            <span class="fa fa-heart icons"></span> & lot of <span class="fa fa-coffee text-warning"></span>
+                        </span>
+                    </footer>
+            </div>
+        </div>
+    </div>
+
+</html>
