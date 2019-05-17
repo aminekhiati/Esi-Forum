@@ -54,7 +54,9 @@ class Publication(models.Model) :
     upvote = models.IntegerField()
     titre = models.CharField(max_length=30)
     lauteur = models.ForeignKey(User,on_delete=models.CASCADE,related_name='publications')
-    ''' photo = models.ImageField() '''
+    ''' photo = models.ImageField() ''' 
+    ''' categorie = models.ForeignKey()'''
+    
 
     def __str__(self):
         return self.titre
