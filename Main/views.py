@@ -8,3 +8,4 @@ def post_list(request):
 
     posts = Publication.objects.all()
     return render(request,'Main/Home.html',{'posts': posts})
+

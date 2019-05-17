@@ -1,14 +1,11 @@
 
-{% extends 'HomeBase.html' %}
 
-
+{% extends './HomeBase.html' %}
 {% load static %}
-<body style="background-color: #171C2F; opacity: 0.8;">
-   
-   
-   {% block container %}
-   
-    <div class="container">
+
+{% block content  %}
+
+<div class="container">
         <nav class="navbar navbar-default" role="inpage">
             <div class="navbar">
                 <ul class="nav nav-pills text-center">
@@ -28,7 +25,7 @@
                 </ul>
             </div>
             
-         </nav>
+    </nav>
     <div class="modal fade" id="newTopic" tabindex="-1" role="dialog" aria-labelledby="newTopicLabel" aria-hidden="true">
       <div class="modal-lg modal-dialog" role="document">
         <div class="modal-content text-danger">
@@ -52,7 +49,7 @@
           </div>
         </div>
       </div>
-     
+    </div>
     <div class="content">
       
       <div class="row">
@@ -78,7 +75,7 @@
                           <a href="#">@i.benzeghli</a>
                         </li>
                         <li>
-                          <img src=" {% static 'images/avatars/1.jpg' %} " class="author-avatar" alt="">
+                          <img src="{% static 'images/avatars/1.jpg' %}" class="author-avatar" alt="">
                         </li>
                       </ul>
                     </div>
@@ -98,15 +95,14 @@
             </div>
           </div>
           </div>
-          <div class="col-4">
-          <div class="sidebar mr-2">
-              
-          </div>
+          
     </div>
   </div>
   </div>
-    <div>
-      <div class="pages text-center">
+  <div>
+
+
+   <div class="pages text-center">
           <nav class="navbar navbar-default"  role="doc-pagelist">
               <div class="navbar">
                   <ul class="nav nav-pills text-center">
@@ -128,39 +124,6 @@
                   </ul>
               </div>
       </div>
-      <hr>
-      <div class="footer-bg">
-          <div id="about-us">
-              <h3 class="mt-3 mb-3">About us</h3>
-              <ul>
-                <li><a href="#">Islam</a></li>
-                <li><a href="#">Karim</a></li>
-                <li><a href="#">Katia</a></li>
-                <li><a href="#">Fatima</a></li>
-                <li><a href="#">Hamouda</a></li>
-                <li><a href="#">Othman</a></li>
-              </ul>
-            </div>
-          <div id="contact-us">
-            <h3 class="mt-3 mb-3">Contact Us</h3>
-            <p><img src=" {% static 'images/icons/address.png' %} " width="24px" height="24px"> 26 Ft bibo , Algeria</p>
-            <p><img src=" {% static 'images/icons/mail.png' %} " width="24px" height="24px"> n.benzeghli@esi-sba.dz</p>
-            <p><img src=" {% static 'images/icons/phone.png' %}" width="24px" height="24px"> (213) 555479987</p>
-          </div>
-          <div id="contact-form">
-            <h3 class="mt-3">CONTACT FORM</h3>
-            <form method="POST">
-              <input type="text" class="form-control mb-2" placeholder="Email">
-              <textarea name="message"  placeholder="Your Message here" class="md-textarea form-control"></textarea>
-              <button type="button" class="btn btn-primary btn-sm float-right mt-1"><img src="{% static 'images/icons/send-mail.png' %}" width="24px" height="24px" > Send</button>
-            </form>
-          </div>
-          <div class="footer-copy text-center">
-              <p class="mt-1">&copy; 2019 ESI-Forums</p>
-            </div>
-          </div>   
-      </div>
 
-      {% endblock container %}
 
-   
+    {% endblock  %}
