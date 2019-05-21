@@ -77,7 +77,19 @@ class Publication(models.Model):
     ''' photo = models.ImageField() '''
     ''' categorie = models.ForeignKey()'''
 
-
+    def how_long_ago(self):
+        how_long = datetime.now(timezone.utc) - self.creation_date
+        if how_long < timedelta(minutes=1):
+            return f'{how_long.seconds} second{pluralize(how_long.seconds)} ago'
+        elif how_long < timedelta(hours=1):
+            # total_seconds returns a float
+            minutes = int(how_long.total_seconds()) // 60
+            return f'{minutes} minute{pluralize(minutes)} ago'
+        elif how_long < timedelta(days=1):
+            hours = int(how_long.total_seconds()) // 3600
+            return f'{hours} hour{pluralize(hours)} ago'
+        else:
+            return f'{how_long.days} day{pluralize(how_long.days)} ago'
 
     def set_upvoted(self, user, *, upvoted):
         if upvoted:
