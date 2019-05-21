@@ -2,22 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 
-# Create your models here.
+from django.template.defaultfilters import pluralize
+from datetime import datetime, timedelta, timezone
+from urllib.parse import urlparse
 
 
-
-
-
-
-class Profile (models.Model):
-
+class Profile(models.Model):
     ROLE = (
         ('etudiant', 'Etudiant'),
         ('enseignant', 'Enseignant'),
-        ('moderateur','Moderateur')
+        ('moderateur', 'Moderateur')
     )
-    
-    
 
     PROMO = (
         ('1cpi', '1CPI'),
@@ -27,36 +22,68 @@ class Profile (models.Model):
         ('3cs', '3CS'),
     )
 
-    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='userprofile')
-    role = models.CharField(choices=ROLE,default='etudiant',max_length=10)
+    user = models.OneToOneField \
+        (User,
+         on_delete=models.CASCADE,
+         related_name='userprofile'
+         )
+    role = models.CharField \
+        (choices=ROLE,
+         default='etudiant',
+         max_length=10
+         )
     date_naissance = models.DateField()
     numero_telephone = models.IntegerField()
-    promotion = models.CharField(choices=PROMO,default='1cpi',max_length=3)
+    promotion = models.CharField \
+        (choices=PROMO,
+         default='1cpi',
+         max_length=3
+         )
     bio = models.TextField()
-    slug = models.SlugField(max_length=250,unique =True)
+    slug = models.SlugField \
+        (max_length=250,
+         unique=True)
 
     def get_absolute_url(self):
         return reverse('Esi_Forum:Main',
-        args=[self.user.role,
-              self.user.username,
-              self.slug])
+                       args=[self.user.role,
+                             self.user.username,
+                             self.slug])
 
     def __str__(self):
-        return 'le nom : {} et le prénom : {}'.format(self.user.username,self.user.lastname)
+        return 'le nom : {} et le prénom : {}'.format(self.user.username, self.user.lastname)
 
 
-class Publication(models.Model) :
-
-    date_de_publication = models.DateField(auto_now_add=True)
-    date_de_modification= models.DateField(auto_now=True)
+class Publication(models.Model):
+    date_de_publication = models.DateField \
+        (auto_now_add=True,
+         )
+    date_de_modification = models.DateField \
+        (auto_now=True
+         )
     section = models.CharField(max_length=30)
     text = models.TextField()
-    upvote = models.IntegerField(default=0)
-    titre = models.CharField(max_length=30)
-    lauteur = models.ForeignKey(User,on_delete=models.CASCADE,related_name='publications')
-    ''' photo = models.ImageField() ''' 
+
+    upvotes = models.ManyToManyField \
+        (User,
+         through='PublicationUpvote'
+         )
+    title = models.CharField(max_length=256)
+    lauteur = models.ForeignKey \
+        (User,
+         on_delete=models.SET_NULL,
+         related_name='publications'
+         )  # when a user is deleted we keep the posts and the creator is set to null
+    ''' photo = models.ImageField() '''
     ''' categorie = models.ForeignKey()'''
-    
+
+
+
+    def set_upvoted(self, user, *, upvoted):
+        if upvoted:
+            PublicationUpvote.objects.get_or_create(post=self, user=user)
+        else:
+            self.upvotes.filter(id=user.id).delete()
 
     def __str__(self):
         return self.titre
@@ -64,42 +91,112 @@ class Publication(models.Model) :
     class Meta:
         ordering = ('-upvote',)
 
-class Commentaire(models.Model):
 
-    commentaire = models.ForeignKey(Publication,related_name="comments",on_delete=models.CASCADE)
-    commented_by = models.ForeignKey(User,on_delete=models.CASCADE, related_name="commentes")
-    text = models.TextField(null=True,blank=True)
-    upvote = models.IntegerField()
-    date_de_commentaire =  models.DateField(auto_now_add=True)
-    tag_utilisateur = models.ManyToManyField(User, related_name="tag_users")
-    
+class PublicationUpvote(models.Model):
+    post = models.ForeignKey \
+            (
+            Publication,
+            on_delete=models.CASCADE,
+        )  # remove the upvote when the post is deleted
+    user = models.ForeignKey \
+            (
+            User,
+            related_name='upvotes',
+            on_delete=models.CASCADE,
+        )  # remove the upvote when the user is deleted
+
+    class Meta:
+        unique_together = ('publication', 'user')
+
+
+class Commentaire(models.Model):
+    creator = models.ForeignKey \
+        (User,
+         related_name='comments',
+         # when the creator is removed set creator to null
+         on_delete=models.SET_NULL,
+         null=True,
+         )
+    publication = models.ForeignKey \
+        (Publication,
+         related_name="comments",
+         on_delete=models.CASCADE
+         # when post is removed there is no way to read the comments so we just remove them
+         )
+    parent = models.ForeignKey \
+            (
+            # What happens when the parent is removed? It should never be removed
+            # otherwise the comment tree will be messed up.
+            # We’ll just set the content to
+            'Comment',
+            related_name='replies',
+            on_delete=models.CASCADE,
+            null=True,
+            default=None,
+        )
+    text = models.TextField(null=True, blank=True)
+    upvotes = models.ManyToManyField \
+        (User,
+         through='CommentUpvote'
+         )
+    date_de_commentaire = models.DateField(auto_now_add=True)
+    tag_utilisateur = models.ManyToManyField \
+        (User,
+         related_name="tag_users"
+         )
+
+    def set_upvoted(self, user, *, upvoted):
+        if upvoted:
+            CommentUpvote.objects.get_or_create(comment=self, user=user)
+        else:
+            self.upvotes.filter(id=user.id).delete()
 
     def __str__(self):
         return self.pk
 
 
+class CommentUpvote(models.Model):
+    comment = models.ForeignKey \
+            (
+            Commentaire,
+            on_delete=models.CASCADE,
+        )  # remove the upvote when the comment is deleted
+    user = models.ForeignKey \
+            (
+            User,
+            related_name='comment_upvotes',
+            on_delete=models.CASCADE,
+        )  # remove the upvote when the user is deleted
+
+    class Meta:
+        unique_together = ('comment', 'user')
+
+
 class Publication_enrigistre(models.Model):
     idpe = models.IntegerField(primary_key=True)
-    idu = models.ForeignKey(User,on_delete=models.CASCADE)
+    idu = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.idpe 
+        return self.idpe
+
 
 class Publication_archivee(models.Model):
-    idpa =models.IntegerField(primary_key=True)
+    idpa = models.IntegerField(primary_key=True)
 
     def __str__(self):
-        return self.idpa 
+        return self.idpa
 
-class Fichier_attachee (models.Model):
+
+class Fichier_attachee(models.Model):
     idfa = models.IntegerField(primary_key=True)
-    idp = models.ForeignKey(Publication,on_delete=models.CASCADE)
-    idc = models.ForeignKey(Commentaire,on_delete=models.CASCADE)
+    idp = models.ForeignKey(Publication, on_delete=models.CASCADE)
+    idc = models.ForeignKey(Commentaire, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.idfa 
+        return self.idfa
 
-class Statistiques (models.Model):
+
+class Statistiques(models.Model):
     ids = models.IntegerField(primary_key=True)
     nmbr_publication = models.IntegerField()
     nmbr_commentaires = models.IntegerField()
