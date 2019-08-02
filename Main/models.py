@@ -34,15 +34,14 @@ class Profile(models.Model):
          )
     date_naissance = models.DateField()
     numero_telephone = models.IntegerField()
-<<<<<<< HEAD
+
     promotion = models.CharField(choices=PROMO,default='1cpi',max_length=4)
-=======
     promotion = models.CharField \
         (choices=PROMO,
          default='1cpi',
          max_length=3
          )
->>>>>>> f7d68316f5376df8674bedbdbbaedeb6c1b02ccc
+
     bio = models.TextField()
     slug = models.SlugField \
         (max_length=250,
@@ -58,7 +57,7 @@ class Profile(models.Model):
         return 'le nom : {} et le prénom : {}'.format(self.user.username, self.user.lastname)
 
 
-class Publication(models.Model):
+class Publication (models.Model):
     date_de_publication = models.DateField \
         (auto_now_add=True,
          )
@@ -81,57 +80,57 @@ class Publication(models.Model):
     ''' photo = models.ImageField() '''
     ''' categorie = models.ForeignKey()'''
 
-    def how_long_ago(self):
-        how_long = datetime.now(timezone.utc) - self.creation_date
-        if how_long < timedelta(minutes=1):
-            return f'{how_long.seconds} second{pluralize(how_long.seconds)} ago'
-        elif how_long < timedelta(hours=1):
-            # total_seconds returns a float
-            minutes = int(how_long.total_seconds()) // 60
-            return f'{minutes} minute{pluralize(minutes)} ago'
-        elif how_long < timedelta(days=1):
-            hours = int(how_long.total_seconds()) // 3600
-            return f'{hours} hour{pluralize(hours)} ago'
-        else:
-            return f'{how_long.days} day{pluralize(how_long.days)} ago'
+    # def how_long_ago(self):
+    #     how_long = datetime.now(timezone.utc) - self.creation_date
+    #     if how_long < timedelta(minutes=1):
+    #         return f'{how_long.seconds} second{pluralize(how_long.seconds)} ago'
+    #     elif how_long < timedelta(hours=1):
+    #         # total_seconds returns a float
+    #         minutes = int(how_long.total_seconds()) // 60
+    #         return f'{minutes} minute{pluralize(minutes)} ago'
+    #     elif how_long < timedelta(days=1):
+    #         hours = int(how_long.total_seconds()) // 3600
+    #         return f'{hours} hour{pluralize(hours)} ago'
+    #     else:
+    #         return f'{how_long.days} day{pluralize(how_long.days)} ago'
+    #
+    # def set_upvoted(self, user, *, upvoted):
+    #     if upvoted:
+    #         PublicationUpvote.objects.get_or_create(post=self, user=user)
+    #     else:
+    #         self.upvotes.filter(id=user.id).delete()
+    #
+    # def __str__(self):
+    #     return self.titre
+    #
+    # class Meta:
+    #     ordering = ('-upvote',)
 
-    def set_upvoted(self, user, *, upvoted):
-        if upvoted:
-            PublicationUpvote.objects.get_or_create(post=self, user=user)
-        else:
-            self.upvotes.filter(id=user.id).delete()
+    #Othmane check this Bloc
 
-    def __str__(self):
-        return self.titre
-
-    class Meta:
-        ordering = ('-upvote',)
+   #  publication = models.ForeignKey(Publication,related_name="comments",on_delete=models.CASCADE)
+   # commented_by = models.ForeignKey(User,on_delete=models.CASCADE, related_name="commentes")
+   #  text = models.TextField(null=True,blank=True)
+   # upvote = models.IntegerField()
+   #  date_de_commentaire =  models.DateField(auto_now_add=True)
+   #  tag_utilisateur = models.ManyToManyField(User, related_name="tag_users")
 
 
-<<<<<<< HEAD
-    publication = models.ForeignKey(Publication,related_name="comments",on_delete=models.CASCADE)
-    commented_by = models.ForeignKey(User,on_delete=models.CASCADE, related_name="commentes")
-    text = models.TextField(null=True,blank=True)
-    upvote = models.IntegerField()
-    date_de_commentaire =  models.DateField(auto_now_add=True)
-    tag_utilisateur = models.ManyToManyField(User, related_name="tag_users")
-    
-=======
-class PublicationUpvote(models.Model):
-    post = models.ForeignKey \
-            (
-            Publication,
-            on_delete=models.CASCADE,
-        )  # remove the upvote when the post is deleted
-    user = models.ForeignKey \
-            (
-            User,
-            related_name='upvotes',
-            on_delete=models.CASCADE,
-        )  # remove the upvote when the user is deleted
-
-    class Meta:
-        unique_together = ('publication', 'user')
+# class PublicationUpvote(models.Model):
+#     post = models.ForeignKey \
+#             (
+#             Publication,
+#             on_delete=models.CASCADE,
+#         )  # remove the upvote when the post is deleted
+#     user = models.ForeignKey \
+#             (
+#             User,
+#             related_name='upvotes',
+#             on_delete=models.CASCADE,
+#         )  # remove the upvote when the user is deleted
+#
+#     class Meta:
+#         unique_together = ('publication', 'user')
 
 
 class Commentaire(models.Model):
@@ -175,31 +174,31 @@ class Commentaire(models.Model):
             CommentUpvote.objects.get_or_create(comment=self, user=user)
         else:
             self.upvotes.filter(id=user.id).delete()
->>>>>>> f7d68316f5376df8674bedbdbbaedeb6c1b02ccc
+
 
     def __str__(self):
         return self.pk
 
 
-class CommentUpvote(models.Model):
-    comment = models.ForeignKey \
-            (
-            Commentaire,
-            on_delete=models.CASCADE,
-        )  # remove the upvote when the comment is deleted
-    user = models.ForeignKey \
-            (
-            User,
-            related_name='comment_upvotes',
-            on_delete=models.CASCADE,
-        )  # remove the upvote when the user is deleted
-
-    class Meta:
-        unique_together = ('comment', 'user')
+# class CommentUpvote(models.Model):
+#     comment = models.ForeignKey \
+#             (
+#             Commentaire,
+#             on_delete=models.CASCADE,
+#         )  # remove the upvote when the comment is deleted
+#     user = models.ForeignKey \
+#             (
+#             User,
+#             related_name='comment_upvotes',
+#             on_delete=models.CASCADE,
+#         )  # remove the upvote when the user is deleted
+#
+#     class Meta:
+#         unique_together = ('comment', 'user')
 
 
 class Publication_enrigistre(models.Model):
-<<<<<<< HEAD
+
     user = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):
@@ -218,33 +217,33 @@ class Fichier_attachee (models.Model):
         return self.id
 
 class Statistiques (models.Model):
-=======
-    idpe = models.IntegerField(primary_key=True)
+
+    #idpe = models.IntegerField(primary_key=True)
     idu = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.idpe
+        return self.id
 
 
 class Publication_archivee(models.Model):
-    idpa = models.IntegerField(primary_key=True)
+    #idpa = models.IntegerField(primary_key=True)
 
     def __str__(self):
-        return self.idpa
+        return self.id
 
 
 class Fichier_attachee(models.Model):
-    idfa = models.IntegerField(primary_key=True)
+    #idfa = models.IntegerField(primary_key=True)
     idp = models.ForeignKey(Publication, on_delete=models.CASCADE)
     idc = models.ForeignKey(Commentaire, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.idfa
+        return self.id
 
 
 class Statistiques(models.Model):
-    ids = models.IntegerField(primary_key=True)
->>>>>>> f7d68316f5376df8674bedbdbbaedeb6c1b02ccc
+    #ids = models.IntegerField(primary_key=True)
+
     nmbr_publication = models.IntegerField()
     nmbr_commentaires = models.IntegerField()
     upvote = models.IntegerField()
