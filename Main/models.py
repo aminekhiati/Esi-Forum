@@ -1,8 +1,8 @@
 from django.db import models
-from django.contrib.auth.models import User,AbstractUser
+from django.contrib.auth.models import AbstractUser
 from django.template.defaultfilters import slugify
-
 from django.urls import reverse
+from django.conf import settings    
 
 ROLE = (
         ('etudiant', 'Etudiant'),
@@ -18,24 +18,6 @@ PROMO = (
         ('3cs', '3CS'),
     )
 
-
-
-class Publication(models.Model) :
-
-    date_de_publication = models.DateField(auto_now_add=True)
-    date_de_modification= models.DateField(auto_now=True)
-    section = models.CharField(max_length=30)
-    content = models.TextField()
-    upvote = models.IntegerField()
-    titre = models.CharField(max_length=30)
-    lauteur = models.ForeignKey(User,on_delete=models.CASCADE,related_name='publications')
-    image_user = models.ImageField() 
-
-    def __str__(self):
-        return self.titre
-
-    class Meta:
-        ordering = ('-upvote',)
 
 
 class Tags(models.Model):
@@ -55,18 +37,41 @@ class Tags(models.Model):
     def __str__(self):
         return self.name
 
+class Utilisateur(AbstractUser):
+    role = models.CharField(choices=ROLE,default='etudiant',max_length=10)
+
+
+
+class Publication(models.Model) :
+
+    date_de_publication = models.DateField(auto_now_add=True)
+    date_de_modification= models.DateField(auto_now=True)
+    section = models.CharField(max_length=30)
+    content = models.TextField()
+    upvote = models.IntegerField()
+    titre = models.CharField(max_length=30)
+    lauteur = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='publications')
+    image_user = models.ImageField() 
+    tags = models.ManyToManyField(Tags, related_name='posts')
+
+
+    def __str__(self):
+        return self.titre
+
+    class Meta:
+        ordering = ('-upvote',)
+
 class Profile (models.Model):
     
-    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='userprofile')
-    role = models.CharField(choices=ROLE,default='etudiant',max_length=10)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='userprofile')    
     date_naissance = models.DateField()
     numero_telephone = models.IntegerField()
     promotion = models.CharField(choices=PROMO,default='1cpi',max_length=3)
     bio = models.TextField()
     slug = models.SlugField(max_length=250,unique =True)
-    tags = models.ManyToManyField(Tags, related_name='posts')
     publication_enregistrer = models.ForeignKey(Publication,on_delete=models.CASCADE)
     image = models.ImageField()
+
 
     def get_absolute_url(self):
         return reverse('Esi_Forum:Main',
@@ -84,12 +89,12 @@ class Profile (models.Model):
 class Commentaire(models.Model):
 
     publication = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
-    commented_by = models.ForeignKey(User,on_delete=models.CASCADE, related_name="commentes")
+    commented_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="commentes")
     content = models.TextField(null=True,blank=True)
     date_de_commentaire =  models.DateField(auto_now_add=True)
     upvote = models.IntegerField()
     date_de_commentaire =  models.DateField(auto_now_add=True)
-    tag_utilisateur = models.ManyToManyField(User, related_name="tag_users")
+    tag_utilisateur = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tag_users")
     
 
     def __str__(self):
