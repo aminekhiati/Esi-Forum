@@ -9,34 +9,43 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/bootstrap.css">
   <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Iceberg" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
   <script src="js/bootstrap.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <script src="js/responsive.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"
+    type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
-  <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_editor.pkgd.min.css" rel="stylesheet"
+    type="text/css" />
+  <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_style.min.css" rel="stylesheet"
+    type="text/css" />
 
   <script type="text/javascript">
     $(document).ready(function () {
-        $("#notificationLink").click(function () {
-            $("#notificationContainer").fadeToggle(300);
-            $("#notification_count").fadeOut("slow");
-            return false;
-        });
+      $("#notificationLink").click(function () {
+        $("#notificationContainer").fadeToggle(300);
+        $("#notification_count").fadeOut("slow");
+        return false;
+      });
 
-        //Document Click
-        $(document).click(function () {
-            $("#notificationContainer").hide();
-        });
-        //Popup Click
-        $("#notificationContainer").click(function () {
-            return false
-        });
+      //Document Click
+      $(document).click(function () {
+        $("#notificationContainer").hide();
+      });
+      //Popup Click
+      $("#notificationContainer").click(function () {
+        return false
+      });
 
     });
-</script>
+  </script>
 
 </head>
 
@@ -46,7 +55,7 @@
   <div class="header">
     <nav class="navbar navbar-default py-0 mt-2" role="navigation">
       <div class="navbar">
-        <ul class="nav nav-pills">
+        <ul class="nav nav-pills" id="homemenu">
           <li class="nav-item">
             <a class="nav-link" id="active" href="#">
               <span class="fa fa-home icons"></span> Accueill</a>
@@ -76,18 +85,74 @@
           <li class="nav-item">
             <a class="nav-link" href="#"><span class="fa fa-users icons"></span> Clubs</a>
           </li>
+          <li class="ml-1 nav-item float-right">
+            <label class="field a-field a-field_a1 page__field pt-0 mr-4">
+              <input class="field__input a-field__input" type="text" placeholder="Search" value="">
+              <span class="a-field__label-wrap">
+                <span class="fa fa-search float-right mt-2 mr-3"></span>
+              </span>
+
+            </label>
+          </li>
+          <a href="#" data-toggle="modal" data-target="#advancedSearch"
+            style="position: relative;top:0.9vw;color:lightcoral">Advanced</a>
+
+          <div class="modal fade" id="advancedSearch" tabindex="-1" role="dialog" aria-labelledby="hh"
+            aria-hidden="false" data-backdrop="false">
+            <div class="modal-lg modal-dialog" role="document">
+              <div class="modal-content text-danger">
+                <div class="">
+                  <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="col-md-12">
+                    <label class="field a-field a-field_a1 page__field reg"
+                      style="float:left;width:80%;margin-bottom: 1vw;">
+                      <input class="field__input a-field__input" type="text" placeholder="Mots clés" value="" required>
+                      <span class="a-field__label-wrap">
+                        <span class="a-field__label">Mots clés</span>
+                      </span>
+                    </label>
+                    <div class="custom-control custom-checkbox"
+                      style=" position:relative;margin-bottom: 1vw;float: left;">
+                      <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                      <label class="custom-control-label" for="defaultUnchecked">Recherche dans l'archive</label>
+                    </div>
+                    <select class="selectpicker" style="float:left;width:80%; margin-bottom: 1vw;">
+                      <option value="0" selected>Postes</option>
+                      <option value="1">Membres</option>
+                    </select>
+                    <select class="selectpicker" style="float:left;width:80%;">
+                      <option value="0" selected="selected">N'importe quelle date</option>
+                      <option value="1">Hier</option>
+                      <option value="7">Il y a une semaine</option>
+                      <option value="14">Il y a 2 semaines</option>
+                      <option value="30"> Il y a un mois</option>
+                      <option value="90">Il y a 3 mois</option>
+                      <option value="180">Il y a 6 mois</option>
+                      <option value="365">Il y a une année</option>
+                    </select>
+                    <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                      <input class="field__input a-field__input" type="text" placeholder="Tag" value="">
+                      <span class="a-field__label-wrap">
+                        <span class="a-field__label">Tag</span>
+                      </span>
+                    </label>
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger">Rechercher</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </ul>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item float-right ml-1">
-               <label class="field a-field a-field_a1 page__field pt-0 mr-4">
-                          <input class="field__input a-field__input" type="text" placeholder="Search" value="">
-                          <span class="a-field__label-wrap">
-                                  <span class="fa fa-search float-right mt-2 mr-3"></span>
-                          </span>
-                          
-                      </label>
-          </li> 
-      </ul>
+
+        </ul>
       </div>
 
     </nav>
@@ -119,54 +184,115 @@
   <!-- End Menu-->
 
   <div class="container">
-      <nav class="navbar navbar-default" role="inpage">
-          <div class="navbar">
-              <ul class="nav nav-pills text-center">
-                  <li class="nav-item">
-                      <button class="btn btn-danger" data-toggle="modal" data-target="#newTopic"  >
-                        <span class="fa fa-plus-square icons"></span> New Topic</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#"><span class="fa fa-newspaper icons"></span> Articles</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#"><span class="fa fa-question-circle icons"></span> Questions</a>
-                 </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#"><span class="fa fa-flag icons"></span> Surveys</a>
-                  </li>
-              </ul>
+    <div class="text-center mt-4" id="profile">
+      <div class="notifications">
+        <a href="#" class="user">
+          <span id="notification_count">3</span>
+          <a class="nav-link right-search" id="notificationLink" href="#"><span class="fa fa-bell icons"
+              style="position:relative; font-size: 1.5rem; top: 3px;"></span>
+          </a>
+          <div id="notificationContainer">
+            <div id="notificationTitle" style="color: white">Notifications</div>
+            <div id="notificationsBody"  style="overflow-y: scroll">
+              <div class="element-notif">
+                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <a href="#">Link</a>
+              </div>
+              <div class="line"></div>
+              <div class="element-notif">
+                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <a href="#">Link</a>
+              </div>
+              <div class="line"></div>
+              <div class="element-notif">
+                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <a href="#">Link</a>
+              </div>
+              <div class="line"></div>
+              <div class="element-notif">
+                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <a href="#">Link</a>
+              </div>
+              <div class="line"></div>
+              <div class="element-notif">
+                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <a href="#">Link</a>
+              </div>
+              <div class="line"></div>
+              <div class="element-notif">
+                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <a href="#">Link</a>
+              </div>
+              <div class="line"></div>
+            </div>
+            <div id="notificationFooter"><a href="#" style="color: white">See All</a></div>
           </div>
-          
-  </nav>
-  <div class="modal fade" id="newTopic" tabindex="-1" role="dialog" aria-labelledby="newTopicLabel" aria-hidden="true">
-    <div class="modal-lg modal-dialog" role="document">
-      <div class="modal-content text-danger">
-        <div class="">
-          <label class="field a-field a-field_a1 page__field modal-title ml-4 mt-2" id="newTopicLabel">
+      </div>
+      <a href="#" class="user">
+        <span class="fa fa-envelope icons fa-lg" style="width:34px;"></span>
+      </a>
+      <a href="#" class="user">@i.benzeghli
+        &nbsp;
+        <img src="images/avatars/1.jpg" id="profile-avatar">
+      </a>
+      </span>
+    </div>
+    <nav class="navbar navbar-default" role="inpage">
+      <div class="navbar">
+        <ul class="nav nav-pills text-center">
+          <li class="nav-item">
+            <button class="btn btn-danger" data-toggle="modal" data-target="#newTopic">
+              <span class="fa fa-plus-square icons"></span> New Topic</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><span class="fa fa-newspaper icons"></span> Articles</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><span class="fa fa-question-circle icons"></span> Questions</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><span class="fa fa-flag icons"></span> Surveys</a>
+          </li>
+        </ul>
+
+      </div>
+
+    </nav>
+    <div class="modal fade" id="newTopic" tabindex="-1" role="dialog" aria-labelledby="newTopicLabel"
+      aria-hidden="true">
+      <div class="modal-lg modal-dialog" role="document">
+        <div class="modal-content text-danger">
+          <div class="">
+            <label class="field a-field a-field_a1 page__field modal-title ml-4 mt-2" id="newTopicLabel">
               <input class="field__input a-field__input" placeholder="TP5 Solution" required>
               <span class="a-field__label-wrap">
                 <span class="a-field__label">Title</span>
               </span>
             </label>
-          <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
+            <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
             <textarea id="editor"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger">Post Topic</button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-danger">Post Topic</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
     <div class="content">
 
       <div class="row">
-        <div class="col-8 float-left">
+        <div class="col-8 float-left" id="topics">
           <div class="topics">
             <div class="btn-group float-right mt-4 mr-4" role="group" aria-label="trier">
               <div class="btn-group" role="group">
@@ -181,6 +307,7 @@
                 </div>
               </div>
             </div>
+            <br>
             <br>
             <div class="topic-placement">
               <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
@@ -197,7 +324,7 @@
                 <span class="author-separator"></span>
                 <div class="media-body">
                   <div class="article-metadata">
-                    <small class="float-right mt-4">01 mars 2019</small>
+                    <small class="float-right mt-4 metadata">01 mars 2019</small>
                     <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
                   </div>
                   <hr>
@@ -207,7 +334,7 @@
                     orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
                   <span class="statics-post"><span class="fa fa-eye icons"></span> 50 <span
                       class="fa fa-comment icons"></span> 10</span>
-                      <button class="btn btn-outline-danger float-right">Read more</a>
+                  <button class="btn btn-outline-danger float-right">Read more</a>
                 </div>
               </article>
               <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
@@ -224,7 +351,7 @@
                 <span class="author-separator"></span>
                 <div class="media-body">
                   <div class="article-metadata">
-                    <small class="float-right mt-4">01 mars 2019</small>
+                    <small class="float-right mt-4 metadata">01 mars 2019</small>
                     <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
                   </div>
                   <hr>
@@ -234,7 +361,7 @@
                     orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
                   <span class="statics-post"><span class="fa fa-eye icons"></span> 50 <span
                       class="fa fa-comment icons"></span> 10</span>
-                      <button class="btn btn-outline-danger float-right">Read more</a>
+                  <button class="btn btn-outline-danger float-right">Read more</a>
                 </div>
               </article>
               <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
@@ -251,7 +378,7 @@
                 <span class="author-separator"></span>
                 <div class="media-body">
                   <div class="article-metadata">
-                    <small class="float-right mt-4">01 mars 2019</small>
+                    <small class="float-right mt-4 metadata">01 mars 2019</small>
                     <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
                   </div>
                   <hr>
@@ -261,74 +388,14 @@
                     orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
                   <span class="statics-post"><span class="fa fa-eye icons"></span> 50 <span
                       class="fa fa-comment icons"></span> 10</span>
-                      <button class="btn btn-outline-danger float-right">Read more</a>
+                  <button class="btn btn-outline-danger float-right">Read more</a>
                 </div>
               </article>
             </div>
           </div>
         </div>
-        <div class="col-4">
+        <div class="col-4" id="statistics">
           <div class="sidebar mr-2">
-            <span class="ml-3">
-              <div class="notifications">
-                <a href="#" class="user">
-                    <span id="notification_count">3</span>
-                    <a class="nav-link right-search" id="notificationLink"href="#"><span class="fa fa-bell icons" style="position:relative; font-size: 1.5rem; top: 3px;"></span>
-                    </a>
-                    <div id="notificationContainer">
-                        <div id="notificationTitle">Notifications</div>
-                        <div id="notificationsBody" class="notifications">
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-                            <div class="line"></div>
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-                            <div class="line"></div>
-                            
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-                            <div class="line"></div>
-
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-                            <div class="line"></div>
-
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-
-                        </div>
-                        <div id="notificationFooter"><a href="#">See All</a></div>
-                    </div>
-                </a>
-              </div>
-              <a href="#" class="user">
-                <span class="fa fa-envelope icons fa-lg" style="width:34px;"></span>
-              </a>
-              <a href="#" class="user">@i.benzeghli
-                &nbsp;
-                <img src="images/avatars/1.jpg" id="profile-avatar">
-              </a>
-            </span>
             <div class="card" style="width: 18rem; border-style:hidden;">
               <div class="bg-info text-center">
                 <span class="title"><img src="images/icons/baseline_assignment_white_18dp.png"> Most Popular</span>
@@ -422,19 +489,22 @@
   </div>
   <!-- Include external JS libs. -->
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/mode/xml/xml.min.js"></script>
 
   <!-- Include Editor JS files. -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/js/froala_editor.pkgd.min.js"></script>
+  <script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/js/froala_editor.pkgd.min.js"></script>
 
   <!-- Initialize the editor. -->
-  <script> $(function() { 
-    $('#editor').froalaEditor({
-     toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'clearFormatting', 'emoticons', 'fontAwesome', 'align', 'formatOL', 'formatUL', 'quote', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'selectAll', 'undo', 'redo']
-    }) 
- 
- }); </script>
+  <script> $(function () {
+      $('#editor').froalaEditor({
+        toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'clearFormatting', 'emoticons', 'fontAwesome', 'align', 'formatOL', 'formatUL', 'quote', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'selectAll', 'undo', 'redo']
+      })
+
+    }); </script>
 </body>
 
 </html>

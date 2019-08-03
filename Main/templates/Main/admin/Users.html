@@ -32,29 +32,26 @@
                 <h3 class="mb-4" id="logo-dash">Dashboard</h3>
                 <div id="line-dash"></div>
                 <div>
-                    <ul>
-                        <li>
-                            <span class="fa fa-tachometer-alt icons"></span>
-                            <a href="#" class="menu-item">Dashboard</a></li>
-                        <li>
-                            <span class="fa fa-users-cog icons"></span>
-                            <a href="#" class="menu-item">Usergroups</a></li>
-                        <li>
-                            <span class="fa fa-users icons"></span>
-                            <a href="#" class="menu-item">Users</a></li>
-                        <li>
-                            <span class="fa fa-comments icons"></span>
-                            <a href="#" class="menu-item"> Sections</a></li>
-                        <li>
-                            <span class="fa fa-envelope icons"></span>
-                            <a href="#" class="menu-item"> Messages</a></li>
-                        <li>
-                            <span class="fa fa-sticky-note icons"></span>
-                            <a href="#" class="menu-item"> Reports</a></li>
-                        <li>
-                            <span class="fa fa-cog icons"></span>
-                            <a href="#" class="menu-item">Settings</a></li>
-                    </ul>
+                  <ul>
+                    <li>
+                        <span class="fa fa-tachometer-alt icons"></span>
+                        <a href="#" class="menu-item">Dashboard</a></li>
+                    <li>
+                        <span class="fa fa-users-cog icons"></span>
+                        <a href="#" class="menu-item">Usergroups</a></li>
+                    <li>
+                        <span class="fa fa-users icons"></span>
+                        <a href="#" class="menu-item">Users</a></li>
+                    <li>
+                        <span class="fa fa-comments icons"></span>
+                        <a href="#" class="menu-item"> Sections</a></li>
+                    <li>
+                        <span class="fa fa-envelope icons"></span>
+                        <a href="#" class="menu-item"> Msgs & Reports</a></li>
+                    <li>
+                        <span class="fa fa-cog icons"></span>
+                        <a href="#" class="menu-item">Settings</a></li>
+                </ul>
                 </div>
             </div>
             <div class="col-10 pl-0">
@@ -152,28 +149,24 @@
                                                     <td><a href="#"><span class="fa fa-check-circle icons"></span></a></td>
                                                 </tr>
                                             </table>
-                                            <div class="pages text-center mt-2">
-                                                    <nav class="navbar navbar-default"  role="doc-pagelist">
-                                                        <div class="navbar">
-                                                            <ul class="nav nav-pills text-center">
-                                                                <li class="nav-item mr-2">
-                                                                    <a class="nav-link active "href="#" > 1</a>
-                                                                </li>
-                                                                <li class="nav-item mr-2">
-                                                                    <a class="nav-link" id="active" href="#" > 2</a>
-                                                                   </li>
-                                                                <li class="nav-item mr-2">
-                                                                    <a class="nav-link " id="active" href="#" > 3</a>
-                                                                  </li>
-                                                                <li class="nav-item mr-2 mt-2">
-                                                                  <strong>...</strong>
-                                                                </li>
-                                                                <li class="nav-item mr-2">
-                                                                    <a class="nav-link " id="active" href="#" > 99</a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                      </div>
+                                            <nav aria-label="pagination" class="pages">
+                                                <ul class="pagination justify-content-center">
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                                  </li>
+                                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                                  <li class="page-item active">
+                                                    <span class="page-link">
+                                                      2
+                                                      <span class="sr-only">(current)</span>
+                                                    </span>
+                                                  </li>
+                                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                  <li class="page-item">
+                                                    <a class="page-link" href="#">Next</a>
+                                                  </li>
+                                                </ul>
+                                              </nav>
                                     </div>
                                     <div class="modal-footer">
                                       <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -255,6 +248,24 @@
                                         <a href="#" role="button"><span class="fa fa-trash icons mr-4"></span></a></td>
                                 </tr>
                             </table>
+                            <nav aria-label="pagination" class="mt-4" style="margin: 0 auto;">
+                                <ul class="pagination justify-content-center">
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                  <li class="page-item active">
+                                    <span class="page-link">
+                                      2
+                                      <span class="sr-only">(current)</span>
+                                    </span>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                  <li class="page-item">
+                                    <a class="page-link" href="#">Next</a>
+                                  </li>
+                                </ul>
+                              </nav>
                             <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                       <div class="modal-content">
@@ -362,28 +373,6 @@
                                               </div>
                                             </div>
                                           </div>
-                            <div class="pages text-center mt-2">
-                                    <nav class="navbar navbar-default"  role="doc-pagelist">
-                                        <div class="navbar">
-                                            <ul class="nav nav-pills text-center">
-                                                <li class="nav-item mr-2">
-                                                    <a class="nav-link active "href="#" > 1</a>
-                                                </li>
-                                                <li class="nav-item mr-2">
-                                                    <a class="nav-link" id="active" href="#" > 2</a>
-                                                   </li>
-                                                <li class="nav-item mr-2">
-                                                    <a class="nav-link " id="active" href="#" > 3</a>
-                                                  </li>
-                                                <li class="nav-item mr-2 mt-2">
-                                                  <strong>...</strong>
-                                                </li>
-                                                <li class="nav-item mr-2">
-                                                    <a class="nav-link " id="active" href="#" > 99</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                            </div>
                         </div>
                     </div>
                 </div>
