@@ -8,5 +8,7 @@ admin.site.register(Fichier_attachee)
 admin.site.register(Statistiques)
 admin.site.register(Commentaire)
 admin.site.register(Publication_archivee)
+admin.site.register(Utilisateur)
+
 
 

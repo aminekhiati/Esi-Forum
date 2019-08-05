@@ -3,6 +3,12 @@ from django.contrib.auth.models import AbstractUser
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.conf import settings    
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.contrib.auth.models import User
+
+
+
 
 ROLE = (
         ('etudiant', 'Etudiant'),
@@ -42,6 +48,8 @@ class Utilisateur(AbstractUser):
 
 
 
+
+
 class Publication(models.Model) :
 
     date_de_publication = models.DateField(auto_now_add=True)
@@ -63,24 +71,26 @@ class Publication(models.Model) :
 
 class Profile (models.Model):
     
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='userprofile')    
-    date_naissance = models.DateField()
-    numero_telephone = models.IntegerField()
-    promotion = models.CharField(choices=PROMO,default='1cpi',max_length=3)
-    bio = models.TextField()
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)    
+    numero_telephone = models.IntegerField(null=True)
+    promotion = models.CharField(choices=PROMO,default='1cpi',max_length=3,null=True)
+    bio = models.TextField(null=True)
     slug = models.SlugField(max_length=250,unique =True)
-    publication_enregistrer = models.ForeignKey(Publication,on_delete=models.CASCADE)
-    image = models.ImageField()
+    publication_enregistrer = models.ForeignKey(Publication,on_delete=models.CASCADE,null=True)
+    image = models.ImageField(null=True)
 
+    @receiver(post_save, sender=Utilisateur)
+    def update_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Profile.objects.create(user=instance)
+        instance.profile.save()
 
     def get_absolute_url(self):
         return reverse('Esi_Forum:Main',
-        args=[self.role,
-              self.user.username,
+        args=[self.user.role,
               self.slug])
 
-    def __str__(self):
-        return 'le nom : {} et le prénom : {}'.format(self.user.username,self.user.lastname)
+    
 
 
 

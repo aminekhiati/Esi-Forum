@@ -6,5 +6,6 @@ app_name = 'Main'
 
 
 urlpatterns = [
-    path('', views.post_list, name='post_list'),
+    path('signup', views.signup, name='signup'),
+
 ]
