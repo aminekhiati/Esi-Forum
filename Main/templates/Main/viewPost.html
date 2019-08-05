@@ -12,6 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/responsive.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
@@ -40,52 +41,110 @@
 <body style="background-color: #171C2F; opacity: 0.8;">
     <!--Begin Menu-->
     <div class="header">
-            <nav class="navbar navbar-default py-0 mt-2" role="navigation">
-                    <div class="navbar">
-                        <ul class="nav nav-pills">
-                            <li class="nav-item">
-                                <a class="nav-link" id="active" href="#" >
-                                   <span class="fa fa-home icons"></span> Accueill</a>
-                            </li>
-                            <li class="nav-item">
-                            <div class="dropdown show">
-                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <span class="fa fa-user icons"></span> Etudiants</a>
-                                <!-- dropdown menu here-->
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" style="color:black;" href="#">1 CPI</a>
-                                        <a class="dropdown-item" style="color:black;" href="#">2 CPI</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" style="color:black;" href="#">1 CS</a>
-                                        <a class="dropdown-item" style="color:black;" href="#">SIW</a>
-                                        <a class="dropdown-item" style="color:black;" href="#">ISI</a>
-                                </div>
+        <nav class="navbar navbar-default py-0 mt-2" role="navigation">
+                <div class="navbar">
+                    <ul class="nav nav-pills" id="homemenu">
+                        <li class="nav-item">
+                            <a class="nav-link" id="active" href="#" >
+                               <span class="fa fa-home icons"></span> Accueill</a>
+                        </li>
+                        <li class="nav-item">
+                        <div class="dropdown show">
+                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <span class="fa fa-user icons"></span> Etudiants</a>
+                            <!-- dropdown menu here-->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" style="color:black;" href="#">1 CPI</a>
+                                    <a class="dropdown-item" style="color:black;" href="#">2 CPI</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" style="color:black;" href="#">1 CS</a>
+                                    <a class="dropdown-item" style="color:black;" href="#">SIW</a>
+                                    <a class="dropdown-item" style="color:black;" href="#">ISI</a>
                             </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><span class="fa fa-briefcase icons"></span> Enseignants</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><span class="fa fa-graduation-cap icons"></span> Bacheliers</a>
-                           </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><span class="fa fa-users icons"></span> Clubs</a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav ml-auto">
-                            <li class="ml-1 nav-item float-right">
-                                 <label class="field a-field a-field_a1 page__field pt-0 mr-4">
-                                            <input class="field__input a-field__input" type="text" placeholder="Search" value="">
-                                            <span class="a-field__label-wrap">
-                                                    <span class="fa fa-search float-right mt-2 mr-3"></span>
-                                            </span>
-                                            
-                                        </label>
-                            </li> 
-                        </ul>
+                        </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><span class="fa fa-briefcase icons"></span> Enseignants</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><span class="fa fa-graduation-cap icons"></span> Bacheliers</a>
+                       </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><span class="fa fa-users icons"></span> Clubs</a>
+                        </li>
+                        <li class="ml-1 nav-item float-right">
+                             <label class="field a-field a-field_a1 page__field pt-0 mr-4">
+                                        <input class="field__input a-field__input" type="text" placeholder="Search" value="">
+                                        <span class="a-field__label-wrap">
+                                                <span class="fa fa-search float-right mt-2 mr-3"></span>
+                                        </span>
+                                        
+                                    </label>
+                        </li> 
+                        <a href="#" data-toggle="modal" data-target="#advancedSearch"
+            style="position: relative;top:0.9vw;color:lightcoral">Advanced</a>
+                        
+          <div class="modal fade" id="advancedSearch" tabindex="-1" role="dialog" aria-labelledby="hh"
+            aria-hidden="false" data-backdrop="false">
+            <div class="modal-lg modal-dialog" role="document">
+              <div class="modal-content text-danger">
+                <div class="">
+                  <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div class="col-md-12">
+                    <label class="field a-field a-field_a1 page__field reg"
+                      style="float:left;width:80%;margin-bottom: 1vw;">
+                      <input class="field__input a-field__input" type="text" placeholder="Mots clés" value="" required>
+                      <span class="a-field__label-wrap">
+                        <span class="a-field__label">Mots clés</span>
+                      </span>
+                    </label>
+                    <div class="custom-control custom-checkbox"
+                      style=" position:relative;margin-bottom: 1vw;float: left;">
+                      <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
+                      <label class="custom-control-label" for="defaultUnchecked">Recherche dans l'archive</label>
                     </div>
+                    <select class="selectpicker" style="float:left;width:80%; margin-bottom: 1vw;">
+                      <option value="0" selected>Postes</option>
+                      <option value="1">Membres</option>
+                    </select>
+                    <select class="selectpicker" style="float:left;width:80%;">
+                      <option value="0" selected="selected">N'importe quelle date</option>
+                      <option value="1">Hier</option>
+                      <option value="7">Il y a une semaine</option>
+                      <option value="14">Il y a 2 semaines</option>
+                      <option value="30"> Il y a un mois</option>
+                      <option value="90">Il y a 3 mois</option>
+                      <option value="180">Il y a 6 mois</option>
+                      <option value="365">Il y a une année</option>
+                    </select>
+                    <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                      <input class="field__input a-field__input" type="text" placeholder="Tag" value="">
+                      <span class="a-field__label-wrap">
+                        <span class="a-field__label">Tag</span>
+                      </span>
+                    </label>
+
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-danger">Rechercher</button>
+                </div>
+              </div>
+            </div>
+          </div>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        
+                    </ul>
+                </div>
+                
                     
             </nav>
+            
                 <div id="carouselExampleControls" class="my-carousel carousel slide" data-ride="carousel">
                       <p id="titre-carousel">ESI Community</p>
                       <p id="content-carousel">Espace D’étudiants de l’école supérieur d'informatique Sidi Bel Abbes</p>
@@ -136,6 +195,65 @@
     <!-- End Menu-->
    
     <div class="container">
+        <div class="text-center mt-4" id="profile">
+            <div class="notifications">
+                <a href="#" class="user">
+                  <span id="notification_count">3</span>
+                  <a class="nav-link right-search" id="notificationLink" href="#"><span class="fa fa-bell icons"
+                      style="position:relative; font-size: 1.5rem; top: 3px;"></span>
+                  </a>
+                  <div id="notificationContainer">
+                    <div id="notificationTitle" style="color: white">Notifications</div>
+                    <div id="notificationsBody"  style="overflow-y: scroll">
+                      <div class="element-notif">
+                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                        <a href="#">Link</a>
+                      </div>
+                      <div class="line"></div>
+                      <div class="element-notif">
+                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                        <a href="#">Link</a>
+                      </div>
+                      <div class="line"></div>
+                      <div class="element-notif">
+                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                        <a href="#">Link</a>
+                      </div>
+                      <div class="line"></div>
+                      <div class="element-notif">
+                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                        <a href="#">Link</a>
+                      </div>
+                      <div class="line"></div>
+                      <div class="element-notif">
+                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                        <a href="#">Link</a>
+                      </div>
+                      <div class="line"></div>
+                      <div class="element-notif">
+                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                        <a href="#">Link</a>
+                      </div>
+                      <div class="line"></div>
+                    </div>
+                    <div id="notificationFooter"><a href="#" style="color: white">See All</a></div>
+                  </div>
+              </div>
+              <a href="#" class="user">
+                <span class="fa fa-envelope icons fa-lg" style="width:34px;"></span>
+              </a>
+              <a href="#" class="user">@i.benzeghli
+                &nbsp;
+                <img src="images/avatars/1.jpg" id="profile-avatar">
+              </a>
+            </span>
+        </div>
         <nav class="navbar navbar-default" role="inpage">
             <div class="navbar">
                 <ul class="nav nav-pills text-center">
@@ -146,75 +264,21 @@
                         <a class="nav-link" href="#"><span class="fa fa-question-circle icons"></span> Questions</a>
                    </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><span class="fa fa-flag icons"></span> Surveys</a>
+                        <a class="nav-link" href="#"><span class="fa fa-flag icons" ></span> Surveys</a>
                     </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" id="responsive-login" data-toggle="modal" data-target="#loginPop" hidden><span class="fas fa-sign-in-alt icons" ></span> Login</a>
+                  </li>
                 </ul>
-                <div class="notifications">
-                <a href="#" class="user">
-                    <span id="notification_count">3</span>
-                    <a class="nav-link right-search" id="notificationLink"href="#"><span class="fa fa-bell icons" style="position:relative; font-size: 1.5rem; top: 3px;"></span>
-                    </a>
-                    <div id="notificationContainer">
-                        <div id="notificationTitle">Notifications</div>
-                        <div id="notificationsBody" class="notifications">
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-                            <div class="line"></div>
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-                            <div class="line"></div>
-                            
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-                            <div class="line"></div>
-
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-                            <div class="line"></div>
-
-                            <div class="element-notif">
-                                <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a
-                                    commenté
-                                    votre publication</i><br>
-                            </div>
-
-                        </div>
-                        <div id="notificationFooter"><a href="#">See All</a></div>
-                    </div>
-                </a>
-              </div>
-              <a href="#" class="user">
-                  <span class="fa fa-envelope icons fa-lg" style="width:34px;"></span>
-                </a>
-                <a href="#" class="user">@i.benzeghli
-                  &nbsp;
-                  <img src="images/avatars/1.jpg" id="profile-avatar">
-                </a>
-            </div>
+               
+              
             
     </nav>
     
     <div class="content">
       
       <div class="row">
-        <div class="col-12">
+        <div class="col-12" id="topics">
         <div class="topics">
             <div class="btn-group float-right mt-4 mr-4" role="group" aria-label="trier">
                 <div class="btn-group" role="group">
@@ -231,75 +295,78 @@
               <br>
               <br>
               <br>
-            <div class="topic-placement" style="margin-top:2%;">
-                <article class="media content-section mr-4" style="background-color: #1a2035; border-style: hidden;">
-                    <div class="author float-left" style="width:15%;">
-                      <ul class="mr-4 mt-4">
-                        <li class="author-name">
-                          <a href="#">@i.benzeghli</a>
-                        </li>
-                        <li>
-                          <img src="images/avatars/1.jpg" class="author-avatar" alt="">
-                          <span class="text-danger author-avatar mt-1">Administrator</span>
-                        </li>
-                      </ul>
+              <article class="media content-section mr-4" style="background-color: #1a2035; border-style: hidden;">
+                  <div class="author float-left" style="width:15%;">
+                    <ul class="mr-4 mt-4">
+                      <li class="author-name">
+                        <a href="#">@i.benzeghli</a>
+                      </li>
+                      <li>
+                        <img src="images/avatars/1.jpg" class="author-avatar" alt="">
+                        
+                      </li>
+                    </ul>
+                  </div>
+                  <span class="author-separator"></span>
+                  <div class="media-body">
+                    <div class="article-metadata">
+                        <small class="float-right mt-4 mb-2 metadata">01 mars 2019</small>
+                        <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
                     </div>
-                    <span class="author-separator"></span>
-                    <div class="media-body">
-                      <div class="article-metadata">
-                          <small class="float-right mt-4">01 mars 2019</small>
-                          <h2 class="article-title mt-4">Title of topic</h2>
-                      </div>
-                      <hr>
-                      <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                     </div>
-                </article>
+                    <hr>
+                    <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
+                    <span class="statics-post mt-4 float-right"><a href="#"><span class="fa fa-flag icons"  data-toggle="modal" data-target="#reportPop"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"></span></a> &nbsp;</span></a></span>
+                  </div>
+              </article>
                 <hr class="w-75">
                 <h4 class="icons">Comments</h4>
-                <article class="media content-section mr-4" style="background-color: #1a2035; border-style: hidden;">
-                    <div class="author float-left" style="width:15%;">
-                      <ul class="mr-4 mt-4">
-                        <li class="author-name">
-                          <a href="#">@i.benzeghli</a>
-                        </li>
-                        <li>
-                          <img src="images/avatars/1.jpg" class="author-avatar" alt="">
-                          <span class="text-danger author-avatar mt-1">Administrator</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <span class="author-separator"></span>
-                    <div class="media-body">
-                      <div class="article-metadata">
-                          <small class="float-right mt-4 mb-2">01 mars 2019</small>  
+                <div class="comments">
+                  <article class="media content-section mr-4" style="background-color: #1a2035; border-style: hidden;">
+                      <div class="author float-left" style="width:15%;">
+                        <ul class="mr-4 mt-4">
+                          <li class="author-name">
+                            <a href="#">@i.benzeghli</a>
+                          </li>
+                          <li>
+                            <img src="images/avatars/1.jpg" class="author-avatar" alt="">
+                            <small class="article-title" id="author-title">Administrator</small>
+                          </li>
+                        </ul>
                       </div>
-                      <br><br>
-                      <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                      <span class="statics-post mt-4 float-right"><a href="#"><span class="fa fa-flag icons"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"></span></a> &nbsp;  <a href="#"><span class="fa fa-trash icons"></span></a></span>
-                    </div>
-                </article>
-                <article class="media content-section mr-4" style="background-color: #1a2035; border-style: hidden;">
-                    <div class="author float-left" style="width:15%;">
-                      <ul class="mr-4 mt-4">
-                        <li class="author-name">
-                          <a href="#">@i.benzeghli</a>
-                        </li>
-                        <li>
-                          <img src="images/avatars/1.jpg" class="author-avatar" alt="">
-                          <span class="text-danger author-avatar mt-1">Administrator</span>
-                        </li>
-                      </ul>
-                    </div>
-                    <span class="author-separator"></span>
-                    <div class="media-body">
-                      <div class="article-metadata">
-                          <small class="float-right mt-4 mb-2">01 mars 2019</small>  
+                      <span class="author-separator"></span>
+                      <div class="media-body">
+                        <div class="article-metadata">
+                            <small class="float-right mt-4 mb-2 metadata">01 mars 2019</small>
+                            
+                        </div>
+                        <br><br>
+                        <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
+                        <span class="statics-post mt-4 float-right"><a href="#"  data-toggle="modal" data-target="#reportPop"><span class="fa fa-flag icons"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"></span></a> &nbsp;  <a href="#" data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons"></span></a></span>
                       </div>
-                      <br><br>
-                      <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                      <span class="statics-post mt-4 float-right"><a href="#"><span class="fa fa-flag icons"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"></span></a> &nbsp;  <a href="#"><span class="fa fa-trash icons"></span></a></span>
-                    </div>
-                </article>
+                  </article>
+                  <article class="media content-section mr-4" style="background-color: #1a2035; border-style: hidden;">
+                      <div class="author float-left" style="width:15%;">
+                        <ul class="mr-4 mt-4">
+                          <li class="author-name">
+                            <a href="#">@i.benzeghli</a>
+                          </li>
+                          <li>
+                            <img src="images/avatars/1.jpg" class="author-avatar" alt="">
+                            <small class="article-title" id="author-title">Administrator</small>
+                          </li>
+                        </ul>
+                      </div>
+                      <span class="author-separator"></span>
+                      <div class="media-body">
+                        <div class="article-metadata">
+                            <small class="float-right mt-4 mb-2 metadata">01 mars 2019</small>  
+                        </div>
+                        <br><br>
+                        <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
+                        <span class="statics-post mt-4 float-right"><a href="#"  data-toggle="modal" data-target="#reportPop"><span class="fa fa-flag icons"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"></span></a> &nbsp;  <a href="#"  data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons"></span></a></span>
+                      </div>
+                  </article>
+              </div>
             <hr class="w-75">
             <div style="margin:0 auto; width: 98%;">
             <textarea id="editor"></textarea>
@@ -309,32 +376,106 @@
             </div>
           </div>
           </div>
+          <div class="modal fade" id="loginPop" tabindex="-1" role="dialog" aria-labelledby="loginPopLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="loginPopLabel" style="color: white;">Login</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body text-danger">
+                  <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                    <input class="field__input a-field__input" type="text" placeholder="email@esi-sba.dz" value="">
+                    <span class="a-field__label-wrap">
+                      <span class="a-field__label">Email</span>
+                    </span>
+                  </label><br>
+                  <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                    <input class="field__input a-field__input" type="text" placeholder="*******" value="">
+                    <span class="a-field__label-wrap">
+                      <span class="a-field__label">Password</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                  <button type="button" class="btn btn-danger">Login</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="reportPop" tabindex="-1" role="dialog" aria-labelledby="reportPopLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="reportPopLabel" style="color: white;">Alert</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body text-danger">
+                  Are you sure you want to report this user?
+                  <br>
+                  <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                    <input class="field__input a-field__input" type="text" placeholder="Reason" value="">
+                    <span class="a-field__label-wrap">
+                      <span class="a-field__label">Reason</span>
+                    </span>
+                  </label>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                  <button type="button" class="btn btn-danger">Report</button>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal fade" id="deletePop" tabindex="-1" role="dialog" aria-labelledby="deletePopLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deletePopLabel" style="color: white;">Alert</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body text-danger">
+              Are you sure you want to delete this comment?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+              <button type="button" class="btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
     </div>
   </div>
   </div>
+  <br>
     <div>
-      <div class="pages text-center">
-          <nav class="navbar navbar-default"  role="doc-pagelist">
-              <div class="navbar">
-                  <ul class="nav nav-pills text-danger text-center">
-                      <li class="nav-item mr-2">
-                          <a class="nav-link active "href="#" > 1</a>
-                      </li>
-                      <li class="nav-item mr-2">
-                          <a class="nav-link " id="active" href="#" > 2</a>
-                         </li>
-                      <li class="nav-item mr-2">
-                          <a class="nav-link " id="active" href="#" > 3</a>
-                        </li>
-                      <li class="nav-item mr-2 mt-2">
-                        <strong>...</strong>
-                      </li>
-                      <li class="nav-item mr-2">
-                          <a class="nav-link " id="active" href="#" > 99</a>
-                      </li>
-                  </ul>
-              </div>
-      </div>
+      <nav aria-label="pagination">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="#" tabindex="-1">Previous</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item active">
+            <span class="page-link">
+              2
+              <span class="sr-only">(current)</span>
+            </span>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+          </li>
+        </ul>
+      </nav>
       <hr>
       <div class="footer-bg">
           <div id="about-us">
