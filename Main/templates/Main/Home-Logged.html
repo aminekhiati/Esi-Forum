@@ -46,7 +46,14 @@
 
     });
   </script>
-
+  <script type="text/javascript">
+    $('#email, #password').on('keyup', function () {
+      if ($('#password').val() == $('#confirm_password').val()) {
+        $('#message').html('Matching').css('color', 'green');
+      } else
+        $('#message').html('Not Matching').css('color', 'red');
+    });
+  </script>
 </head>
 
 <body style="background-color: #171C2F; opacity: 0.8;">
@@ -193,40 +200,40 @@
           </a>
           <div id="notificationContainer">
             <div id="notificationTitle" style="color: white">Notifications</div>
-            <div id="notificationsBody"  style="overflow-y: scroll">
+            <div id="notificationsBody" style="overflow-y: scroll">
               <div class="element-notif">
                 <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <b>Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                 <a href="#">Link</a>
               </div>
               <div class="line"></div>
               <div class="element-notif">
                 <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <b>Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                 <a href="#">Link</a>
               </div>
               <div class="line"></div>
               <div class="element-notif">
                 <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <b>Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                 <a href="#">Link</a>
               </div>
               <div class="line"></div>
               <div class="element-notif">
                 <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <b>Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                 <a href="#">Link</a>
               </div>
               <div class="line"></div>
               <div class="element-notif">
                 <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <b>Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                 <a href="#">Link</a>
               </div>
               <div class="line"></div>
               <div class="element-notif">
                 <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                <b>Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                 <a href="#">Link</a>
               </div>
               <div class="line"></div>
@@ -259,6 +266,8 @@
           <li class="nav-item">
             <a class="nav-link" href="#"><span class="fa fa-flag icons"></span> Surveys</a>
           </li>
+          <li class="nav-item">
+            <button class="btn btn-danger">Log out</button></li>
         </ul>
 
       </div>
