@@ -29,9 +29,10 @@ def signup(request):
 
 
 def logout_request(request):
+    print("sjaspasasas")
     logout(request)
     messages.info(request,"Logged out successfully")
-    return redirect("")
+    return redirect('../login')
 
 def login_request(request):
     if request.method == "POST":

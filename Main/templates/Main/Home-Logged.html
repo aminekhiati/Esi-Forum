@@ -248,7 +248,7 @@
       <a href="#" class="user">
         <span class="fa fa-envelope icons fa-lg" style="width:34px;"></span>
       </a>
-      <a href="#" class="user">{{user.username}}
+      <a href="#" class="user"> {% if user.is_authenticated %} {{user.username}} {% else %} Guest {% endif %}
         &nbsp;
         <img src="{% static "images/avatars/1.jpg"%}" id="profile-avatar">
       </a>
@@ -271,8 +271,9 @@
             <a class="nav-link" href="#"><span class="fa fa-flag icons"></span> Surveys</a>
           </li>
           <li class="nav-item">
-            <button class="btn btn-danger">Log out</button></li>
-
+              <form action="/logout">
+                  <button class="btn btn-danger">Log out</button>
+              </form>
         </ul>
 
       </div>
