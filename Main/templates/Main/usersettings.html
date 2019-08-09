@@ -161,12 +161,11 @@
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-2 col-md-2 sidebar" style="display: block;">
-                        <img src="{% static "images/avatars/1.jpg"%}" class="profile-pic" alt="">
-                        <h3>Name Surname</h3>
-                        <h5>Etudiant 1CS</h5>
-                        <h6>Bio :</h6>
-                        <p>qjfgfjqgs fhqsgfjqs gfqsfk qhksffsqfk gqfkqsgf fgqjg fjqgfjqsgfjq fqj hgfsgfqjsf
-                            fqjhsgfjqsf</p>
+                        <img src="{{ user.profile.image.url }}" class="profile-pic" alt="">
+                        <h3>{{ user.profile.name }} {{ user.profile.surname }}</h3>
+                        <h5>{{ user.profile.promotion  }}</h5>
+                        <h6> Bio : </h6>
+                        <p>{{ user.profile.bio }} </p>
                         <div class="line"></div>
                         <div class="all col-sm-10">
                             <ul style="display: block;">
@@ -184,7 +183,7 @@
                 <div class="col-sm-10 content">
                         <div class="tab mt-4">
                                 <div class="float-left text-center ml-4">
-                                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-setting">
+                                        <img src="{{ user.profile.image.url }}" class="avatar-setting">
                                         <br>
                                         <form class="mt-2">
                                                 <div class="custom-file" id="customFile">
@@ -205,7 +204,7 @@
                                 </div>
                                 <div class="float-right mr-4 text-center">
                                 <label class="field a-field a-field_a1 page__field float-right">
-                                        <input class="field__input a-field__input" placeholder="bondbenz" value="">
+                                        <input class="field__input a-field__input" placeholder={{ user.username}} value="">
                                         <span class="a-field__label-wrap">
                                             <span class="a-field__label">Username</span>
                                             <span class="fa fa-user float-right mt-2 mr-3 icons"></span>

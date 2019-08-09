@@ -74,12 +74,14 @@ class Publication(models.Model) :
 class Profile (models.Model):
     
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="profile")    
+    name = models.CharField(max_length=20)
+    surname = models.CharField(max_length=20)
     numero_telephone = models.IntegerField(null=True)
     promotion = models.CharField(choices=PROMO,default='1cpi',max_length=3,null=True)
     bio = models.TextField(null=True)
     slug = models.SlugField(max_length=250,unique =True,null=True)
     publication_enregistrer = models.ForeignKey(Publication,on_delete=models.CASCADE,null=True)
-    image = models.ImageField(null=True)
+    image = models.ImageField(null=True,upload_to='profile_pics')
     is_appoved =models.BooleanField(default=False)
 
     @receiver(post_save, sender=Utilisateur)
@@ -93,7 +95,9 @@ class Profile (models.Model):
         args=[self.user.role,
               self.slug])
 
-    
+    def __str__(self):
+        return self.user.username
+
 class Commentaire(models.Model):
 
     publication = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
