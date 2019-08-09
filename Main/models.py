@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 
 
 
+
 ROLE = (
         ('etudiant', 'Etudiant'),
         ('enseignant', 'Enseignant'),
@@ -59,9 +60,10 @@ class Publication(models.Model) :
     upvote = models.IntegerField()
     titre = models.CharField(max_length=30)
     lauteur = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='publications')
-    image_user = models.ImageField() 
-    tags = models.ManyToManyField(Tags, related_name='posts')
-
+    image = models.ImageField(null=True) 
+    tags = models.ManyToManyField(Tags, related_name='posts',default="ok")
+    nb_vues =models.IntegerField(default=0)
+    
 
     def __str__(self):
         return self.titre
@@ -71,13 +73,14 @@ class Publication(models.Model) :
 
 class Profile (models.Model):
     
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)    
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="profile")    
     numero_telephone = models.IntegerField(null=True)
     promotion = models.CharField(choices=PROMO,default='1cpi',max_length=3,null=True)
     bio = models.TextField(null=True)
-    slug = models.SlugField(max_length=250,unique =True)
+    slug = models.SlugField(max_length=250,unique =True,null=True)
     publication_enregistrer = models.ForeignKey(Publication,on_delete=models.CASCADE,null=True)
     image = models.ImageField(null=True)
+    is_appoved =models.BooleanField(default=False)
 
     @receiver(post_save, sender=Utilisateur)
     def update_user_profile(sender, instance, created, **kwargs):
@@ -91,11 +94,6 @@ class Profile (models.Model):
               self.slug])
 
     
-
-
-
-
-
 class Commentaire(models.Model):
 
     publication = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
@@ -124,10 +122,4 @@ class Fichier_attachee (models.Model):
     def __str__(self):
         return self.idfa 
 
-class Statistiques (models.Model):
-    nmbr_publication = models.IntegerField()
-    nmbr_commentaires = models.IntegerField()
-    nmbr_user   = models.IntegerField()
 
-    def __str__(self):
-        return self.ids

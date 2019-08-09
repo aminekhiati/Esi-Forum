@@ -1,99 +1,21 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin - Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../css/user.css">
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/css/bootstrap-select.min.css">
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Iceberg" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/js/bootstrap-select.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-</head>
-<body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-2 sidebar-dash">
-                <h3 class="mb-4" id="logo-dash">Dashboard</h3>
-                <div id="line-dash"></div>
-                <div>
-                    <ul>
-                        <li>
-                            <span class="fa fa-tachometer-alt icons"></span>
-                            <a href="#" class="menu-item">Dashboard</a></li>
-                        <li>
-                            <span class="fa fa-users-cog icons"></span>
-                            <a href="#" class="menu-item">Usergroups</a></li>
-                        <li>
-                            <span class="fa fa-users icons"></span>
-                            <a href="#" class="menu-item">Users</a></li>
-                        <li>
-                            <span class="fa fa-comments icons"></span>
-                            <a href="#" class="menu-item"> Sections</a></li>
-                        <li>
-                            <span class="fa fa-envelope icons"></span>
-                            <a href="#" class="menu-item"> Msgs & Reports</a></li>
-                        <li>
-                            <span class="fa fa-cog icons"></span>
-                            <a href="#" class="menu-item">Settings</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-10 pl-0">
-                <nav class="navbar navbar-expand" role="dashboard">
-                    <a class="navbar-brand"> Dashboard</a>
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item float-right">
-                             <label class="field a-field a-field_a1 page__field pt-0 mr-4">
-                                        <input class="field__input a-field__input" type="text" placeholder="Search" value="">
-                                        <span class="a-field__label-wrap">
-                                                <span class="fa fa-search float-right mt-2 mr-3"></span>
-                                        </span>
-                                        
-                                    </label>
-                        </li> 
-                        <li class="nav-item float-right mt-2">
-                            <a href="#" class="mr-4 menu-item">
-                                <span class="fa fa-sync-alt "></span></a>
-                        </li>
-                        <li class="nav-item float-right mt-2">
-                            <a href="#" class="mr-4 menu-item">Account</a>
-                        </li>
-                        <li class="nav-item float-right mt-2">
-                            <a href="#" class="mr-4 ml-4 menu-item">Logout</a>
-                        </li>
-                    </ul>
-                </nav>
-                <div class="row ml-4">
+{% extends "./dashboardBse.html" %}
+{% block content %}
+<div class="row ml-4">
                     <div class="col-4">
                             <div id="members">
                                 <small class="float-left mt-1 ml-1">Members</small>
                                 <div class="text-dash">
-                            50 <span class="fa fa-user"></span>
+                                    {{ nbr_user }} <span class="fa fa-user"></span>
+                                </div>
                             </div>
-                        </div>
                     </div>
                     <div class="col-4">
                             <div id="total-topics">
                                 <small class="float-left mt-1 ml-1">Topics</small>
                                 <div class="text-dash">
-                            302 <span class="fa fa-comments"></span>
+                                    {{nbr_topic}} <span class="fa fa-comments"></span>
+                                </div>
                             </div>
-                        </div>
                     </div>
                     <div class="col-4">
                         <div id="online">
@@ -103,16 +25,18 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row ml-2">
+    </div>
+                
+    <div class="row ml-2">
                     <div class="col-4">
                         <div class="admin-notif  text-center">
                             <span class="fa fa-exclamation-circle icons admin-notif-spn"></span>
                             You have 2 messages and 3 reports.
                         </div>
                     </div>
-                </div>
-                <div class="row ml-4 mt-4">
+    </div>
+
+    <div class="row ml-4 mt-4">
                     <div class="col-md-8 col-center">
                         <div class="box">
                             <p>Popular topics</p>
@@ -126,36 +50,17 @@
                                     <th><span class="fa fa-comments icons"></th>
                                     <th><span class="fa fa-eye icons"></th>
                                 </tr>
+                                {% for post in pubs_populaie %}
                                 <tr class="cursor" onclick="window.location.replace('#')">
-                                    <td>Anouncement de grève</td>
-                                    <td>17</td>
-                                    <td>160</td>
+                                    <td>{{post}}</td>
+                                    <td>{{post.commentaires.all.count}}</td>
+                                    <td>{{post.nb_vues}}</td>
                                 </tr>
-                                <tr class="cursor" onclick="window.location.replace('http://google.dz')">
-                                    <td>Emploi du temps S2</td>
-                                    <td>80</td>
-                                    <td>600</td>
-                                </tr>
-                                <tr class="cursor" onclick="window.location.replace('http://google.dz')">
-                                    <td>Emploi du temps S2</td>
-                                    <td>80</td>
-                                    <td>600</td>
-                                </tr>
+                                {% endfor %}
+                                
+                              
                             </table>
                         </div>
                     </div>
-                </div>
-                <footer class="footer">
-                        <a href="#" class="menu-item mr-4">ESI-SBA</a>
-                        <a href="#" class="menu-item ml-4 mr-4">FORUM</a>
-                        <a href="#" class="menu-item ml-4 mr-4">ABOUT US</a>
-                        
-                        <span class="">&copy; Copyright 2019 | Powered by Root-Dev with 
-                            <span class="fa fa-heart icons"></span> & lot of <span class="fa fa-coffee text-warning"></span>
-                        </span>
-                    </footer>
-            </div>
         </div>
-    </div>
-
-</html>
+{% endblock content %}
