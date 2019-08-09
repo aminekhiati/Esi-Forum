@@ -2,14 +2,11 @@ from django.shortcuts import render, redirect
 from .models import Publication,Profile,Utilisateur
 from .forms import SignUpForm,userUpdate,approveForm,listuserForm,deleteForm,addmodForm
 from django.http import HttpResponse
-from django.db.models import F
 from django.db.models import Count, F
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate,logout
 from django.forms.models import model_to_dict
-
-
-
-
+from django.contrib import messages
+from django.contrib.auth.forms import AuthenticationForm
 
 
 
@@ -17,7 +14,7 @@ from django.forms.models import model_to_dict
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
-        if form.is_valid(): 
+        if form.is_valid():
             utilisateur = form.save()
             utilisateur.refresh_from_db()  # load the profile instance created by the signal
             if(form.cleaned_data.get('phone_number')):
@@ -27,11 +24,11 @@ def signup(request):
             if(form.cleaned_data.get('bio')):
                 utilisateur.profile.bio = form.cleaned_data.get('bio')
             utilisateur.profile.is_appoved =False
-            utilisateur.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
+            #username = form.cleaned_data.get('username')
+            #raw_password = form.cleaned_data.get('password1')
             #user = authenticate(username=username, password=raw_password)
             #login(request, user)
+            utilisateur.save()
             return HttpResponse('success')
     else:
         form = SignUpForm()
@@ -124,3 +121,31 @@ def users(request):
                                                         })    
                
 
+def logout_request(request):
+    print("sjaspasasas")
+    logout(request)
+    messages.info(request,"Logged out successfully")
+    return redirect('../login')
+
+def login_request(request):
+    if request.method == "POST":
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                messages.success(request, "Logged in successfully as {username}")
+                return redirect('../home/')
+            else:
+                messages.info(request,"User dosn't exist")
+        else:
+            messages.info(request,"Invalid Syntaxe")
+    form = AuthenticationForm()
+    return render(request,"Main/Home.html", {"form":form})
+
+
+
+def loggedin (request):
+    return render(request, "Main/Home-Logged.html")

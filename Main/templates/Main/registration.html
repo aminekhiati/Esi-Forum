@@ -1,6 +1,3 @@
-{% load widget_tweaks %}
-{% load static %}
-
 <html>
 
 <head>
@@ -8,10 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Registration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static "css/user.css" %}">
-    <link rel="stylesheet" href="{% static "css/style.css" %}">
-    <link rel="stylesheet" href="{% static "css/bootstrap.css" %} ">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="css/user.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/css/bootstrap-select.min.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Iceberg" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
@@ -21,143 +19,155 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-    <script src="{% static "js/bootstrap.min.js" %} "></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.10/dist/js/bootstrap-select.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
 </head>
 
 <body>
-<form  method="post">
-    {% csrf_token %}
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <img src="{% static "images/slide/slide1.jpg" %} " class="img-responsive fit-image">
-            </div>
+                <img src="images/slide/slide1.jpg" class="img-responsive fit-image">
 
-        
+            </div>
             <div class="col-md-6">
-            
-        
-            <div class="reg">
-                <span class="fa fa-user icons" id="ic"></span>
-                <label class="field a-field a-field_a1 page__field" style="width:40%">
-                    {% render_field  form.first_name  class="field__input a-field__input" placeholder="First Name" %}
-                    <span class="a-field__label-wrap">
-                        <span class="a-field__label">First Name</span>
-                    </span>
-                </label>
+                <form method="POST">
+                    <div class="reg">
+                        <span class="fa fa-user icons" id="ic"></span>
+                        <label class="field a-field a-field_a1 page__field" style="width:40%">
+                            <input class="field__input a-field__input" type="text" placeholder="First Name" value=""
+                                required>
+                            <span class="a-field__label-wrap">
+                                <span class="a-field__label">First Name</span>
+                            </span>
+                        </label>
+                        <label class="field a-field a-field_a1 page__field" style="width:40%">
+                            <input class="field__input a-field__input" type="text" placeholder="Last Name" value=""
+                                required>
+                            <span class="a-field__label-wrap">
+                                <span class="a-field__label">Last Name</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="reg">
+                        <span class="fa fa-user icons" id="ic"></span>
+                        <label class="field a-field a-field_a1 page__field" style="width:84%">
+                            <input class="field__input a-field__input" type="text" placeholder="Userame" value=""
+                                required>
+                            <span class="a-field__label-wrap">
+                                <span class="a-field__label">Userame</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="reg">
+                        <span class="fa fa-envelope icons" id="ic"></span>
+                        <label class="field a-field a-field_a1 page__field" style="width:84%">
+                            <input class="field__input a-field__input" type="text" placeholder="Email" value=""
+                                pattern="[a-z]{1}.[a-z]+@esi-sba.dz" required>
+                            <span class="a-field__label-wrap">
+                                <span class="a-field__label">Email</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="reg">
+                        <span class="fa fa-phone-square icons" id="ic"></span>
+                        <label class="field a-field a-field_a1 page__field" style="width:84%">
+                            <input class="field__input a-field__input" type="tel" placeholder="Phone Number" value="">
+                            <span class="a-field__label-wrap">
+                                <span class="a-field__label">Phone Number</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="reg">
+                        <span class="fa fa-unlock-alt icons"></span>
+                        <label class="field a-field a-field_a1 page__field" style="width:84%">
+                            <input class="field__input a-field__input" type="password" placeholder="***********"
+                                value="" id="password" required>
+                            <span class="a-field__label-wrap">
+                                <span class="a-field__label" id="mes">Password</span>
+                            </span>
+                        </label>
+                    </div>
+                    <div class="reg">
+                        <span class="fa fa-unlock-alt icons"></span>
+                        <label class="field a-field a-field_a1 page__field" style="width:84%;">
+                            <input class="field__input a-field__input" type="password" placeholder="***********"
+                                value="" id="confirm_password" required>
+                            <span class="a-field__label-wrap">
+                                <span class="a-field__label" id="message">Confirm password</span>
+                            </span>
+                        </label>
 
-                <label class="field a-field a-field_a1 page__field" style="width:40%">
-                    {% render_field  form.last_name  class="field__input a-field__input" placeholder="Last Name" %}
-                    <span class="a-field__label-wrap">
-                        <span class="a-field__label">Last Name</span>
-                    </span>
-                </label>
-            </div>
-
-            <div class="reg">
-                <span class="fa fa-user icons" id="ic"></span>
-                <label class="field a-field a-field_a1 page__field" style="width:84%">
-                    {% render_field  form.username  class="field__input a-field__input" placeholder="username" %}
-                    <span class="a-field__label-wrap">
-                        <span class="a-field__label">Userame</span>
-                    </span>
-                </label>
-            </div>
-
-            <div class="reg">
-                <span class="fa fa-envelope icons" id="ic"></span>
-                <label class="field a-field a-field_a1 page__field" style="width:84%">
-                    {% render_field  form.email  class="field__input a-field__input" placeholder="Email" %}
-                    <span class="a-field__label-wrap">
-                        <span class="a-field__label">Email</span>
-                    </span>
-                </label>
-            </div>
-
-            <div class="reg">
-                <span class="fa fa-phone-square icons" id="ic"></span>
-                <label class="field a-field a-field_a1 page__field" style="width:84%">
-                    {% render_field  form.phone_number  class="field__input a-field__input" placeholder="Phone Number" %}
-                    <span class="a-field__label-wrap">
-                        <span class="a-field__label">Phone Number</span>
-                    </span>
-                </label>
-            </div>
-
-            <div class="reg">
-                <span class="fa fa-unlock-alt icons" id="ic"></span>
-                <label class="field a-field a-field_a1 page__field" style="width:84%">
-                    {% render_field  form.password1  class="field__input a-field__input" placeholder="***********" %}
-                    
-                    <span class="a-field__label-wrap">
-                        <span class="a-field__label">Password</span>
-                    </span>
-                </label>
-            </div>
-
-            <div class="reg">
-                <span class="fa fa-unlock-alt icons" id="ic"></span>
-                <label class="field a-field a-field_a1 page__field" style="width:84%">
-                    {% render_field  form.password2  class="field__input a-field__input" placeholder="***********" %}
-                    
-                    <span class="a-field__label-wrap">
-                        <span class="a-field__label">Confirm password</span>
-                    </span>    
-                </label>
-            </div>
-            
-            <div class="reg">
-                    <span class="fa  fa-id-card icons" id="ic"></span>
-                     {% render_field  form.role  class="selectpicker mr-4" onchange="displayPromo()"  id="mySelect"%}
-                    
-            </div>
-
-            <div class="reg" id="promo">
-                <span class="fa fa-user-circle icons appear" id="ic"></span>
-                {% render_field  form.promo  class="selectpicker mr-4" %}    
-            </div>
-
-            <div class="reg">
-                <span class="fa fa-user icons" id="ff"></span>
-                <div class="row">
-                    <div class="col-5">
-                        <div class="form-group">
-                            <h6>Biography</h6>
-                            <div class="fr-wrapper ml-4 show-placeholder">
-                                {% render_field  form.bio  class="fr-wrapper fr-box" rows="3" id="comment"%}
-                            </div> 
+                    </div>
+                </form>
+                <div class="reg">
+                    <span class="fa fa-id-card icons" id="ic"></span>
+                    <select class="selectpicker mr-4">
+                        <option selected>Student</option>
+                        <option value="1">Professor</option>
+                    </select>
+                </div>
+                <div class="reg">
+                    <span class="fa fa-user-circle icons" id="ic"></span>
+                    <select class="selectpicker">
+                        <option selected>1 CPI</option>
+                        <option value="1">2 CPI</option>
+                        <option value="1">1 CS</option>
+                        <option value="1">1 SIW</option>
+                        <option value="1">1 ISI</option>
+                        <option value="1">2 SIW</option>
+                        <option value="1">2 ISI</option>
+                    </select>
+                </div>
+                <div class="reg col-md-6 justify-content-right">
+                    <span class="fa fa-user icons" id="ff"></span>
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <h6>Biography</h6>
+                                <div class="fr-wrapper ml-4 show-placeholder">
+                                    <textarea class="fr-wrapper fr-box" rows="3" id="comment"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>        
+
+                </div>
+                <div class="success col-md-6">Registration successful!</div>
+                <button class="btn btn-danger" data-toggle="modal" data-target="#newTopic" type="submit" id="hh">SIGN
+                    UP</button>
             </div>
-
-            <button class="btn btn-danger" id="hh" type="submit">SIGN UP</button>
-        </div>
+            <div class="modal fade" id="newTopic" tabindex="-1" role="dialog" aria-labelledby="newTopicLabel"
+                aria-hidden="true">
+                <div class="modal-lg modal-dialog" style="width: 200px;" role="document">
+                    <div class="modal-content text-danger">
+                        <div style="text-align: center;">
+                            You're not yet approved!
+                        </div>
+                        <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                </div>
             </div>
-
-       
-
+            </form>
         </div>
+
     </div>
-     </form>
+    </div>
+    <script type="text/javascript">
+        $('#password, #confirm_password').on('keyup', function () {
+            if ($('#password').val().length <= 6) {
+                $('#mes').html('Password too short').css('color', 'red');
+            }
+            else $('#mes').html('Accepted').css('color', 'green');
+            if ($('#password').val() == $('#confirm_password').val()) {
+                $('#message').html('Matching').css('color', 'green');
+            } else
+                $('#message').html('Not Matching').css('color', 'red');
+        });
+    </script>
 </body>
-
-<script>
-
-function displayPromo() {
-        
-        var x = document.getElementById("mySelect").value;
-        console.log(x)
-        if(x=="enseignant") 
-            document.getElementById("promo").style.display = "none";
-        else  document.getElementById("promo").style.display = "";
-}
-
-
-</script>
 <style>
     label {
         position: relative;
@@ -195,32 +205,55 @@ function displayPromo() {
     .col-md-6 {
         height: 100%;
     }
-    button{
+
+    button {
         position: relative;
         left: 40%;
         top: 20px;
     }
-    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-    width: 85%;
-    right: 34%;
-    bottom: 10px;
-}
-.form-control{
-    position: relative;
-    left: 3.5%;
-    width:85%;
-}
-#ff{
-    position: relative;
-    top: 50px;
-    right: 0.75%;
-}
-#hh{
 
-    position: relative;
-    top: 100px;
-    right: 0.75%;
-}
+    .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+        width: 85%;
+        right: 34%;
+        bottom: 10px;
+    }
+
+    .form-control {
+        position: relative;
+        left: 3.5%;
+        width: 85%;
+    }
+
+    #ff {
+        position: relative;
+        top: 50px;
+        right: 0.75%;
+    }
+
+    #hh {
+
+        position: relative;
+        top: 100px;
+        right: 0.75%;
+    }
+
+    .success {
+        border-radius: 45%;
+        width: 200;
+        height: 33px;
+        background-color: #ff7474;
+        float: right;
+        position: relative;
+        right: 10vw;
+        text-align: center;
+    }
+
+    @media (max-width: 600px) {
+        .success {
+            width: 200px;
+            position: absolute center;
+        }
+    }
 </style>
 
 </html>
