@@ -149,3 +149,7 @@ def login_request(request):
 
 def loggedin (request):
     return render(request, "Main/Home-Logged.html")
+
+
+def editeProfile(request):
+    return render(request,"Main/usersettings.html")
