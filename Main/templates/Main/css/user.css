@@ -767,3 +767,17 @@ margin: auto;
 }
 
   }
+  .bookmarks{
+	  display: none;
+	  background-color:#171c2f;
+	  z-index: 9;
+	  margin: 30px;
+	  height:500px;
+	  border-radius: 10px;
+	  overflow-y: scroll;
+color: #ff7474;
+justify-items: center;
+  }
+  .bookmarks h3:hover{
+	  color: #ff7474;
+  }

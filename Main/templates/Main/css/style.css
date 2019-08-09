@@ -975,3 +975,43 @@ a:hover {
 .element-notif a{
 	color:white;
 }
+.search_results{
+	padding-top: 3vw;
+	padding-left: 2vw;
+	padding-bottom: 5vw;
+height: auto;
+width:90%;
+color: white;
+}
+.element_search{
+width: 80%;
+height: auto;
+
+}
+.element_search a{
+	color: white;
+}
+.successful_reg{
+position: absolute;
+height: auto;
+z-index: 30;
+left: 35%;
+top: 55%;
+	font-family: Roboto, sans-serif;
+	font-size: 20px;
+	color: white;
+	width: 30vw;
+	background: #171c2f;
+	border: 0.5px solid #ffffff;
+	border-style: hidden;
+	align-content: center;
+	border-radius: 15%;
+}
+.successful_reg i{
+	display: inline-block !important;
+}
+.successful_reg h5{
+	color: rgb(255, 241, 241);
+	font-weight: bold;
+	padding: 0 10px 10px 10px;
+}
