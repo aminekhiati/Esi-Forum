@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="751d1bf2-3f4f-45e9-ba72-b10cf2a5f7f1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Main/migrations/0002_auto_20190809_1836.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Esi_Forum/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/Esi_Forum/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Esi_Forum/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/Esi_Forum/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Main/templates/Main/usersettings.html" beforeDir="false" afterPath="$PROJECT_DIR$/Main/templates/Main/usersettings.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -54,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Main/templates/Main/usersettings.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="166" column="29" selection-start-line="166" selection-start-column="29" selection-end-line="166" selection-end-column="29" />
+            <state relative-caret-position="276">
+              <caret line="225" column="40" lean-forward="true" selection-start-line="225" selection-start-column="40" selection-end-line="225" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -80,13 +74,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main/templates/Main/Home.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="129" column="95" selection-start-line="129" selection-start-column="91" selection-end-line="129" selection-end-column="95" />
+            <state relative-caret-position="263">
+              <caret line="150" column="78" selection-start-line="150" selection-start-column="65" selection-end-line="150" selection-end-column="78" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="222">
@@ -126,12 +120,12 @@
         <option value="$PROJECT_DIR$/Main/views.py" />
         <option value="$PROJECT_DIR$/Esi_Forum/settings.py" />
         <option value="$PROJECT_DIR$/Esi_Forum/urls.py" />
-        <option value="$PROJECT_DIR$/Main/templates/Main/usersettings.html" />
         <option value="$PROJECT_DIR$/Main/models.py" />
+        <option value="$PROJECT_DIR$/Main/templates/Main/usersettings.html" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="240" />
     <option name="y" value="45" />
     <option name="width" value="980" />
@@ -229,15 +223,15 @@
       <workItem from="1565262407799" duration="152000" />
       <workItem from="1565267967980" duration="132000" />
       <workItem from="1565268697608" duration="318000" />
-      <workItem from="1565362690757" duration="8003000" />
+      <workItem from="1565362690757" duration="9373000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16368000" />
+    <option name="totallyTimeSpent" value="17738000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="848" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1785235" />
@@ -386,13 +380,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Main/templates/Main/Home.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="129" column="95" selection-start-line="129" selection-start-column="91" selection-end-line="129" selection-end-column="95" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Esi_Forum/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2176">
@@ -404,13 +391,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="36" lean-forward="true" selection-start-column="36" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Main/templates/Main/usersettings.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="166" column="29" selection-start-line="166" selection-start-column="29" selection-end-line="166" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -431,6 +411,20 @@
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main/templates/Main/Home.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="263">
+          <caret line="150" column="78" selection-start-line="150" selection-start-column="65" selection-end-line="150" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Main/templates/Main/usersettings.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="276">
+          <caret line="225" column="40" lean-forward="true" selection-start-line="225" selection-start-column="40" selection-end-line="225" selection-end-column="40" />
         </state>
       </provider>
     </entry>
