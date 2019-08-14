@@ -8,7 +8,15 @@ from django.forms.models import model_to_dict
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 
-
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from .models import Publication
+from django.views.generic import (
+    CreateView,
+    ListView,
+    UpdateView,
+    DetailView,
+    DeleteView
+)
 
 
 def signup(request):
@@ -153,3 +161,50 @@ def loggedin (request):
 
 def editeProfile(request):
     return render(request,"Main/usersettings.html")
+
+
+# <app>/<model>_<viewtype>.html <-- template naming conventions for best practice
+
+class PostListView(LoginRequiredMixin, ListView):
+    model = Publication
+    context_object_name = 'Publication'
+    template_name = 'Main/Home-Logged.html'
+    ordering = ['-date_de_publication']
+
+
+class PostDetailView(LoginRequiredMixin, DetailView):
+    model = Publication
+    context_object_name = 'Publication'
+    template_name = 'Main/viewPost.html'
+
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Publication
+    fields = ['titre', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Publication
+    fields = ['titre', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    # prevent any users from editing people's posts --> devrait retourner une erreure 403 (i.e forbidden)
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.lauteur
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Publication
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.lauteur
