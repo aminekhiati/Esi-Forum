@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Publication,Profile,Utilisateur
-from .forms import SignUpForm,userUpdate,approveForm,listuserForm,deleteForm,addmodForm
+from .forms import SignUpForm,userUpdate,approveForm,listuserForm,deleteForm,addmodForm,UserUpdateForm
 from django.http import HttpResponse
 from django.db.models import Count, F
 from django.contrib.auth import login, authenticate,logout
@@ -160,7 +160,21 @@ def loggedin (request):
 
 
 def editeProfile(request):
-    return render(request,"Main/usersettings.html")
+    form = UserUpdateForm()
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST,request.FILES,instance=request.user)
+        if  form.is_valid():
+            username = form.cleaned_data.get('username')
+            firstname = request.POST.get('firstname')
+            lastname = request.POST.get('lastname')
+            email = form.cleaned_data.get('email')
+            nt = request.POST.get('nt')
+            password = form.cleaned_data.get('password')
+            U = Utilisateur(first_name=firstname,last_name=lastname,username=username,password=password,email=email)
+            U.save()
+            #p = Profile(numero_telephone=nt)
+            #p.save()
+    return render(request,"Main/usersettings.html", {"form": form})
 
 
 # <app>/<model>_<viewtype>.html <-- template naming conventions for best practice
