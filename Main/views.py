@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Publication,Profile,Utilisateur
-from .forms import SignUpForm,userUpdate,approveForm,listuserForm,deleteForm,addmodForm,UserUpdateForm
+from .forms import SignUpForm,userUpdate,approveForm,listuserForm,deleteForm,addmodForm,UserUpdateForm,ProfileUpdateForm
 from django.http import HttpResponse
 from django.db.models import Count, F
 from django.contrib.auth import login, authenticate,logout
@@ -160,21 +160,27 @@ def loggedin (request):
 
 
 def editeProfile(request):
-    form = UserUpdateForm()
     if request.method == 'POST':
-        form = UserUpdateForm(request.POST,request.FILES,instance=request.user)
-        if  form.is_valid():
-            username = form.cleaned_data.get('username')
-            firstname = request.POST.get('firstname')
-            lastname = request.POST.get('lastname')
-            email = form.cleaned_data.get('email')
-            nt = request.POST.get('nt')
-            password = form.cleaned_data.get('password')
-            U = Utilisateur(first_name=firstname,last_name=lastname,username=username,password=password,email=email)
-            U.save()
-            #p = Profile(numero_telephone=nt)
-            #p.save()
-    return render(request,"Main/usersettings.html", {"form": form})
+        u_form = UserUpdateForm(request.POST,instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.Profile)
+        if u_form.is_valid() and p_form.is_valid() :
+            username = u_form.cleaned_data.get('username')
+            firstname = u_form.cleaned_data.get('firstname')
+            lastname = u_form.cleaned_data.get('lastname')
+            email = u_form.cleaned_data.get('email')
+            nmbr = p_form.cleaned_data.get('nt')
+            print(nmbr)
+
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.Profile)
+
+    context ={
+        'u_form' : u_form,
+        'p_form' : p_form
+    }
+
+    return render(request,"Main/usersettings.html",context)
 
 
 # <app>/<model>_<viewtype>.html <-- template naming conventions for best practice

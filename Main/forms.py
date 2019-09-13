@@ -72,17 +72,17 @@ class addmodForm(forms.Form):
 
 
 class UserUpdateForm(forms.ModelForm):
-
+    email = forms.EmailField()
     class Meta:
         model = Utilisateur
         fields = (
             'first_name', 'last_name', 'username', 'email', 'password')
 
-class UserProfileUpdateForm(forms.ModelForm):
+class ProfileUpdateForm(forms.ModelForm):
     phone_number = forms.CharField(max_length=10, required=False, label="Phone Number")
     promo = forms.ChoiceField(choices=PROMO, label="", initial='', widget=forms.Select(), required=False)
 
     class Meta:
         model = Profile
-        fields = (
+        fields = ('phone_number','promo'
             )
