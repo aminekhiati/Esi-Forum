@@ -19,10 +19,23 @@ $(window).on('resize', function() {
       document.getElementById("homemenu").classList.add("nav-pills");
       document.getElementById("homemenu").classList.remove("flex-column");
       
-      console.log(win.width());
+      
     }
   });
 
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#img-prof')
+                .attr('src', e.target.result)
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
 
     

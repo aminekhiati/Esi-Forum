@@ -193,13 +193,13 @@
                             {% if user.profile.image %}
                                 <img src="{{ user.profile.image.url }}" class="avatar-setting">
                             {% else %}
-                                <img src="{% static "images/avatars/1.jpg" %}" class="profile-pic" alt="">
+                                <img src="{% static "images/avatars/1.jpg" %}" id="img-prof" class="profile-pic" alt="">
                             {% endif %}
                                 <br>
 
                                 <form class="mt-2">
                                     <div class="custom-file" id="customFile">
-                                        <input name="image" type="file" class="custom-file-input"
+                                        <input name="image" type="file" onchange="readURL(this);" class="custom-file-input"
                                                id="exampleInputFile"
                                                aria-describedby="fileHelp">
                                         <label class="custom-file-label" for="exampleInputFile">
