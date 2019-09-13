@@ -77,7 +77,7 @@ class Profile (models.Model):
     numero_telephone = models.IntegerField(null=True)
     promotion = models.CharField(choices=PROMO,default='1cpi',max_length=4,null=True)
     bio = models.TextField(null=True)
-    slug = models.SlugField(max_length=250,unique =True,null=True)
+    slug = models.SlugField(max_length=250,unique =True,null=True,blank=True)
     publication_enregistrer = models.ForeignKey(Publication,on_delete=models.CASCADE,null=True,blank=True)
     image = models.ImageField(null=True,upload_to='profile_pics')
     is_appoved =models.BooleanField(default=False)

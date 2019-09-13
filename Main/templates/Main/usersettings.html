@@ -162,7 +162,11 @@
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-2 col-md-2 sidebar" style="display: block;">
+                    {% if user.profile.image %}
                     <img src="{{ user.profile.image.url }}" class="profile-pic" alt="">
+                    {% else %}
+                    <img src="{% static "images/avatars/1.jpg" %}" class="profile-pic" alt="">
+                    {% endif %}
                     <h3>{{ user.first_name }} {{ user.profile.surname }}</h3>
                     <h5>{{ user.last_name}}</h5>
                     <h6> Bio : </h6>
@@ -186,7 +190,11 @@
                         {% csrf_token %}
                         <div class="tab mt-4">
                             <div class="float-left text-center ml-4">
+                            {% if user.profile.image %}
                                 <img src="{{ user.profile.image.url }}" class="avatar-setting">
+                            {% else %}
+                                <img src="{% static "images/avatars/1.jpg" %}" class="profile-pic" alt="">
+                            {% endif %}
                                 <br>
 
                                 <form class="mt-2">
