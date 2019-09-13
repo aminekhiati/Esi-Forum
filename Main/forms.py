@@ -79,10 +79,10 @@ class UserUpdateForm(forms.ModelForm):
             'first_name', 'last_name', 'username', 'email', 'password')
 
 class ProfileUpdateForm(forms.ModelForm):
-    phone_number = forms.CharField(max_length=10, required=False, label="Phone Number")
+    nt = forms.CharField(max_length=10, required=False, label="Phone Number")
     promo = forms.ChoiceField(choices=PROMO, label="", initial='', widget=forms.Select(), required=False)
 
     class Meta:
         model = Profile
-        fields = ('phone_number','promo'
+        fields = ('nt','promo'
             )

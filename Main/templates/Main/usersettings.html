@@ -202,8 +202,8 @@
                                 <br>
                                 <label class="field a-field a-field_a1 page__field float-left">
 
-                                    <input name="firstname" class="field__input a-field__input"
-                                           placeholder="{{ user.first_name }}" value="">
+                                    {% render_field u_form.first_name  name="firstname" class="field__input a-field__input" value="" %}
+
                                     <span class="a-field__label-wrap">
                                                     <span class="a-field__label">First Name</span>
                                                     <span class="fa fa-address-card float-right mt-2 mr-3 icons"></span>
@@ -211,55 +211,44 @@
                                 </label>
                                 <br><br><br>
                                 <label class="field a-field a-field_a1 page__field float-left">
-                                    <input name="lastname" class="field__input a-field__input"
-                                           placeholder="{{ user.last_name }}" value="">
+                                    {% render_field u_form.last_name   name="lastname" class="field__input a-field__input" value="" %}
                                     <span class="a-field__label-wrap">
                                                     <span class="a-field__label">Last Name</span>
                                                 </span>
                                 </label>
                                 <br>
                                 <label class="field a-field a-field_a1 page__field float-left">
-                                    <input name="nt" class="field__input a-field__input"
-                                           placeholder="{{ user.profile.numero_telephone }}" value="">
+                                    {% render_field p_form.nt   name="nt" class="field__input a-field__input" value="" %}
                                     <span class="a-field__label-wrap">
                                                     <span class="a-field__label">Phone</span>
                                                     <span class="fa fa-phone float-right mt-2 mr-3 icons"></span>
                                                 </span>
                                 </label><br><br>
                                 <span class="float-left mt-4">
-                                                Promo : 
-                                                <select name="promo" class="selectpicker">
-                                                        <option selected value="1">1 CPI</option>
-                                                        <option value="2">2 CPI</option>
-                                                        <option value="3">1 CS</option>
-                                                        <option value="4">SIW</option>
-                                                        <option value="5">ISI</option>
-                                                </select>  
+                                                Promo :
+                                                  {% render_field p_form.promo %}
                                         </span>
                             </div>
                             <div class="float-right mr-4 text-center">
 
                                 <label class="field a-field a-field_a1 page__field float-right">
-                                    <input name="username" class="field__input a-field__input"
-                                           placeholder={{ user.username }} value="">
+                                    {% render_field u_form.username name="username" class="field__input a-field__input" value="" %}
                                     <span class="a-field__label-wrap">
                                             <span class="a-field__label">Username</span>
                                             <span class="fa fa-user float-right mt-2 mr-3 icons"></span>
                                         </span>
                                 </label><br>
                                 <label class="field a-field a-field_a1 page__field float-right">
-                                    <input name="email" class="field__input a-field__input"
-                                           placeholder="n.benzeghli@esi-sba.dz"
-                                           value="">
+                                    {% render_field u_form.email  name="email" class="field__input a-field__input" value="" %}
                                     <span class="a-field__label-wrap">
                                         <span class="a-field__label">Email</span>
                                         <span class="fa fa-envelope float-right mt-2 mr-3 icons"></span>
                                     </span>
                                 </label><br>
                                 <label class="field a-field a-field_a1 page__field float-right">
-                                    <input name="password" class="field__input a-field__input" type="password"
-                                           placeholder="********"
-                                           value="">
+                                    {% render_field u_form.password name="password" class="field__input a-field__input" type="password" value="" %}
+
+
                                     <span class="a-field__label-wrap">
                                             <span class="a-field__label">New Password</span>
                                             <span class="fa fa-lock float-right mt-2 mr-3 icons"></span>

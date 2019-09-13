@@ -162,18 +162,20 @@ def loggedin (request):
 def editeProfile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST,instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.Profile)
-        if u_form.is_valid() and p_form.is_valid() :
-            username = u_form.cleaned_data.get('username')
-            firstname = u_form.cleaned_data.get('firstname')
-            lastname = u_form.cleaned_data.get('lastname')
-            email = u_form.cleaned_data.get('email')
-            nmbr = p_form.cleaned_data.get('nt')
-            print(nmbr)
+        p_form = ProfileUpdateForm(request.POST, request.FILES)
+        if u_form.is_valid() and p_form.is_valid():
+            print("worked")
+            u_form.save()
+            p_form.save()
+            # firstname = u_form.cleaned_data.get('firstname')
+            # lastname = u_form.cleaned_data.get('lastname')
+            # email = u_form.cleaned_data.get('email')
+            # nmbr = p_form.cleaned_data.get('nt')
+            # print(nmbr)
 
     else:
         u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.Profile)
+        p_form = ProfileUpdateForm(instance=request.utilisateur.Profile)
 
     context ={
         'u_form' : u_form,
