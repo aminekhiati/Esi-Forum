@@ -1,3 +1,5 @@
+{% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html>
 
@@ -6,17 +8,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Esi Forums - Profile Settings</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/user.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="{% static "css/user.css"%}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css"%}">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Iceberg" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="js/responsive.js"></script>
@@ -50,197 +52,232 @@
 </head>
 
 <body>
-        <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-12">
-                        <nav class="navbar navbar-default py-0 mt-2 " role="navigation">
-                            <div class="navbar">
-                                <ul class="nav nav-pills" id="homemenu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="active" href="#" >
-                                           <span class="fa fa-home icons"></span> Accueill</a>
-                                    </li>
-                                    <li class="nav-item">
-                                    <div class="dropdown show">
-                                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                          <span class="fa fa-user icons"></span> Etudiants</a>
-                                        <!-- dropdown menu here-->
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" style="color:black;" href="#">1 CPI</a>
-                                                <a class="dropdown-item" style="color:black;" href="#">2 CPI</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item" style="color:black;" href="#">1 CS</a>
-                                                <a class="dropdown-item" style="color:black;" href="#">SIW</a>
-                                                <a class="dropdown-item" style="color:black;" href="#">ISI</a>
-                                        </div>
-                                    </div>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><span class="fa fa-briefcase icons"></span> Enseignants</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><span class="fa fa-graduation-cap icons"></span> Bacheliers</a>
-                                   </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#" style="margin-right:25vw !important;"><span class="fa fa-users icons"></span> Clubs</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <span id="notification_count">3</span>
-                                        <a class="nav-link " id="notificationLink" href="#"><span
-                                                class="fa fa-bell icons"></span>
-                                        </a>
-                                        <div id="notificationContainer">
-                                            <div id="notificationTitle">Notifications</div>
-                                            <div id="notificationsBody" class="notifications" style="overflow-y: scroll;" >
-                                                <div class="element-notif">
-                                                    <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                                    <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                        a
-                                                        commenté
-                                                        votre publication</i><br>
-                                                        <a href="#">Link</a>
-                                                </div>
-                                                <div class="line"></div>
-                                                <div class="element-notif">
-                                                    <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                                    <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                        a
-                                                        commenté
-                                                        votre publication</i><br>
-                                                        <a href="#">Link</a>
-                                                </div>
-                                                <div class="line"></div>
-        
-                                                <div class="element-notif">
-                                                    <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                                    <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                        a
-                                                        commenté
-                                                        votre publication</i><br>
-                                                        <a href="#">Link</a>
-                                                </div>
-                                                <div class="line"></div>
-        
-                                                <div class="element-notif">
-                                                    <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                                    <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                        a
-                                                        commenté
-                                                        votre publication</i><br>
-                                                        <a href="#">Link</a>
-                                                </div>
-                                                <div class="line"></div>
-        
-                                                <div class="element-notif">
-                                                    <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                                    <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                        a
-                                                        commenté
-                                                        votre publication</i><br>
-                                                        <a href="#">Link</a>
-                                                </div>
-        
-                                            </div>
-                                            <div id="notificationFooter"><a href="#">See All</a></div>
-                                        </div>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><span class="fa fa-envelope icons"></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><span class="fa fa-cog icons"></a>
-                                    </li>
-        
-        
-                                    
-                                </ul>
-                            </div>                    
-                        </nav>
-            </div>
-            <div class="col-lg-12">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2 sidebar" style="display: block;">
-                        <img src="images/avatars/1.jpg" class="profile-pic" alt="">
-                        <h3>Name Surname</h3>
-                        <h5>Etudiant 1CS</h5>
-                        <h6>Bio :</h6>
-                        <p>qjfgfjqgs fhqsgfjqs gfqsfk qhksffsqfk gqfkqsgf fgqjg fjqgfjqsgfjq fqj hgfsgfqjsf
-                            fqjhsgfjqsf</p>
-                        <div class="line"></div>
-                        <div class="all col-sm-10">
-                            <ul style="display: block;">
-                                <li>
-                                    <a href="#">ALL</a></li>
-                                <li>
-                                    <a href="#">Topics</a></li>
-                                <li>
-                                    <a href="#">Replies</a></li>
-                                <li>
-                                    <a href="#">Bookmarks</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                <div class="col-sm-10 content">
-                        <div class="tab mt-4">
-                                <div class="float-left text-center ml-4">
-                                        <img src="images/avatars/1.jpg" class="avatar-setting">
-                                        <br>
-                                        <form class="mt-2">
-                                                <div class="custom-file" id="customFile">
-                                                    <input type="file" class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp">
-                                                    <label class="custom-file-label" for="exampleInputFile">
-                                                        Upload avatar
-                                                    </label>
-                                                </div>
-                                            </form>
-                                            <br>
-                                            <label class="field a-field a-field_a1 page__field float-left">
-                                                    <input class="field__input a-field__input"  placeholder="example@esi-sba.dz" value="">
-                                                    <span class="a-field__label-wrap">
-                                                        <span class="a-field__label">Email</span>
-                                                        <span class="fa fa-envelope float-right mt-2 mr-3 icons"></span>
-                                                    </span>
-                                            </label>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <nav class="navbar navbar-default py-0 mt-2 " role="navigation">
+                <div class="navbar">
+                    <ul class="nav nav-pills" id="homemenu">
+                        <li class="nav-item">
+                            <a class="nav-link" id="active" href="#" >
+                                <span class="fa fa-home icons"></span> Accueill</a>
+                        </li>
+                        <li class="nav-item">
+                            <div class="dropdown show">
+                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="fa fa-user icons"></span> Etudiants</a>
+                                <!-- dropdown menu here-->
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" style="color:black;" href="#">1 CPI</a>
+                                    <a class="dropdown-item" style="color:black;" href="#">2 CPI</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" style="color:black;" href="#">1 CS</a>
+                                    <a class="dropdown-item" style="color:black;" href="#">SIW</a>
+                                    <a class="dropdown-item" style="color:black;" href="#">ISI</a>
                                 </div>
-                                <div class="float-right mr-4 text-center">
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><span class="fa fa-briefcase icons"></span> Enseignants</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><span class="fa fa-graduation-cap icons"></span> Bacheliers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" style="margin-right:25vw !important;"><span class="fa fa-users icons"></span> Clubs</a>
+                        </li>
+                        <li class="nav-item">
+                            <span id="notification_count">3</span>
+                            <a class="nav-link " id="notificationLink" href="#"><span
+                                    class="fa fa-bell icons"></span>
+                            </a>
+                            <div id="notificationContainer">
+                                <div id="notificationTitle">Notifications</div>
+                                <div id="notificationsBody" class="notifications" style="overflow-y: scroll;" >
+                                    <div class="element-notif">
+                                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                                        <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
+                                        a
+                                        commenté
+                                        votre publication</i><br>
+                                        <a href="#">Link</a>
+                                    </div>
+                                    <div class="line"></div>
+                                    <div class="element-notif">
+                                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                                        <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
+                                        a
+                                        commenté
+                                        votre publication</i><br>
+                                        <a href="#">Link</a>
+                                    </div>
+                                    <div class="line"></div>
+
+                                    <div class="element-notif">
+                                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                                        <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
+                                        a
+                                        commenté
+                                        votre publication</i><br>
+                                        <a href="#">Link</a>
+                                    </div>
+                                    <div class="line"></div>
+
+                                    <div class="element-notif">
+                                        <img src="{% static "images/avatars/1.jpg"%}"class="avatar-notif" alt="">
+                                        <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
+                                        a
+                                        commenté
+                                        votre publication</i><br>
+                                        <a href="#">Link</a>
+                                    </div>
+                                    <div class="line"></div>
+
+                                    <div class="element-notif">
+                                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                                        <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
+                                        a
+                                        commenté
+                                        votre publication</i><br>
+                                        <a href="#">Link</a>
+                                    </div>
+
+                                </div>
+                                <div id="notificationFooter"><a href="#">See All</a></div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><span class="fa fa-envelope icons"/></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><span class="fa fa-cog icons"/></a>
+                        </li>
+
+
+
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <div class="col-lg-12">
+            <div class="row">
+                <div class="col-lg-2 col-md-2 sidebar" style="display: block;">
+                    <img src="{{ user.profile.image.url }}" class="profile-pic" alt="">
+                    <h3>{{ user.first_name }} {{ user.profile.surname }}</h3>
+                    <h5>{{ user.last_name}}</h5>
+                    <h6> Bio : </h6>
+                    <p>{{ user.profile.bio }} </p>
+                    <div class="line"></div>
+                    <div class="all col-sm-10">
+                        <ul style="display: block;">
+                            <li>
+                                <a href="#">ALL</a></li>
+                            <li>
+                                <a href="#">Topics</a></li>
+                            <li>
+                                <a href="#">Replies</a></li>
+                            <li>
+                                <a href="#">Bookmarks</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-sm-10 content">
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <div class="tab mt-4">
+                            <div class="float-left text-center ml-4">
+                                <img src="{{ user.profile.image.url }}" class="avatar-setting">
+                                <br>
+
+                                <form class="mt-2">
+                                    <div class="custom-file" id="customFile">
+                                        <input name="image" type="file" class="custom-file-input"
+                                               id="exampleInputFile"
+                                               aria-describedby="fileHelp">
+                                        <label class="custom-file-label" for="exampleInputFile">
+                                            Upload avatar
+                                        </label>
+                                    </div>
+                                </form>
+                                <br>
+                                <label class="field a-field a-field_a1 page__field float-left">
+
+                                    {% render_field u_form.first_name  name="firstname" class="field__input a-field__input" value="" %}
+
+                                    <span class="a-field__label-wrap">
+                                                    <span class="a-field__label">First Name</span>
+                                                    <span class="fa fa-address-card float-right mt-2 mr-3 icons"></span>
+                                                </span>
+                                </label>
+                                <br><br><br>
+                                <label class="field a-field a-field_a1 page__field float-left">
+                                    {% render_field u_form.last_name   name="lastname" class="field__input a-field__input" value="" %}
+                                    <span class="a-field__label-wrap">
+                                                    <span class="a-field__label">Last Name</span>
+                                                </span>
+                                </label>
+                                <br>
+                                <label class="field a-field a-field_a1 page__field float-left">
+                                    {% render_field p_form.nt   name="nt" class="field__input a-field__input" value="" %}
+                                    <span class="a-field__label-wrap">
+                                                    <span class="a-field__label">Phone</span>
+                                                    <span class="fa fa-phone float-right mt-2 mr-3 icons"></span>
+                                                </span>
+                                </label><br><br>
+                                <span class="float-left mt-4">
+                                                Promo :
+                                                  {% render_field p_form.promo %}
+                                        </span>
+                            </div>
+                            <div class="float-right mr-4 text-center">
+
                                 <label class="field a-field a-field_a1 page__field float-right">
-                                        <input class="field__input a-field__input" placeholder="bondbenz" value="">
-                                        <span class="a-field__label-wrap">
+                                    {% render_field u_form.username name="username" class="field__input a-field__input" value="" %}
+                                    <span class="a-field__label-wrap">
                                             <span class="a-field__label">Username</span>
                                             <span class="fa fa-user float-right mt-2 mr-3 icons"></span>
                                         </span>
                                 </label><br>
                                 <label class="field a-field a-field_a1 page__field float-right">
-                                        <input class="field__input a-field__input" type="password" placeholder="********" value="">
-                                        <span class="a-field__label-wrap">
+                                    </span>
+                                </label><br>
+                                <label class="field a-field a-field_a1 page__field float-right">
+                                    {% render_field u_form.password name="password" class="field__input a-field__input" type="password" value="" %}
+
+
+                                    <span class="a-field__label-wrap">
                                             <span class="a-field__label">New Password</span>
                                             <span class="fa fa-lock float-right mt-2 mr-3 icons"></span>
                                         </span>
                                 </label><br>
-                                <label class="field a-field a-field_a1 page__field float-right">
-                                        <input class="field__input a-field__input" type="password" placeholder="********" value="">
-                                        <span class="a-field__label-wrap">
+                                    <input class="field__input a-field__input" type="password"
+                                           placeholder="********"
+                                           value="">
+                                    <span class="a-field__label-wrap">
                                             <span class="a-field__label">Confirm Password</span>
                                         </span>
                                 </label>
-                                </div>
-                                <br><br><br><br><br><br><br><br><br><br><br>
-                                <hr>
-                                <button class="btn btn-danger float-right">Update Profile</button>
-                                <br>
-                        </div>
-                        <footer class="footer" style="margin-left:-100px;">
-                                <a href="#" class="menu-item mr-4">ESI-SBA</a>
-                                <a href="#" class="menu-item ml-4 mr-4">FORUM</a>
-                                <a href="#" class="menu-item ml-4 mr-4">ABOUT US</a>
-                                
-                                <span class="">&copy; Copyright 2019 | Powered by Root-Dev with 
+                            </div>
+                            <br><br><br><br><br><br><br><br><br><br><br>
+                            <hr>
+                            <button type="submit" class="btn btn-danger float-right">Update Profile</button>
+                            <br>
+                    </form>
+                </div>
+                <footer class="footer" style="margin-left:-100px;">
+                    <a href="#" class="menu-item mr-4">ESI-SBA</a>
+                    <a href="#" class="menu-item ml-4 mr-4">FORUM</a>
+                    <a href="#" class="menu-item ml-4 mr-4">ABOUT US</a>
+
+                    <span class="">&copy; Copyright 2019 | Powered by Root-Dev with
                                     <span class="fa fa-heart icons"></span> & lot of <span class="fa fa-coffee text-warning"></span>
                                 </span>
-                            </footer>
-                    </div>
+                </footer>
+            </div>
         </div>
     </div>
+</div>
+</div>
 </body>
 
 </html>

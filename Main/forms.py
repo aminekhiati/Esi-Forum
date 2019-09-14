@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Utilisateur
+from .models import Utilisateur,Profile
 
 ROLE = (
         ('etudiant', 'Etudiant'),
@@ -64,3 +64,39 @@ class addmodForm(forms.Form):
     password =forms.CharField(required=False)
     password1 =forms.CharField(required=False)
     email= forms.EmailField(required=False)
+
+class adminUpdate(forms.Form):
+    firstname=forms.CharField(required=False)
+    lastname=forms.CharField(required=False)
+    username=forms.CharField(required=False)
+    username1=forms.CharField(required=False)
+    password =forms.CharField(required=False)
+    password1 =forms.CharField(required=False)
+    email= forms.EmailField(required=False)
+
+
+    def clean(self):
+        cd = self.cleaned_data
+        if cd.get('password') != cd.get('password1'):
+            self.add_error('passwor1', "passwords do not match !")
+
+        if cd.get('username') != "admin":
+            self.add_error('username', "passwords do not match !")
+        return cd
+
+class UserUpdateForm(forms.ModelForm):
+    mail = forms.EmailField()
+
+    class Meta:
+        model = Utilisateur
+        fields = (
+            'first_name', 'last_name', 'username', 'email', 'password')
+
+class ProfileUpdateForm(forms.ModelForm):
+    nt = forms.CharField(max_length=10, required=False, label="Phone Number")
+    promo = forms.ChoiceField(choices=PROMO, label="", initial='', widget=forms.Select(), required=False)
+
+    class Meta:
+        model = Profile
+        fields = ('nt', 'promo'
+                      )

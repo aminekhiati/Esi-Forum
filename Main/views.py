@@ -1,13 +1,28 @@
 from django.shortcuts import render, redirect
 from .models import Publication,Profile,Utilisateur
-from .forms import SignUpForm,userUpdate,approveForm,listuserForm,deleteForm,addmodForm
+from .forms import SignUpForm,userUpdate,approveForm,listuserForm,deleteForm,addmodForm,adminUpdate,UserUpdateForm,ProfileUpdateForm
 from django.http import HttpResponse
 from django.db.models import Count, F
 from django.contrib.auth import login, authenticate,logout
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+from django.forms.models import model_to_dict
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+from django.views.generic import (
+    CreateView,
+    ListView,
+    UpdateView,
+    DetailView,
+    DeleteView
+)
+
+
+def admin_check(user):
+    return user.role=="admin" or user.role=="moderateur"
 
 
 
@@ -35,21 +50,49 @@ def signup(request):
     return render(request, 'Main/registration.html', {'form': form})
 
 
-
+@login_required(login_url='/home/')
+@user_passes_test(admin_check,login_url='/home/')
 def dashboard(request):
     pubs_populaie=Publication.objects.annotate(num_c_v=(Count('commentaire')+F('nb_vues'))).order_by('num_c_v')[0:3]
     nbr_user=Utilisateur.objects.all().count()-1
     nbr_topic=Publication.objects.all().count()
+    admin_pubs=Publication.objects.filter(lauteur__role='admin')
     return render(request, 'Main/admin/Dashboard.html', {"nbr_user":nbr_user,
                                                          "nbr_topic":nbr_topic,
-                                                         "pubs_populaie":pubs_populaie
+                                                         "pubs_populaie":pubs_populaie,
+                                                         "admin_pubs":admin_pubs
                                                         })
+
+@login_required(login_url='/home/')
+@user_passes_test(admin_check,login_url='/home/')
 def dashboard_editProfile(request):
-    admin=Profile.objects.all()[0:1]
+    form=adminUpdate()
+    add = Profile.objects.filter(user__username=request.user)
+    for ad in add:
+        admin = ad
+    if request.method == 'POST' :
+        form = adminUpdate(request.POST)
+
+        if form.is_valid(): 
+            if(form.cleaned_data.get('username1')):
+                if(form.cleaned_data.get('username')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(username=form.cleaned_data.get('username'))
+                if(form.cleaned_data.get('email')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(email=form.cleaned_data.get('email'))
+                if(form.cleaned_data.get('password')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(password=form.cleaned_data.get('password'))
+                if(form.cleaned_data.get('firstname')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(first_name=form.cleaned_data.get('firstname'))
+                if(form.cleaned_data.get('lastname')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(first_name=form.cleaned_data.get('last_name'))
+     
+    
     return render(request, 'Main/admin/EditUser.html', {"admin":admin,
+                                                        "form":form
                                                         })
 
-
+@login_required(login_url='/home/')
+@user_passes_test(admin_check,login_url='/home/')
 def users(request):
     if request.method == 'POST' and 'update' in request.POST:
         form = userUpdate(request.POST)
@@ -149,3 +192,76 @@ def login_request(request):
 
 def loggedin (request):
     return render(request, "Main/Home-Logged.html")
+
+
+def editeProfile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST,instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES)
+        if u_form.is_valid() and p_form.is_valid():
+            print("worked")
+            u_form.save()
+            p_form.save()
+            # firstname = u_form.cleaned_data.get('firstname')
+            # lastname = u_form.cleaned_data.get('lastname')
+            # email = u_form.cleaned_data.get('email')
+            # nmbr = p_form.cleaned_data.get('nt')
+            # print(nmbr)
+
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = ProfileUpdateForm()
+
+    context ={
+        'u_form' : u_form,
+        'p_form' : p_form
+    }
+
+    return render(request,"Main/usersettings.html",context)
+
+
+# <app>/<model>_<viewtype>.html <-- template naming conventions for best practice
+
+class PostListView(LoginRequiredMixin, ListView):
+    model = Publication
+    context_object_name = 'Publication'
+    template_name = 'Main/Home-Logged.html'
+    ordering = ['-date_de_publication']
+
+
+class PostDetailView(LoginRequiredMixin, DetailView):
+    model = Publication
+    context_object_name = 'Publication'
+    template_name = 'Main/viewPost.html'
+
+
+class PostCreateView(LoginRequiredMixin, CreateView):
+    model = Publication
+    fields = ['titre', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
+class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Publication
+    fields = ['titre', 'content']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    # prevent any users from editing people's posts --> devrait retourner une erreure 403 (i.e forbidden)
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.lauteur
+
+
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Publication
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.lauteur

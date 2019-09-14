@@ -14,7 +14,8 @@ from django.contrib.auth.models import User
 ROLE = (
         ('etudiant', 'Etudiant'),
         ('enseignant', 'Enseignant'),
-        ('moderateur','Moderateur')
+        ('moderateur','Moderateur'),
+        ('admin','Admin')
     )
 
 PROMO = (
@@ -73,13 +74,13 @@ class Publication(models.Model) :
 
 class Profile (models.Model):
     
-    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="profile")    
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="profile")
     numero_telephone = models.IntegerField(null=True)
-    promotion = models.CharField(choices=PROMO,default='1cpi',max_length=3,null=True)
+    promotion = models.CharField(choices=PROMO,default='1cpi',max_length=4,null=True)
     bio = models.TextField(null=True)
     slug = models.SlugField(max_length=250,unique =True,null=True)
-    publication_enregistrer = models.ForeignKey(Publication,on_delete=models.CASCADE,null=True)
-    image = models.ImageField(null=True)
+    publication_enregistrer = models.ForeignKey(Publication,on_delete=models.CASCADE,null=True,blank=True)
+    image = models.ImageField(null=True,upload_to='profile_pics')
     is_appoved =models.BooleanField(default=False)
 
     @receiver(post_save, sender=Utilisateur)
@@ -93,7 +94,9 @@ class Profile (models.Model):
         args=[self.user.role,
               self.slug])
 
-    
+    def __str__(self):
+        return self.user.username
+
 class Commentaire(models.Model):
 
     publication = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
