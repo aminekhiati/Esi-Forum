@@ -19,9 +19,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
             integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
             crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{% static "js/bootstrap.min.js"%}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="js/responsive.js"></script>
+    <script src="{% static "js/responsive.js"%}"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -191,9 +191,9 @@
                         <div class="tab mt-4">
                             <div class="float-left text-center ml-4">
                             {% if user.profile.image %}
-                                <img src="{{ user.profile.image.url }}" class="avatar-setting">
+                                <img src="{{ user.profile.image.url }}" id="img-prof" class="avatar-setting">
                             {% else %}
-                                <img src="{% static "images/avatars/1.jpg" %}" id="img-prof" class="profile-pic" alt="">
+                                <img src="{% static "images/avatars/1.jpg" %}"  class="profile-pic" alt="">
                             {% endif %}
                                 <br>
 
