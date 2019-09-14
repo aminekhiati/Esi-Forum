@@ -164,14 +164,11 @@ def editeProfile(request):
         u_form = UserUpdateForm(request.POST,instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES)
         if u_form.is_valid() and p_form.is_valid():
-            print("worked")
+            print("============================================================")
             u_form.save()
-            p_form.save()
-            # firstname = u_form.cleaned_data.get('firstname')
-            # lastname = u_form.cleaned_data.get('lastname')
-            # email = u_form.cleaned_data.get('email')
-            # nmbr = p_form.cleaned_data.get('nt')
-            # print(nmbr)
+            p_form.save(commit=False)
+            return HttpResponse('User info changed !')
+
 
     else:
         u_form = UserUpdateForm(instance=request.user)

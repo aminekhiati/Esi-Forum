@@ -193,7 +193,7 @@
                             {% if user.profile.image %}
                                 <img src="{{ user.profile.image.url }}" id="img-prof" class="avatar-setting">
                             {% else %}
-                                <img src="{% static "images/avatars/1.jpg" %}"  class="profile-pic" alt="">
+                                <img src="{% static "images/avatars/1.jpg" %}" id="img-prof" class="profile-pic" alt="">
                             {% endif %}
                                 <br>
 
@@ -272,9 +272,9 @@
                                 </label>
                             </div>
                             <br><br><br><br><br><br><br><br><br><br><br>
-                            <hr>
+                            <hr width="50%">
                             <button type="submit" class="btn btn-danger float-right" style="margin-bottom: 20%">Update Profile</button>
-                            <br>
+                            <br><br><br><br><br><br><br>
                     </form>
                 </div>
                 <footer class="footer" style="margin-left:-100px;">
