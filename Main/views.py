@@ -182,6 +182,7 @@ def editeProfile(request):
     return render(request,"Main/usersettings.html",context)
 
 
+
 # <app>/<model>_<viewtype>.html <-- template naming conventions for best practice
 
 class PostListView(LoginRequiredMixin, ListView):
