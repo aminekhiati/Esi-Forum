@@ -118,7 +118,8 @@ margin-left: 22px;
 }
 
 .right-search {
-margin-left: 300px;
+	position: relative;
+float: right;
 }
 
 .right-search input {
@@ -138,7 +139,7 @@ margin-left: 300px;
 .sidebar{
 width: 18%;
 float: left;
-height: 768px;
+height: 600px;
 background-color: #171c2f;
 }
 .content{
@@ -146,6 +147,7 @@ background-color: #171c2f;
 	float:left;
 	height:768px;
 	z-index: 2;
+	overflow-y: scroll;
 
 }
 .wrapper {
@@ -156,14 +158,13 @@ background-color: #171c2f;
 }
 .profile-pic{
 height: 150px;
-width: 150px;
-margin-left: 20px;
-margin-top: 20px;
-margin-bottom: 10px;
+display: block;
+margin: auto;
 border-radius: 50%;
 border: 2px solid #fff;
 z-index: 9;
 max-width: 100%;
+width: auto;
 }
 
 .sidebar p {
@@ -189,6 +190,7 @@ max-width: 100%;
 		margin: 30px;
 		height:500px;
 		border-radius: 10px;
+		overflow-y: scroll;
 }
 .avatar{
 	height: 50px;
@@ -223,7 +225,6 @@ padding-top: 25px;
 .element b{
 margin-top: 10px;
 }
-
 .menu-item {
 	font-size: 15px;
 	font-family: Roboto;
@@ -281,19 +282,19 @@ margin-top: 10px;
 	text-decoration: none;
 	color: #ff7474;
 }
-#notification_li{position:relative}
+#notification_li{position: absolute;}
         #notificationContainer {
         background-color:#292e41;
         border: 1px solid rgba(100, 100, 100, .4);
         -webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
         overflow: visible;
         position: absolute;
-        top: 30px;
-        margin-left: 124px;
         margin-top: 10px;
         width: 400px;
         z-index: 99;
-        display: none;
+		display: none;
+		top: 30px;
+		right: 1vw;
         }
         #notificationContainer:before {
         content: '';
@@ -305,7 +306,6 @@ margin-top: 10px;
         border: 10px solid black;
         border-color: transparent transparent white;
         margin-top: -20px;
-        margin-left: 188px;
         }
         #notificationTitle {
         z-index: 1000;
@@ -318,7 +318,8 @@ margin-top: 10px;
         }
         #notificationsBody {
         padding: 5px 5px 5px 5px !important;
-        min-height:300px;
+		min-height:300px;
+		max-height: 300px;
 		}
 		.avatar-notif{
 			height: 35px;
@@ -331,7 +332,7 @@ margin-top: 10px;
 
 		}
 		.element-notif {
-			margin-bottom: 20px;
+			margin-bottom: 5px;
 			padding:5px 0px 0px 0px;
 		}
 
@@ -343,18 +344,19 @@ margin-top: 10px;
         font-size: 12px;
         border-top: 1px solid #ff7474;
         }
-#notification_count {
-  padding: 3px 7px 3px 7px;
-  background: #cc0000;
-  color: #ffffff;
-  font-weight: bold;
-  margin-left: 150px;
-  border-radius: 9px;
-  position: absolute;
-  margin-top: -8px;
-  font-size: 11px;
-}
-
+		#notification_count 
+		{
+		padding: 3px 7px 3px 7px;
+		background: #cc0000;
+		color: #ffffff;
+		font-weight: bold;
+		border-radius: 9px;
+		-moz-border-radius: 9px; 
+		-webkit-border-radius: 9px;
+		position: absolute;
+		margin-top: -11px;
+		font-size: 11px;
+		}
 .box{
 	width: 400px;
 	height: 100px;
@@ -393,6 +395,7 @@ margin-top: 10px;
 	font-family: 'Ubuntu', sans-serif;
 	color: #FFFFFF;
 	box-shadow: 0px 4px 5px #111111;
+	height: 100%;
 
 }
 
@@ -707,3 +710,74 @@ margin-top: 10px;
 	--fieldBorderColor: #d1c4e9;
 	--fieldBorderColorActive: #ff7474;
 }
+.all ul li {
+  justify-content: center;
+  display: flex;
+}
+@media (max-width: 600px) {
+  
+.card-content{
+margin: auto;	
+}
+#notificationContainer{
+	left: 0.5vw;
+	width: 250px;
+	top: 41vw;
+}
+#notificationTitle{
+	width: 250px;
+}
+#notification_count{
+}
+.navbar-default[role="navigation"] {
+	margin: 0 !important;
+	margin-bottom: 10% !important;
+	z-index: 999;
+	width: 100% !important;
+	background: #171c2f;
+	border-radius: 0px !important;
+	color: white;
+	
+}
+
+.navbar-default[role="inpage"] {
+	
+	margin-left:-12% !important;
+}
+.navbar-default[role="inpage"] li {
+	display: block !important;
+	
+}
+
+.navbar[role="inpage"] li a {
+	font-size: 14px !important;
+}
+
+.navbar[role="inpage"] li button {
+	padding:4px 8px;
+	font-size:80%;
+	line-height: 1;
+}
+
+.navbar[role="inpage"] li a:hover {
+	color: #3585c1;
+}
+.right-search{
+	justify-content: center;
+}
+
+  }
+  .bookmarks{
+	  display: none;
+	  background-color:#171c2f;
+	  z-index: 9;
+	  margin: 30px;
+	  height:500px;
+	  border-radius: 10px;
+	  overflow-y: scroll;
+color: #ff7474;
+justify-items: center;
+  }
+  .bookmarks h3:hover{
+	  color: #ff7474;
+  }
