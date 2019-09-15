@@ -384,7 +384,7 @@
                                         <h2><a class="article-title mt-4" href="{% url 'post-detail' post.id %}">{{ post.titre }}</a></h2>
                                     </div>
                                     <hr>
-                                    <p class="article-content"> {{ post.content }}</p>
+                                    <p class="article-content post-toparse"> {{ post.content }}</p>
                                     <span class="statics-post"><span class="fa fa-eye icons"></span> {{ post.nb_vues }}    <span class="fa fa-comment icons"></span> {{ post.commentaires.count }}</span>
                                     <button class="btn btn-outline-danger float-right">Read more</button>
                                 </div>
@@ -499,6 +499,15 @@
     })
 
 }); </script>
+<script>
+  
+    var posts = document.getElementsByClassName("post-toparse");
+    for(var i=0;i<posts.length; i++){
+      post = posts.item(i);
+      post.innerHTML = post.textContent;
+    }
+    
+  </script>
 </body>
 
 </html>

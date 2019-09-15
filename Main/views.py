@@ -307,13 +307,32 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.auteur
+        return self.request.user == post.commented_by
 
 
-class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Commentaire
-    success_url = '/'
+@login_required
+def comment_remove(request, pk1,pk2):
+    if request.method == "POST":
+        comment = get_object_or_404(Commentaire, pk=pk2)
+        if comment.commented_by == request.user:
+            comment.delete()
+            return redirect('post-detail', pk=comment.publication.id)
+        else:
+            return redirect('post-detail', pk=comment.publication.id)
 
-    def test_func(self):
-        post = self.get_object()
-        return self.request.user == post.auteur
+@login_required
+def comment_update(request, pk1,pk2):
+    post = get_object_or_404(Publication, pk=pk1)
+    if request.method == "POST":
+        comment = get_object_or_404(Commentaire, pk=pk2)
+        if comment.commented_by == request.user:
+            comment.publication = post
+            content = request.POST['content-comment']
+            comment.content = content
+            comment.commented_by = request.user
+            comment.save()
+            return redirect('post-detail', pk=post.pk)
+    
+    return redirect('post-detail', pk=post.pk)
+
+    

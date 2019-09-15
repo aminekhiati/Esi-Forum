@@ -15,6 +15,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="{% static "js/bootstrap.min.js"%}"></script>
     <script src="{% static "js/responsive.js"%}"></script>
+    <script src="{% static "js/textversion.js"%}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
@@ -344,11 +345,62 @@
                             
                         </div>
                         <br><br>
-                        <p class="article-content">{{ comment.content }}</p>
-                        <span class="statics-post mt-4 float-right"><a href="#"  data-toggle="modal" data-target="#reportPop"><span class="fa fa-flag icons"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"></span></a> &nbsp;  <a href="#" data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons"></span></a></span>
+                        <p class="article-content comment-toparse">{{ comment.content }}</p>
+                        <span class="statics-post mt-4 float-right">
+                          <a href="#"  data-toggle="modal" data-target="#reportPop">
+                            <span class="fa fa-flag icons"></span></a> &nbsp;  
+                            <a href="#" data-toggle="modal" data-target="#editCommentPop{{comment.id}}"><span class="fa fa-pencil icons"></span></a> &nbsp;  
+                            <a href="#" data-toggle="modal" data-target="#deletePop{{comment.id}}">
+                              <span class="fa fa-trash icons"></span></a></span>
                       </div>
                   </article>
-                
+                  
+                  <div class="modal fade" id="deletePop{{comment.id}}" tabindex="-1" role="dialog" aria-labelledby="deletePopLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="deletePopLabel" style="color: white;">Alert</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body text-danger">
+                            Are you sure you want to delete this comment by {{ comment.commented_by.username }} ?
+                          </div>
+                          <div class="modal-footer">
+                            <form method="post" action="{% url 'comment-delete' object.id comment.id %}">
+                                {% csrf_token %}
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                <button type="button submit" class="btn btn-danger">Delete</button>
+                            </form> 
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      <div class="modal fade" id="editCommentPop{{comment.id}}" tabindex="-1" role="dialog" aria-labelledby="editCommentLabel"
+      aria-hidden="true">
+      <div class="modal-lg modal-dialog" role="document">
+        <div class="modal-content text-danger">
+          <div class="">
+            <form method="post" action="{% url 'comment-update' object.id comment.id %}">
+              {% csrf_token %}
+            
+            <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <textarea class="editor" name="content-comment">{{ comment.content }}</textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button submit" class="btn btn-danger" name="addpost" >Edit Comment</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+      </div>
                   {% endfor %}
               </div>
             <hr class="w-75">
@@ -419,7 +471,7 @@
               </div>
             </div>
           </div>
-          <div class="modal fade" id="editTopicPop" tabindex="-1" role="dialog" aria-labelledby="editTopicLabel"
+    <div class="modal fade" id="editTopicPop" tabindex="-1" role="dialog" aria-labelledby="editTopicLabel"
       aria-hidden="true">
       <div class="modal-lg modal-dialog" role="document">
         <div class="modal-content text-danger">
@@ -448,25 +500,7 @@
       </div>
     </div>
       </div>
-      <div class="modal fade" id="deletePop" tabindex="-1" role="dialog" aria-labelledby="deletePopLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="deletePopLabel" style="color: white;">Alert</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body text-danger">
-              Are you sure you want to delete this comment?
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-              <button type="button" class="btn btn-danger">Delete</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      
       <div class="modal fade" id="deleteTopicPop" tabindex="-1" role="dialog" aria-labelledby="deleteTopicPopLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -562,10 +596,14 @@
   }); </script>
 
   <script>
-    function refresh(){
-      var st = document.getElementById("post-content").innerHTML
-      document.getElementById("post-content").innerHTML = st;
+    var post = document.getElementById("post-content");
+    var comments = document.getElementsByClassName("comment-toparse");
+    for(var i=0;i<comments.length; i++){
+      comment = comments.item(i);
+      comment.innerHTML = comment.textContent;
     }
+
+    post.innerHTML = post.textContent;
     
   </script>
 </body>
