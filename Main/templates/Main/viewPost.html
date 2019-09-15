@@ -1,18 +1,20 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Esi Forums - Title Post</title>
+    <title>Esi Forums - {{ object.titre }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="{% static "css/style.css"%}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css"%}">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Iceberg" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/responsive.js"></script>
+    <script src="{% static "js/bootstrap.min.js"%}"></script>
+    <script src="{% static "js/responsive.js"%}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
@@ -36,9 +38,10 @@
   
       });
   </script>
+ 
 </head>
 
-<body style="background-color: #171C2F; opacity: 0.8;">
+<body style="background-color: #171C2F; opacity: 0.8;" onload="refresh()">
     <!--Begin Menu-->
     <div class="header">
         <nav class="navbar navbar-default py-0 mt-2" role="navigation">
@@ -172,13 +175,13 @@
                       </div>                 
                       <div class="carousel-inner">
                       <div class="carousel-item active">
-                        <img class="d-block w-100" src="images/slide/slide2.jpg" alt="First slide">
+                        <img class="d-block w-100" src="{% static "images/slide/slide2.jpg"%}" alt="First slide">
                       </div>
                       <div class="carousel-item">
-                        <img class="d-block w-100" src="images/slide/slide2.jpg" alt="Second slide">
+                        <img class="d-block w-100" src="{% static "images/slide/slide2.jpg"%}" alt="Second slide">
                       </div>
                       <div class="carousel-item">
-                        <img class="d-block w-100" src="images/slide/slide2.jpg" alt="Third slide">
+                        <img class="d-block w-100" src="{% static "images/slide/slide2.jpg"%}" alt="Third slide">
                       </div>
                     </div>
                     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -206,37 +209,37 @@
                     <div id="notificationTitle" style="color: white">Notifications</div>
                     <div id="notificationsBody"  style="overflow-y: scroll">
                       <div class="element-notif">
-                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
                         <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                         <a href="#">Link</a>
                       </div>
                       <div class="line"></div>
                       <div class="element-notif">
-                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
                         <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                         <a href="#">Link</a>
                       </div>
                       <div class="line"></div>
                       <div class="element-notif">
-                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
                         <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                         <a href="#">Link</a>
                       </div>
                       <div class="line"></div>
                       <div class="element-notif">
-                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
                         <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                         <a href="#">Link</a>
                       </div>
                       <div class="line"></div>
                       <div class="element-notif">
-                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
                         <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                         <a href="#">Link</a>
                       </div>
                       <div class="line"></div>
                       <div class="element-notif">
-                        <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
                         <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                         <a href="#">Link</a>
                       </div>
@@ -250,7 +253,7 @@
               </a>
               <a href="#" class="user">@i.benzeghli
                 &nbsp;
-                <img src="images/avatars/1.jpg" id="profile-avatar">
+                <img src="{% static "images/avatars/1.jpg"%}" id="profile-avatar">
               </a>
             </span>
         </div>
@@ -283,12 +286,12 @@
             <div class="btn-group float-right mt-4 mr-4" role="group" aria-label="trier">
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <img src="images/icons/baseline_settings_white_18dp.png" class="mb-1" width="24px" height="24px" alt=""> option
+                  <img src="{% static "images/icons/baseline_settings_white_18dp.png"%}" class="mb-1" width="24px" height="24px" alt=""> option
                   </button>
                   <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                     <a class="dropdown-item" href="#">close</a>
                     <a class="dropdown-item" href="#">move</a>
-                    <a class="dropdown-item" href="#">delete</a>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#deleteTopicPop">delete</a>
                   </div>
                 </div>
               </div>
@@ -299,10 +302,10 @@
                   <div class="author float-left" style="width:15%;">
                     <ul class="mr-4 mt-4">
                       <li class="author-name">
-                        <a href="#">@i.benzeghli</a>
+                        <a href="#">{{ object.auteur.username }}</a>
                       </li>
                       <li>
-                        <img src="images/avatars/1.jpg" class="author-avatar" alt="">
+                        <img src="{{ object.auteur.profile.image.url }}" class="author-avatar" alt="">
                         
                       </li>
                     </ul>
@@ -310,68 +313,52 @@
                   <span class="author-separator"></span>
                   <div class="media-body">
                     <div class="article-metadata">
-                        <small class="float-right mt-4 mb-2 metadata">01 mars 2019</small>
-                        <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
+                        <small class="float-right mt-4 mb-2 metadata">{{ object.date_de_publication }}</small>
+                        <h2 class="article-title mt-4" >{{ object.titre }}</h2>
                     </div>
                     <hr>
-                    <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                    <span class="statics-post mt-4 float-right"><a href="#"><span class="fa fa-flag icons"  data-toggle="modal" data-target="#reportPop"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"></span></a> &nbsp;</span></a></span>
+                    <p class="article-content" id="post-content">{{ object.content }}</p>
+                    <span class="statics-post mt-4 float-right"><a href="#"><span class="fa fa-flag icons"  data-toggle="modal" data-target="#reportPop"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"  data-toggle="modal" data-target="#editTopicPop"></span></a> &nbsp;</span></a></span>
                   </div>
               </article>
                 <hr class="w-75">
                 <h4 class="icons">Comments</h4>
                 <div class="comments">
+                  {% for comment in object.commentaires.all %}
                   <article class="media content-section mr-4" style="background-color: #1a2035; border-style: hidden;">
                       <div class="author float-left" style="width:15%;">
                         <ul class="mr-4 mt-4">
                           <li class="author-name">
-                            <a href="#">@i.benzeghli</a>
+                            <a href="#">{{ comment.commented_by.username }}</a>
                           </li>
                           <li>
-                            <img src="images/avatars/1.jpg" class="author-avatar" alt="">
-                            <small class="article-title" id="author-title">Administrator</small>
+                            <img src="{{ comment.commented_by.profile.image.url }}" class="author-avatar" alt="">
+                            <small class="article-title" id="author-title">{{ comment.commented_by.role }}</small>
                           </li>
                         </ul>
                       </div>
                       <span class="author-separator"></span>
                       <div class="media-body">
                         <div class="article-metadata">
-                            <small class="float-right mt-4 mb-2 metadata">01 mars 2019</small>
+                            <small class="float-right mt-4 mb-2 metadata">{{ comment.date_de_commentaire }}</small>
                             
                         </div>
                         <br><br>
-                        <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
+                        <p class="article-content">{{ comment.content }}</p>
                         <span class="statics-post mt-4 float-right"><a href="#"  data-toggle="modal" data-target="#reportPop"><span class="fa fa-flag icons"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"></span></a> &nbsp;  <a href="#" data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons"></span></a></span>
                       </div>
                   </article>
-                  <article class="media content-section mr-4" style="background-color: #1a2035; border-style: hidden;">
-                      <div class="author float-left" style="width:15%;">
-                        <ul class="mr-4 mt-4">
-                          <li class="author-name">
-                            <a href="#">@i.benzeghli</a>
-                          </li>
-                          <li>
-                            <img src="images/avatars/1.jpg" class="author-avatar" alt="">
-                            <small class="article-title" id="author-title">Administrator</small>
-                          </li>
-                        </ul>
-                      </div>
-                      <span class="author-separator"></span>
-                      <div class="media-body">
-                        <div class="article-metadata">
-                            <small class="float-right mt-4 mb-2 metadata">01 mars 2019</small>  
-                        </div>
-                        <br><br>
-                        <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                        <span class="statics-post mt-4 float-right"><a href="#"  data-toggle="modal" data-target="#reportPop"><span class="fa fa-flag icons"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"></span></a> &nbsp;  <a href="#"  data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons"></span></a></span>
-                      </div>
-                  </article>
+                
+                  {% endfor %}
               </div>
             <hr class="w-75">
             <div style="margin:0 auto; width: 98%;">
-            <textarea id="editor"></textarea>
-            <br>
-            <button class="btn btn-danger float-right">Reply</button>
+            <form method="post" action="{% url 'comment-new' object.id %}">
+                {% csrf_token %}
+                <textarea class="editor" name="content-comment"></textarea>
+                <br>
+                <button class="btn btn-danger float-right" type="submit" >Reply</button>
+            </form>
             </div>
             </div>
           </div>
@@ -432,6 +419,34 @@
               </div>
             </div>
           </div>
+          <div class="modal fade" id="editTopicPop" tabindex="-1" role="dialog" aria-labelledby="editTopicLabel"
+      aria-hidden="true">
+      <div class="modal-lg modal-dialog" role="document">
+        <div class="modal-content text-danger">
+          <div class="">
+            <form method="post" action="{% url 'post-update' object.id %}">
+              {% csrf_token %}
+            <label class="field a-field a-field_a1 page__field modal-title ml-4 mt-2" id="editTopicLabel">
+              <input class="field__input a-field__input" name="titre" placeholder="TP5 Solution" value="{{ object.titre }}" required>
+              <span class="a-field__label-wrap">
+                <span class="a-field__label">Title</span>
+              </span>
+            </label>
+            <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <textarea class="editor" name="content">{{ object.content }}</textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button submit" class="btn btn-danger" name="addpost" >Edit Topic</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
       </div>
       <div class="modal fade" id="deletePop" tabindex="-1" role="dialog" aria-labelledby="deletePopLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -452,6 +467,28 @@
           </div>
         </div>
       </div>
+      <div class="modal fade" id="deleteTopicPop" tabindex="-1" role="dialog" aria-labelledby="deleteTopicPopLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteTopicPopLabel" style="color: white;">Alert</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body text-danger">
+                Are you sure you want to delete this post ?
+              </div>
+              <div class="modal-footer">
+                <form method="post" action="{% url 'post-delete' object.id %}">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                    <button type="button submit" class="btn btn-danger">Delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
   </div>
     </div>
   </div>
@@ -518,10 +555,18 @@
 
    <!-- Initialize the editor. -->
    <script> $(function() { 
-     $('#editor').froalaEditor({
+     $('.editor').froalaEditor({
       toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'fontFamily', 'fontSize', 'color', 'clearFormatting', 'emoticons', 'fontAwesome', 'align', 'formatOL', 'formatUL', 'quote', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'selectAll', 'undo', 'redo']
      }) 
   
   }); </script>
+
+  <script>
+    function refresh(){
+      var st = document.getElementById("post-content").innerHTML
+      document.getElementById("post-content").innerHTML = st;
+    }
+    
+  </script>
 </body>
 </html>

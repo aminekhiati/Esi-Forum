@@ -1,6 +1,11 @@
-from django.shortcuts import render, redirect
-from .models import Publication,Profile,Utilisateur
-from .forms import SignUpForm,userUpdate,approveForm,listuserForm,deleteForm,addmodForm,UserUpdateForm,ProfileUpdateForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Publication,Profile,Utilisateur,Commentaire
+from .forms import (
+    SignUpForm,userUpdate,
+    approveForm,listuserForm,
+    deleteForm,addmodForm,
+    UserUpdateForm,ProfileUpdateForm,
+    CommentForm)
 from django.http import HttpResponse
 from django.db.models import Count, F
 from django.contrib.auth import login, authenticate,logout
@@ -145,7 +150,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Logged in successfully as {username}")
-                return redirect('../home/')
+                return redirect('../')
             else:
                 messages.info(request,"User dosn't exist")
         else:
@@ -182,42 +187,44 @@ def editeProfile(request):
     return render(request,"Main/usersettings.html",context)
 
 
-# <app>/<model>_<viewtype>.html <-- template naming conventions for best practice
+# Publications
 
-class PostListView(LoginRequiredMixin, ListView):
+class PostListView(ListView):
     model = Publication
-    context_object_name = 'Publication'
+    context_object_name = 'posts'
     template_name = 'Main/Home-Logged.html'
     ordering = ['-date_de_publication']
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+class PostDetailView(DetailView):
     model = Publication
-    context_object_name = 'Publication'
     template_name = 'Main/viewPost.html'
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Publication
+    template_name = 'Main/Home-Logged.html'
     fields = ['titre', 'content']
 
+
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.auteur = self.request.user
         return super().form_valid(form)
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Publication
+    template_name = 'Main/viewPost.html'
     fields = ['titre', 'content']
 
+
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.auteur = self.request.user
         return super().form_valid(form)
 
-    # prevent any users from editing people's posts --> devrait retourner une erreure 403 (i.e forbidden)
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.lauteur
+        return self.request.user == post.auteur
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
@@ -226,4 +233,45 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.lauteur
+        return self.request.user == post.auteur
+
+
+#Comments
+
+def add_comment_to_post(request, pk):
+    post = get_object_or_404(Publication, pk=pk)
+    if request.method == "POST":
+        #form = CommentForm(request.POST)
+        
+        comment = Commentaire()
+        comment.publication = post
+        content = request.POST['content-comment']
+        comment.content = content
+        comment.commented_by = request.user
+        comment.save()
+        return redirect('post-detail', pk=post.pk)
+    
+    return redirect('post-detail', pk=post.pk)
+
+class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Commentaire
+    template_name = 'Main/viewPost.html'
+    fields = ['titre', 'content']
+
+
+    def form_valid(self, form):
+        form.instance.auteur = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.auteur
+
+
+class CommentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Commentaire
+    success_url = '/'
+
+    def test_func(self):
+        post = self.get_object()
+        return self.request.user == post.auteur

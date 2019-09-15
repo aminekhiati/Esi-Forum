@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Utilisateur,Profile
+from .models import Utilisateur,Profile,Commentaire
 
 ROLE = (
     ('etudiant', 'Etudiant'),
@@ -86,3 +86,9 @@ class ProfileUpdateForm(forms.ModelForm):
         model = Profile
         fields = ('nt','promo'
             )
+
+class CommentForm(forms.ModelForm):
+    content = forms.CharField( widget=forms.Textarea )
+    class Meta:
+        model = Commentaire
+        fields = ('content',)
