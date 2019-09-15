@@ -170,10 +170,11 @@ def users(request):
                
 
 def logout_request(request):
-    print("sjaspasasas")
     logout(request)
-    messages.info(request,"Logged out successfully")
-    return redirect('../login')
+    return redirect('home')
+
+
+
 
 def login_request(request):
     if request.method == "POST":
@@ -191,7 +192,7 @@ def login_request(request):
         else:
             messages.info(request,"Invalid Syntaxe")
     form = AuthenticationForm()
-    return render(request,"Main/Home.html", {"form":form})
+    return render(request,"Main/Home-Logged.html", {"form":form})
 
 
 
