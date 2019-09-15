@@ -162,11 +162,7 @@
         <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-2 col-md-2 sidebar" style="display: block;">
-                    {% if user.profile.image %}
                     <img src="{{ user.profile.image.url }}" class="profile-pic" alt="">
-                    {% else %}
-                    <img src="{% static "images/avatars/1.jpg" %}" class="profile-pic" alt="">
-                    {% endif %}
                     <h3>{{ user.first_name }} {{ user.profile.surname }}</h3>
                     <h5>{{ user.last_name}}</h5>
                     <h6> Bio : </h6>
@@ -247,10 +243,6 @@
                                         </span>
                                 </label><br>
                                 <label class="field a-field a-field_a1 page__field float-right">
-                                    {% render_field u_form.email  name="email" class="field__input a-field__input" value="" %}
-                                    <span class="a-field__label-wrap">
-                                        <span class="a-field__label">Email</span>
-                                        <span class="fa fa-envelope float-right mt-2 mr-3 icons"></span>
                                     </span>
                                 </label><br>
                                 <label class="field a-field a-field_a1 page__field float-right">
@@ -262,18 +254,22 @@
                                             <span class="fa fa-lock float-right mt-2 mr-3 icons"></span>
                                         </span>
                                 </label><br>
-                                <label class="field a-field a-field_a1 page__field float-right">
                                     <input class="field__input a-field__input" type="password"
                                            placeholder="********"
                                            value="">
                                     <span class="a-field__label-wrap">
                                             <span class="a-field__label">Confirm Password</span>
                                         </span>
-                                </label>
+                                </label><br>
+                                <label class="float-left mt-2">
+                                    Biography <span class="fa fa-info-circle icons"></span><br>
+                                    <textarea  style="resize: none; background-color: #171c2f; color:white;" rows="3"></textarea>
+                                </label><br>
+                                
                             </div>
                             <br><br><br><br><br><br><br><br><br><br><br>
-                            <hr width="50%">
-                            <button type="submit" class="btn btn-danger float-right" style="margin-bottom: 20%">Update Profile</button>
+                            <br><br><br><br><br><br><hr>
+                            <button type="submit" class="btn btn-danger float-right" style="margin-bottom: 20%;">Update Profile</button>
                             <br><br><br><br><br><br><br>
                     </form>
                 </div>

@@ -19,8 +19,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/responsive.js"></script>
+  <script src="{% static "js/bootstrap.min.js"%}"></script>
+  <script src="{% static "js/responsive.js"%}"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"
     type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
@@ -284,8 +284,10 @@
       <div class="modal-lg modal-dialog" role="document">
         <div class="modal-content text-danger">
           <div class="">
+            <form method="post" action="{% url 'post-create' %}">
+              {% csrf_token %}
             <label class="field a-field a-field_a1 page__field modal-title ml-4 mt-2" id="newTopicLabel">
-              <input class="field__input a-field__input" placeholder="TP5 Solution" required>
+              <input class="field__input a-field__input" name="titre" placeholder="TP5 Solution" required>
               <span class="a-field__label-wrap">
                 <span class="a-field__label">Title</span>
               </span>
@@ -295,12 +297,13 @@
             </button>
           </div>
           <div class="modal-body">
-            <textarea id="editor"></textarea>
+            <textarea id="editor" name="content"></textarea>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger">Post Topic</button>
+            <button type="button submit" class="btn btn-danger" name="addpost" >Post Topic</button>
           </div>
+        </form>
         </div>
       </div>
     </div>
@@ -325,87 +328,31 @@
             <br>
             <br>
             <div class="topic-placement">
-              <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
-                <div class="author float-left">
-                  <ul class="mr-4 mt-4">
-                    <li class="author-name">
-                      <a href="#">@i.benzeghli</a>
-                    </li>
-                    <li>
-                      <img src="{% static "images/avatars/1.jpg"%}" class="author-avatar" alt="">
-                    </li>
-                  </ul>
-                </div>
-                <span class="author-separator"></span>
-                <div class="media-body">
-                  <div class="article-metadata">
-                    <small class="float-right mt-4 metadata">01 mars 2019</small>
-                    <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
-                  </div>
-                  <hr>
-                  <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.
-                    Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum
-                    ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor,
-                    orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                  <span class="statics-post"><span class="fa fa-eye icons"></span> 50 <span
-                      class="fa fa-comment icons"></span> 10</span>
-                  <button class="btn btn-outline-danger float-right">Read more</button>
-                </div>
-              </article>
-              <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
-                <div class="author float-left">
-                  <ul class="mr-4 mt-4">
-                    <li class="author-name">
-                      <a href="#">@i.benzeghli</a>
-                    </li>
-                    <li>
-                      <img src="{% static "images/avatars/1.jpg"%}" class="author-avatar" alt="">
-                    </li>
-                  </ul>
-                </div>
-                <span class="author-separator"></span>
-                <div class="media-body">
-                  <div class="article-metadata">
-                    <small class="float-right mt-4 metadata">01 mars 2019</small>
-                    <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
-                  </div>
-                  <hr>
-                  <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.
-                    Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum
-                    ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor,
-                    orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                  <span class="statics-post"><span class="fa fa-eye icons"></span> 50 <span
-                      class="fa fa-comment icons"></span> 10</span>
-                  <button class="btn btn-outline-danger float-right">Read more</button>
-                </div>
-              </article>
-              <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
-                <div class="author float-left">
-                  <ul class="mr-4 mt-4">
-                    <li class="author-name">
-                      <a href="#">@i.benzeghli</a>
-                    </li>
-                    <li>
-                      <img src="{% static "images/avatars/1.jpg"%}" class="author-avatar" alt="">
-                    </li>
-                  </ul>
-                </div>
-                <span class="author-separator"></span>
-                <div class="media-body">
-                  <div class="article-metadata">
-                    <small class="float-right mt-4 metadata">01 mars 2019</small>
-                    <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
-                  </div>
-                  <hr>
-                  <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus.
-                    Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum
-                    ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor,
-                    orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                  <span class="statics-post"><span class="fa fa-eye icons"></span> 50 <span
-                      class="fa fa-comment icons"></span> 10</span>
-                  <button class="btn btn-outline-danger float-right">Read more</button>
-                </div>
-              </article>
+                {% for post in posts %}
+                <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
+                    <div class="author float-left">
+                      <ul class="mr-4 mt-4">
+                        <li class="author-name">
+                          <a href="#">{{ post.auteur.username}}</a>
+                        </li>
+                        <li>
+                          <img src="{{ post.auteur.profile.image.url }}" class="author-avatar" alt="">
+                        </li>
+                      </ul>
+                    </div>
+                    <span class="author-separator"></span>
+                    <div class="media-body">
+                      <div class="article-metadata">
+                          <small class="float-right mt-4 metadata">{{ post.date_de_publication }}</small>
+                          <h2><a class="article-title mt-4" href="{% url 'post-detail' post.id %}">{{ post.titre }}</a></h2>
+                      </div>
+                      <hr>
+                      <p class="article-content"> {{ post.content }}</p>
+                      <span class="statics-post"><span class="fa fa-eye icons"></span> {{ post.nb_vues }}    <span class="fa fa-comment icons"></span> {{ post.commentaires.count }}</span>
+                      <button class="btn btn-outline-danger float-right">Read more</button>
+                    </div>
+                </article>
+            {% endfor %}
             </div>
           </div>
         </div>
@@ -446,29 +393,24 @@
       </div>
     </div>
   </div>
-  <div>
-    <div class="pages text-center">
-      <nav class="navbar navbar-default" role="doc-pagelist">
-        <div class="navbar">
-          <ul class="nav nav-pills text-center">
-            <li class="nav-item mr-2">
-              <a class="nav-link active " href="#"> 1</a>
-            </li>
-            <li class="nav-item mr-2">
-              <a class="nav-link " id="active" href="#"> 2</a>
-            </li>
-            <li class="nav-item mr-2">
-              <a class="nav-link " id="active" href="#"> 3</a>
-            </li>
-            <li class="nav-item mr-2 mt-2">
-              <strong>...</strong>
-            </li>
-            <li class="nav-item mr-2">
-              <a class="nav-link " id="active" href="#"> 99</a>
-            </li>
-          </ul>
-        </div>
-    </div>
+  <nav aria-label="pagination">
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item active">
+          <span class="page-link">
+            2
+            <span class="sr-only">(current)</span>
+          </span>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#">Next</a>
+        </li>
+      </ul>
+    </nav>
     <hr>
     <div class="footer-bg">
       <div id="about-us">

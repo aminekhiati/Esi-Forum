@@ -10,11 +10,11 @@ from django.contrib.auth.models import User
 
 
 
-
 ROLE = (
         ('etudiant', 'Etudiant'),
         ('enseignant', 'Enseignant'),
-        ('moderateur','Moderateur')
+        ('moderateur','Moderateur'),
+        ('admin','Admin')
     )
 
 PROMO = (
@@ -57,19 +57,19 @@ class Publication(models.Model) :
     date_de_modification= models.DateField(auto_now=True)
     section = models.CharField(max_length=30)
     content = models.TextField()
-    upvote = models.IntegerField()
     titre = models.CharField(max_length=30)
-    lauteur = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='publications')
-    image = models.ImageField(null=True) 
+    auteur = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='publications')
     tags = models.ManyToManyField(Tags, related_name='posts',default="ok")
     nb_vues =models.IntegerField(default=0)
     
 
     def __str__(self):
         return self.titre
+    
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'pk': self.pk})
 
-    class Meta:
-        ordering = ('-upvote',)
+    
 
 class Profile (models.Model):
     
@@ -79,7 +79,7 @@ class Profile (models.Model):
     bio = models.TextField(null=True,blank=True)
     slug = models.SlugField(max_length=250,unique =True,null=True,blank=True)
     publication_enregistrer = models.ForeignKey(Publication,on_delete=models.CASCADE,null=True,blank=True)
-    image = models.ImageField(null=True,upload_to='profile_pics')
+    image = models.ImageField(null=True,upload_to='profile_pics',default='profile_pics/default.png')
     is_appoved =models.BooleanField(default=False)
 
     @receiver(post_save, sender=Utilisateur)
@@ -98,17 +98,14 @@ class Profile (models.Model):
 
 class Commentaire(models.Model):
 
-    publication = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="commentaire")
+    publication = models.ForeignKey(Publication,on_delete =models.CASCADE,related_name="commentaires",related_query_name="publication")
     commented_by = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE, related_name="commentes")
     content = models.TextField(null=True,blank=True)
     date_de_commentaire =  models.DateField(auto_now_add=True)
-    upvote = models.IntegerField()
-    date_de_commentaire =  models.DateField(auto_now_add=True)
-    tag_utilisateur = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="tag_users")
-    
 
     def __str__(self):
-        return self.pk
+        return self.publication.titre+ ' commentaire '+ str(self.pk)
+    
 
 
 

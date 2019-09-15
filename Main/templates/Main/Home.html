@@ -242,75 +242,31 @@
               <br>
               <br>
             <div class="topic-placement">
+              {% for post in posts %}
                 <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
                     <div class="author float-left">
                       <ul class="mr-4 mt-4">
                         <li class="author-name">
-                          <a href="#">@i.benzeghli</a>
+                          <a href="#">{{ post.auteur.username}}</a>
                         </li>
                         <li>
-                          <img src="{% static "images/avatars/1.jpg"%}" class="author-avatar" alt="">
+                          <img src="{{ post.auteur.profile.image.url }}" class="author-avatar" alt="">
                         </li>
                       </ul>
                     </div>
                     <span class="author-separator"></span>
                     <div class="media-body">
                       <div class="article-metadata">
-                          <small class="float-right mt-4 metadata">01 mars 2019</small>
-                          <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
+                          <small class="float-right mt-4 metadata">{{ post.date_de_publication }}</small>
+                          <h2><a class="article-title mt-4" href="#">{{ post.titre }}</a></h2>
                       </div>
                       <hr>
-                      <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                      <span class="statics-post"><span class="fa fa-eye icons"></span> 50    <span class="fa fa-comment icons"></span> 10</span>
+                      <p class="article-content">{{ post.content }}</p>
+                      <span class="statics-post"><span class="fa fa-eye icons"></span> {{ post.nb_vues }}    <span class="fa fa-comment icons"></span> 10</span>
                       <button class="btn btn-outline-danger float-right">Read more</button>
                     </div>
                 </article>
-                <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
-                  <div class="author float-left">
-                    <ul class="mr-4 mt-4">
-                      <li class="author-name">
-                        <a href="#">@i.benzeghli</a>
-                      </li>
-                      <li>
-                        <img src="{% static "images/avatars/1.jpg"%}" class="author-avatar" alt="">
-                      </li>
-                    </ul>
-                  </div>
-                  <span class="author-separator"></span>
-                  <div class="media-body">
-                    <div class="article-metadata">
-                        <small class="float-right mt-4 metadata" >01 mars 2019</small>
-                        <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
-                    </div>
-                    <hr>
-                    <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                    <span class="statics-post"><span class="fa fa-eye icons"></span> 50    <span class="fa fa-comment icons"></span> 10</span>
-                    <button class="btn btn-outline-danger float-right">Read more</button>
-                  </div>
-              </article>
-              <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
-                <div class="author float-left">
-                  <ul class="mr-4 mt-4">
-                    <li class="author-name">
-                      <a href="#">@i.benzeghli</a>
-                    </li>
-                    <li>
-                      <img src="{% static "images/avatars/1.jpg"%}" class="author-avatar" alt="">
-                    </li>
-                  </ul>
-                </div>
-                <span class="author-separator"></span>
-                <div class="media-body">
-                  <div class="article-metadata">
-                      <small class="float-right mt-4 metadata">01 mars 2019</small>
-                      <h2><a class="article-title mt-4" href="#">Title of topic</a></h2>
-                  </div>
-                  <hr>
-                  <p class="article-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi. Proin porttitor, orci nec nonummy molestie, enim est eleifend mi, non fermentum diam nisl sit amet erat...</p>
-                  <span class="statics-post"><span class="fa fa-eye icons"></span> 50    <span class="fa fa-comment icons"></span> 10</span>
-                  <button class="btn btn-outline-danger float-right">Read more</button>
-                </div>
-            </article>
+            {% endfor %}
             </div>
           </div>
           </div>
