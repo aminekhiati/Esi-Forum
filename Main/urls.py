@@ -21,6 +21,7 @@ urlpatterns = [
     path('home/', views.loggedin, name=''),
     path('logout/', views.logout_request, name='logout'),
     path('usersettings/', views.editeProfile, name='editprofile'),
+    path('searchresults',views.search, name='search'),
 
     path('', PostListView.as_view(), name='home'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),

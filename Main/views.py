@@ -223,8 +223,12 @@ def editeProfile(request):
     return render(request,"Main/usersettings.html",context)
 
 
+def search(request):
 
-# <app>/<model>_<viewtype>.html <-- template naming conventions for best practice
+    return render(request,"Main/searchresults.html")
+
+
+
 # Publications
 
 class PostListView(ListView):
