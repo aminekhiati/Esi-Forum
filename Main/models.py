@@ -13,7 +13,8 @@ from django.contrib.auth.models import User
 ROLE = (
         ('etudiant', 'Etudiant'),
         ('enseignant', 'Enseignant'),
-        ('moderateur','Moderateur')
+        ('moderateur','Moderateur'),
+        ('admin','Admin')
     )
 
 PROMO = (

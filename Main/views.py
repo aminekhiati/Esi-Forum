@@ -12,9 +12,11 @@ from django.contrib.auth import login, authenticate,logout
 from django.forms.models import model_to_dict
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+from django.forms.models import model_to_dict
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import Publication
+
 from django.views.generic import (
     CreateView,
     ListView,
@@ -22,6 +24,11 @@ from django.views.generic import (
     DetailView,
     DeleteView
 )
+
+
+def admin_check(user):
+    return user.role=="admin" or user.role=="moderateur"
+
 
 
 def signup(request):
@@ -48,21 +55,49 @@ def signup(request):
     return render(request, 'Main/registration.html', {'form': form})
 
 
-
+@login_required(login_url='/home/')
+@user_passes_test(admin_check,login_url='/home/')
 def dashboard(request):
     pubs_populaie=Publication.objects.annotate(num_c_v=(Count('commentaire')+F('nb_vues'))).order_by('num_c_v')[0:3]
     nbr_user=Utilisateur.objects.all().count()-1
     nbr_topic=Publication.objects.all().count()
+    admin_pubs=Publication.objects.filter(lauteur__role='admin')
     return render(request, 'Main/admin/Dashboard.html', {"nbr_user":nbr_user,
                                                          "nbr_topic":nbr_topic,
-                                                         "pubs_populaie":pubs_populaie
+                                                         "pubs_populaie":pubs_populaie,
+                                                         "admin_pubs":admin_pubs
                                                         })
+
+@login_required(login_url='/home/')
+@user_passes_test(admin_check,login_url='/home/')
 def dashboard_editProfile(request):
-    admin=Profile.objects.all()[0:1]
+    form=adminUpdate()
+    add = Profile.objects.filter(user__username=request.user)
+    for ad in add:
+        admin = ad
+    if request.method == 'POST' :
+        form = adminUpdate(request.POST)
+
+        if form.is_valid(): 
+            if(form.cleaned_data.get('username1')):
+                if(form.cleaned_data.get('username')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(username=form.cleaned_data.get('username'))
+                if(form.cleaned_data.get('email')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(email=form.cleaned_data.get('email'))
+                if(form.cleaned_data.get('password')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(password=form.cleaned_data.get('password'))
+                if(form.cleaned_data.get('firstname')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(first_name=form.cleaned_data.get('firstname'))
+                if(form.cleaned_data.get('lastname')):
+                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(first_name=form.cleaned_data.get('last_name'))
+     
+    
     return render(request, 'Main/admin/EditUser.html', {"admin":admin,
+                                                        "form":form
                                                         })
 
-
+@login_required(login_url='/home/')
+@user_passes_test(admin_check,login_url='/home/')
 def users(request):
     if request.method == 'POST' and 'update' in request.POST:
         form = userUpdate(request.POST)

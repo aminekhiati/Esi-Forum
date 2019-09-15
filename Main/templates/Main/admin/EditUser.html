@@ -1,4 +1,5 @@
 {% extends "./dashboardBse.html" %}
+{% load widget_tweaks %}
 {% load static %}
 {% block content %}
                 <div class="row ml-4 mt-4">
@@ -12,47 +13,42 @@
                                 <div class="tab text-center">
                                     <br>
                                     <label class="field a-field a-field_a1 page__field  mr-4">
-                                        <input class="field__input a-field__input" type="text" placeholder="bondbenz" value="" required>
+                                        {% render_field form.username class="field__input a-field__input" type="text" placeholder='name'  id='adminname'value="" %}
+                                        
                                         <span class="a-field__label-wrap">
-                                        <span class="a-field__label">Username</span>
+                                        <span class="a-field__label">{{admin.user.username}}</span>
                                         </span>
                                     </label>
 
                                     <label class="field a-field a-field_a1 page__field ">
-                                        <input class="field__input a-field__input" type="text" placeholder="n.benzeghli@esi-sba.dz" value="" required>
+                                        {% render_field form.email class="field__input a-field__input" type="text" placeholder="email" value="" %}
+                                        
                                         <span class="a-field__label-wrap">
-                                        <span class="a-field__label">Email</span>
+                                        <span class="a-field__label">{{admin.user.email}}</span>
                                         </span>
                                     </label>
                                         <br>
                                     <label class="field a-field a-field_a1 page__field mr-4">
-                                        <input class="field__input a-field__input" type="text" placeholder="Nor El Islam" value="" required>
+                                        {% render_field form.firstname class="field__input a-field__input" type="text" placeholder="Firs Name" value="" %}
+                                        
                                         <span class="a-field__label-wrap">
-                                        <span class="a-field__label">First name</span>
+                                        <span class="a-field__label">{{admin.user.firstnsame}}</span>
                                         </span>
                                     </label>
                                     
                                     <label class="field a-field a-field_a1 page__field">
-                                            <input class="field__input a-field__input" type="text" placeholder="Benzeghli" value="" required>
+                                            {% render_field form.lastname class="field__input a-field__input" type="text" placeholder="Last Name" value="" %}
+
                                             <span class="a-field__label-wrap">
-                                            <span class="a-field__label">Last Name</span>
+                                            <span class="a-field__label">{{admin.user.lastname}}</span>
                                             </span>
                                     </label>
                                     <br>
-                                    <select class="selectpicker mr-4">
-                                            <option selected value="1">Student</option>
-                                            <option value="2">Professor</option>
-                                            <option value="3">Administrator</option>
-                                            <option value="4">Moderator</option>
-                                    </select>   
-                                    <label class="field a-field a-field_a1 page__field" style="margin-right:-10%;">
-                                            <input class="field__input a-field__input" type="text" placeholder="1cs" value="" required>
-                                            <span class="a-field__label-wrap">
-                                            <span class="a-field__label">Promo / Module</span>
-                                            </span>
-                                    </label>
                                     <hr>
-                                    <button class="btn btn-danger float-right">Update Profile</button>
+                                    {% ifequal  admin.user.role 'admin'  %}
+                                        <button class="btn btn-danger float-right">Update Profile</button> 
+                                    {% endifequal %}
+                                    
                                     <br>
                                     
                         </div>
@@ -63,15 +59,24 @@
                         </div>
                         <div class="tab text-center">
                             <br> <br>
-                            <strong class="text-danger mt-4">Administrator</strong><br>
+                            <strong class="text-danger mt-4">{{admin.user.role}}</strong><br>
                             <h4 class="mt-1">{{admin.user.username}}</h4>
+                            {% if  admin.bio %}
                             <p>
                                     {{admin.bio}} 
                             </p>
+                           
+                            {% endif %}
+                            
                             <a href="#" role="button" class="btn btn-danger">Profile</a>
                         </div>
                     </div>
                 </div>
+
+                <script>
+                 
+
+                </script>
                 
 {% endblock content %}
            
