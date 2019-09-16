@@ -252,6 +252,7 @@ class PostListView(ListView):
     context_object_name = 'posts'
     template_name = 'Main/Home-Logged.html'
     ordering = ['-date_de_publication']
+    paginate_by = 4
 
 
 class PostDetailView(DetailView):

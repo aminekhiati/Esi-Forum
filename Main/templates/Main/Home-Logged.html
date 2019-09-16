@@ -434,24 +434,39 @@
         </div>
     </div>
 </div>
+{% if is_paginated %}
 <nav aria-label="pagination">
     <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
         <li class="page-item">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item active">
-          <span class="page-link">
-            2
-            <span class="sr-only">(current)</span>
-          </span>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
+        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        {% endif %}
+        {% for num in page_obj.paginator.page_range %}
+            {% if num == page_obj.number %}
+                <li class="page-item active">
+                <span class="page-link">
+                    {{ num }}
+                    <span class="sr-only">(current)</span>
+                </span>
+                </li>
+            
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' and num != 1  %}
+                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+            {% endif %}
+        {% endfor %}
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                    </li>
+            {% endif %}
     </ul>
 </nav>
+{% endif %}
 <hr>
 <div class="footer-bg">
     <div id="about-us">
@@ -476,7 +491,7 @@
         <form method="POST">
             <input type="text" class="form-control mb-2" placeholder="Email">
             <textarea name="message" placeholder="Your Message here" class="md-textarea form-control"></textarea>
-            <button type="button" class="btn btn-primary btn-sm float-right mt-1"><img src="images/icons/send-mail.png"
+            <button type="button" class="btn btn-primary btn-sm float-right mt-1"><img src="{% static "images/icons/send-mail.png"%}"
                                                                                        width="24px" height="24px"> Send</button>
         </form>
     </div>
