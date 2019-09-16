@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message
+from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message,Category
 from .forms import (
     SignUpForm,userUpdate,
     approveForm,listuserForm,
@@ -263,7 +263,7 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Publication
     template_name = 'Main/Home-Logged.html'
-    fields = ['titre', 'content']
+    fields = ['titre', 'content','section']
 
 
     def form_valid(self, form):
@@ -372,3 +372,9 @@ class MessageDeleteView(DeleteView):
     template_name = 'Main/admin/MsgsReports.html'
     model = Message
     success_url = '/reports/'
+
+
+def posts(request,category):
+    posts= Publication.objects.filter(Category__name=category)
+    context = {'posts':posts}
+    render(request,'Main/Home-Logged.html',context)

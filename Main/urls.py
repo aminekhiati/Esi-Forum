@@ -26,6 +26,7 @@ urlpatterns = [
     path('reports/delete/<int:pk>',views.ReportDeleteView.as_view(),name='report-delete'),
     path('reports/deletemeesage/<int:pk>',views.MessageDeleteView.as_view(),name='message-delete'),
     path('', PostListView.as_view(), name='home'),
+    path('<slug:category>', views.posts, name='category'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),
     path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),

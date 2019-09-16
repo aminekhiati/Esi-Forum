@@ -347,10 +347,20 @@
                 <span class="a-field__label">Title</span>
               </span>
                         </label>
+                        
                         <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
+                        <div class="ml-4 mt-4 float-right" style="margin-top: 5% !important;">
+                            <strong style="color: white;" >Section :</strong> 
+                                <select class="selectpicker mr-4" name="section">
+                                    <option selected>Article</option>
+                                    <option value="Question">Question</option>
+                                    <option value="Survey">Survey</option>
+                                </select>
+                            </div>
                 </div>
+                
                 <div class="modal-body">
                     <textarea id="editor" name="content"></textarea>
                 </div>

@@ -25,6 +25,19 @@ PROMO = (
         ('3cs', '3CS'),
     )
 
+CATEGORY = (
+        ('offtalk', 'OffTalk'),
+        ('professors', 'Professors'),
+        ('clubs', 'Clubs'),
+        ('bachelors', 'Bachelors'),
+        ('1cpi', '1CPI'),
+        ('2cpi', '2CPI'),
+        ('1cs', '1CS'),
+        ('2cs', '2CS'),
+        ('3cs', '3CS'),
+    
+)
+
 
 
 class Tags(models.Model):
@@ -48,7 +61,11 @@ class Utilisateur(AbstractUser):
     role = models.CharField(choices=ROLE,default='etudiant',max_length=10)
 
 
-
+class Category(models.Model):
+    name = models.SlugField(choices=CATEGORY,default=1,max_length=30)
+    
+    def __str__(self):
+        return self.name
 
 
 class Publication(models.Model) :
@@ -59,6 +76,7 @@ class Publication(models.Model) :
     content = models.TextField()
     titre = models.CharField(max_length=30)
     auteur = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='publications')
+    category = models.ForeignKey(Category,on_delete =models.CASCADE,related_name="publications",related_query_name="category",default=1)
     tags = models.ManyToManyField(Tags, related_name='posts',default="ok")
     nb_vues =models.IntegerField(default=0)
     
@@ -135,3 +153,5 @@ class Message(models.Model):
     date =models.DateField(auto_now_add=True)
     message=models.TextField(null=True,blank=True)
     sybject = models.TextField(null=True,blank=True)
+
+
