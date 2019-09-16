@@ -97,7 +97,7 @@
                         <form method="GET" action="{% url 'search' %}">
                             <label class="field a-field a-field_a1 page__field pt-0 mr-4">
                                 <input  name ="q" class="field__input a-field__input" type="text" placeholder="Search" value="">
-                                <input type="submit" value="Search">
+                                <input type="submit" style="display: none;">
                                 <span class="a-field__label-wrap">
                                 <span class="fa fa-search float-right mt-2 mr-3"></span>
                             </span>
@@ -180,13 +180,22 @@
             <a href="{% url 'post-detail' pub.id %}">
                 <h3>{{ pub.titre }} </h3>
             </a>
-            <p>{{ pub.content }} </br>
+            <p class="post-toparse">{{ pub.content }} </br>
             </p>
             <div class="line"></div>
         </div>
         {% endfor %}
 
     </div>
+<script>
+  
+    var posts = document.getElementsByClassName("post-toparse");
+    for(var i=0;i<posts.length; i++){
+        post = posts.item(i);
+        post.innerHTML = post.textContent;
+    }
+        
+</script>
 </body>
 
 </html>

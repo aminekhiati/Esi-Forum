@@ -77,14 +77,16 @@
                             <a class="nav-link" href="#"><span class="fa fa-users icons"></span> Clubs</a>
                         </li>
                         <li class="ml-1 nav-item float-right">
-                             <label class="field a-field a-field_a1 page__field pt-0 mr-4">
-                                        <input class="field__input a-field__input" type="text" placeholder="Search" value="">
-                                        <span class="a-field__label-wrap">
-                                                <span class="fa fa-search float-right mt-2 mr-3"></span>
-                                        </span>
-                                        
-                                    </label>
-                        </li> 
+                          <form method="GET" action="{% url 'search' %}">
+                              <label class="field a-field a-field_a1 page__field pt-0 mr-4">
+                                  <input  name ="q" class="field__input a-field__input" type="text" placeholder="Search" value="">
+                                  <input type="submit" style="display: none;">
+                                  <span class="a-field__label-wrap">
+                                  <span class="fa fa-search float-right mt-2 mr-3"></span>
+                              </span>
+                              </label>
+                          </form>
+                      </li> 
                         <a href="#" data-toggle="modal" data-target="#advancedSearch"
             style="position: relative;top:0.9vw;color:lightcoral">Advanced</a>
                         
