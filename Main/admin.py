@@ -9,5 +9,7 @@ admin.site.register(Commentaire)
 admin.site.register(Publication_archivee)
 admin.site.register(Utilisateur)
 admin.site.register(Tags)
+admin.site.register(Report)
+admin.site.register(Message)
 
 

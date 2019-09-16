@@ -7,7 +7,6 @@ from .views import (
     PostUpdateView,
     PostDeleteView,
     CommentUpdateView,
-    
 )
 
 
@@ -23,7 +22,9 @@ urlpatterns = [
     path('logout/', views.logout_request, name='logout'),
     path('usersettings/', views.editeProfile, name='editprofile'),
     path('searchresults',views.search, name='search'),
-
+    path('reports/',views.ReportListView.as_view(),name='reports'),
+    path('reports/delete/<int:pk>',views.ReportDeleteView.as_view(),name='report-delete'),
+    path('reports/deletemeesage/<int:pk>',views.MessageDeleteView.as_view(),name='message-delete'),
     path('', PostListView.as_view(), name='home'),
     path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail'),
     path('post/new/', PostCreateView.as_view(), name='post-create'),

@@ -1,21 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Publication,Profile,Utilisateur,Commentaire
+from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message
 from .forms import (
     SignUpForm,userUpdate,
     approveForm,listuserForm,
-    deleteForm,addmodForm,
+    deleteForm,addmodForm,adminUpdate,
     UserUpdateForm,ProfileUpdateForm,
     CommentForm)
 from django.http import HttpResponse
-from django.db.models import Count, F
+from django.db.models import Count, F, Q
 from django.contrib.auth import login, authenticate,logout
-from django.forms.models import model_to_dict
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
 from django.forms.models import model_to_dict
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.sessions.models import Session
+from django.utils import timezone
 
 from django.views.generic import (
     CreateView,
@@ -25,6 +26,14 @@ from django.views.generic import (
     DeleteView
 )
 
+def get_current_users():
+    active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
+    user_id_list = []
+    for session in active_sessions:
+        data = session.get_decoded()
+        user_id_list.append(data.get('_auth_user_id', None))
+    # Query all logged in users based on id list
+    return Utilisateur.objects.filter(id__in=user_id_list)
 
 def admin_check(user):
     return user.role=="admin" or user.role=="moderateur"
@@ -58,14 +67,16 @@ def signup(request):
 @login_required(login_url='/home/')
 @user_passes_test(admin_check,login_url='/home/')
 def dashboard(request):
-    pubs_populaie=Publication.objects.annotate(num_c_v=(Count('commentaire')+F('nb_vues'))).order_by('num_c_v')[0:3]
+    queryset = get_current_users()
+    pubs_populaie=Publication.objects.annotate(num_c_v=(Count('publication')+F('nb_vues'))).order_by('num_c_v')[0:3]
     nbr_user=Utilisateur.objects.all().count()-1
     nbr_topic=Publication.objects.all().count()
-    admin_pubs=Publication.objects.filter(lauteur__role='admin')
+    admin_pubs=Publication.objects.filter(auteur__role='admin')
     return render(request, 'Main/admin/Dashboard.html', {"nbr_user":nbr_user,
                                                          "nbr_topic":nbr_topic,
                                                          "pubs_populaie":pubs_populaie,
-                                                         "admin_pubs":admin_pubs
+                                                         "admin_pubs":admin_pubs,
+                                                         "nbr_online":queryset.count()
                                                         })
 
 @login_required(login_url='/home/')
@@ -77,15 +88,14 @@ def dashboard_editProfile(request):
         admin = ad
     if request.method == 'POST' :
         form = adminUpdate(request.POST)
-
+        
         if form.is_valid(): 
+            
             if(form.cleaned_data.get('username1')):
                 if(form.cleaned_data.get('username')):
                     Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(username=form.cleaned_data.get('username'))
                 if(form.cleaned_data.get('email')):
                     Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(email=form.cleaned_data.get('email'))
-                if(form.cleaned_data.get('password')):
-                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(password=form.cleaned_data.get('password'))
                 if(form.cleaned_data.get('firstname')):
                     Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(first_name=form.cleaned_data.get('firstname'))
                 if(form.cleaned_data.get('lastname')):
@@ -167,7 +177,6 @@ def users(request):
                                                       "nbprof":nbprof,
                                                       "nbpmod":nbpmod,
                                                         })    
-               
 
 def logout_request(request):
     logout(request)
@@ -224,8 +233,15 @@ def editeProfile(request):
 
 
 def search(request):
+    query =request.GET.get('q')
+    essai = Publication.objects.all()
+    results = Publication.objects.filter(Q(titre__contains=query))
+    context ={
+        'essai':essai,
+        'resutls':results
+    }
+    return render(request,"Main/searchresults.html",context)
 
-    return render(request,"Main/searchresults.html")
 
 
 
@@ -336,3 +352,22 @@ def comment_update(request, pk1,pk2):
     return redirect('post-detail', pk=post.pk)
 
     
+class ReportListView(ListView):
+    template_name = 'Main/admin/MsgsReports.html'
+    context_object_name = 'reports_list'
+    def get_context_data(self, **kwargs):
+        context = super(ReportListView, self).get_context_data(**kwargs)
+        context['messages_list'] = Message.objects.all()
+        return context
+    def get_queryset(self):
+        return Report.objects.all()
+
+class ReportDeleteView(DeleteView):
+    template_name = 'Main/admin/MsgsReports.html'
+    model = Report
+    success_url = '/reports/'
+
+class MessageDeleteView(DeleteView):
+    template_name = 'Main/admin/MsgsReports.html'
+    model = Message
+    success_url = '/reports/'

@@ -9,14 +9,15 @@
                                     <span class="table-caption">
                                         edit information </span>
                                 </div>
-                        
+                            <form method="POST">
+                            {% csrf_token %}
                                 <div class="tab text-center">
                                     <br>
                                     <label class="field a-field a-field_a1 page__field  mr-4">
-                                        {% render_field form.username class="field__input a-field__input" type="text" placeholder='name'  id='adminname'value="" %}
+                                        {% render_field form.username class="field__input a-field__input" type="text" placeholder='name'  value="" %}
                                         
                                         <span class="a-field__label-wrap">
-                                        <span class="a-field__label">{{admin.user.username}}</span>
+                                        <span class="a-field__label" id='adminname'>{{admin.user.username}}</span>
                                         </span>
                                     </label>
 
@@ -43,13 +44,15 @@
                                             <span class="a-field__label">{{admin.user.lastname}}</span>
                                             </span>
                                     </label>
+                                    {% render_field  form.username1  type="hidden" value="" id="usernameadminprofile" %}
                                     <br>
                                     <hr>
                                     {% ifequal  admin.user.role 'admin'  %}
-                                        <button class="btn btn-danger float-right">Update Profile</button> 
+                                        <button type="submit" class="btn btn-danger float-right">Update Profile</button> 
                                     {% endifequal %}
                                     
                                     <br>
+                                </form>
                                     
                         </div>
                     </div>
@@ -68,13 +71,15 @@
                            
                             {% endif %}
                             
-                            <a href="#" role="button" class="btn btn-danger">Profile</a>
+                            
+                        
                         </div>
                     </div>
                 </div>
 
                 <script>
-                 
+                 console.log(document.getElementById("adminname").innerHTML)
+                 document.getElementById("usernameadminprofile").value=document.getElementById("adminname").innerHTML
 
                 </script>
                 

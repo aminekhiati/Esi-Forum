@@ -122,3 +122,16 @@ class Fichier_attachee (models.Model):
         return self.idfa 
 
 
+class Report(models.Model):
+    from_user = models.ForeignKey(Utilisateur,on_delete=models.CASCADE,related_query_name="user_from")
+    sybject = models.TextField(null=True,blank=True)
+    date =models.DateField(auto_now_add=True)
+    user_reported = models.ForeignKey(Utilisateur,on_delete=models.CASCADE,related_name="report",related_query_name="user_reported")
+    reason=models.TextField(null=True,blank=True)
+    topic = models.ForeignKey(Publication,on_delete=models.CASCADE)    
+
+class Message(models.Model):
+    email=models.EmailField( max_length=254)
+    date =models.DateField(auto_now_add=True)
+    message=models.TextField(null=True,blank=True)
+    sybject = models.TextField(null=True,blank=True)

@@ -152,28 +152,30 @@
                 <div id="carouselExampleControls" class="my-carousel carousel slide" data-ride="carousel">
                       <p id="titre-carousel">ESI Community</p>
                       <p id="content-carousel">Espace D’étudiants de l’école supérieur d'informatique Sidi Bel Abbes</p>
-                      <button class="btn" id="join-carousel">Join us</button>
-                      <div id="login-carousel">
-                        <span id="login-span-carousel">
-                          <span class="fa fa-arrow-circle-right icons"></span> Log in
-                        </span>
-                        <form method="POST">
-                          <label class="field a-field a-field_a1 page__field mt-4">
-                            <input class="field__input a-field__input" placeholder="e.g. user@esi-sba.dz" required>
-                            <span class="a-field__label-wrap">
-                              <span class="a-field__label">Email</span>
-                            </span>
-                          </label>
-                            <label class="field a-field a-field_a1 page__field">
-                              <input class="field__input a-field__input" type="password" placeholder="*******" required>
-                              <span class="a-field__label-wrap">
-                                <span class="a-field__label">Password</span>
-                              </span>
-                            </label>
-                            <small class="float-left ml-4 mb-3"><a href="#">mot de passe oublié?</a></small></br>
-                            <button class="btn float-right mr-4" type="submit">connexion</button>
-                        </form>
-                      </div>                 
+                      {% if not user.is_authenticated %}
+                        <button class="btn" id="join-carousel">Join us</button>
+                        <div id="login-carousel">
+                                        <span id="login-span-carousel">
+                                          <span class="fa fa-arrow-circle-right icons"></span> Log in
+                                        </span>
+                            <form method="POST">
+                                <label class="field a-field a-field_a1 page__field mt-4">
+                                    <input class="field__input a-field__input" placeholder="e.g. user@esi-sba.dz" required>
+                                    <span class="a-field__label-wrap">
+                                              <span class="a-field__label">Email</span>
+                                            </span>
+                                </label>
+                                <label class="field a-field a-field_a1 page__field">
+                                    <input class="field__input a-field__input" type="password" placeholder="*******" required>
+                                    <span class="a-field__label-wrap">
+                                                <span class="a-field__label">Password</span>
+                                              </span>
+                                </label>
+                                <small class="float-left ml-4 mb-3"><a href="#">mot de passe oublié?</a></small></br>
+                                <button class="btn float-right mr-4" type="submit">connexion</button>
+                            </form>
+                        </div>
+                        {% endif %}                 
                       <div class="carousel-inner">
                       <div class="carousel-item active">
                         <img class="d-block w-100" src="{% static "images/slide/slide2.jpg"%}" alt="First slide">
@@ -272,6 +274,13 @@
                     </li>
                     <li class="nav-item">
                       <a class="nav-link" href="#" id="responsive-login" data-toggle="modal" data-target="#loginPop" hidden><span class="fas fa-sign-in-alt icons" ></span> Login</a>
+                  </li>
+                  <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <form action="{% url 'logout' %}">
+                        <button class="btn btn-danger">Log out</button>
+                    </form>
+                    {% endif %}
                   </li>
                 </ul>
                
