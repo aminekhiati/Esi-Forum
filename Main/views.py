@@ -195,7 +195,7 @@ def login_request(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, "Logged in successfully as {username}")
-                return redirect('../')
+                return redirect('home')
             else:
                 messages.info(request,"User dosn't exist")
         else:

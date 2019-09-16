@@ -85,7 +85,7 @@
 		position: absolute;
 	}
 	
-	#author-title{
+	.author-title{
 		position: absolute;
 		font-size: 12px !important;
 		margin-left: -10% !important;

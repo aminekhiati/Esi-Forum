@@ -68,8 +68,8 @@
         <div class="navbar">
             <ul class="nav nav-pills" id="homemenu">
                 <li class="nav-item">
-                    <a class="nav-link" id="active" href="#">
-                        <span class="fa fa-home icons"></span> Accueill</a>
+                    <a class="nav-link" id="active" href="{% url 'home' %}">
+                        <span class="fa fa-home icons"></span> Home</a>
                 </li>
                 <li class="nav-item">
                     <div class="dropdown show">
@@ -236,37 +236,37 @@
                     <div id="notificationTitle" style="color: white">Notifications</div>
                     <div id="notificationsBody"  style="overflow-y: scroll">
                         <div class="element-notif">
-                            <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
                             <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                             <a href="#">Link</a>
                         </div>
                         <div class="line"></div>
                         <div class="element-notif">
-                            <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
                             <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                             <a href="#">Link</a>
                         </div>
                         <div class="line"></div>
                         <div class="element-notif">
-                            <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
                             <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                             <a href="#">Link</a>
                         </div>
                         <div class="line"></div>
                         <div class="element-notif">
-                            <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
                             <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                             <a href="#">Link</a>
                         </div>
                         <div class="line"></div>
                         <div class="element-notif">
-                            <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
                             <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                             <a href="#">Link</a>
                         </div>
                         <div class="line"></div>
                         <div class="element-notif">
-                            <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
+                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
                             <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
                             <a href="#">Link</a>
                         </div>
@@ -278,9 +278,23 @@
         <a href="#" class="user">
             <span class="fa fa-envelope icons fa-lg" style="width:34px;"></span>
         </a>
-        <a href="#" class="user"> {% if user.is_authenticated %} {{user.username}} {% else %} Guest {% endif %}
+        <a href="#" class="user"> {% if user.is_authenticated %} 
+            {{user.username}} 
+            <img src="{{ user.profile.image.url }}" id="profile-avatar">
+            {% else %}
+            <script>
+                $('#notificationLink').remove();
+                $('#notification_count').remove();
+                $('.fa-bell').remove();
+                $('.fa-envelope').remove();
+                
+                
+            </script>
+            Guest 
+            <img src="{% static "images/avatars/1.png"%}" id="profile-avatar">
+            {% endif %}
             &nbsp;
-            <img src="{% static "images/avatars/1.jpg"%}" id="profile-avatar">
+            
         </a>
         </span>
     </div>
@@ -374,10 +388,14 @@
                                 <div class="author float-left">
                                     <ul class="mr-4 mt-4">
                                         <li class="author-name">
-                                            <a href="#">{{ post.auteur.username}}</a>
+                                            <a href="#" style="position: absolute; margin-left:6%;">{{ post.auteur.username}}</a><br>
                                         </li>
                                         <li>
                                             <img src="{{ post.auteur.profile.image.url }}" class="author-avatar" alt="">
+                                        </li>
+                                        <li>
+                                            <small class="article-title" id="author-title" style="position: absolute; margin-left:6%;">
+                                                {{ post.auteur.role }}</small>
                                         </li>
                                     </ul>
                                 </div>
@@ -390,7 +408,7 @@
                                     <hr>
                                     <p class="article-content post-toparse"> {{ post.content }}</p>
                                     <span class="statics-post"><span class="fa fa-eye icons"></span> {{ post.nb_vues }}    <span class="fa fa-comment icons"></span> {{ post.commentaires.count }}</span>
-                                    <button class="btn btn-outline-danger float-right">Read more</button>
+                                    <a href="{% url 'post-detail' post.id %}" class="btn btn-outline-danger float-right">Read more</a>
                                 </div>
                             </article>
                         {% endfor %}

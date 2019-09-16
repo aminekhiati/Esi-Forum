@@ -49,8 +49,8 @@
                 <div class="navbar">
                     <ul class="nav nav-pills" id="homemenu">
                         <li class="nav-item">
-                            <a class="nav-link" id="active" href="#" >
-                               <span class="fa fa-home icons"></span> Accueill</a>
+                            <a class="nav-link" id="active" href="{% url 'home' %}" >
+                               <span class="fa fa-home icons"></span> Home</a>
                         </li>
                         <li class="nav-item">
                         <div class="dropdown show">
@@ -160,22 +160,23 @@
                                         <span id="login-span-carousel">
                                           <span class="fa fa-arrow-circle-right icons"></span> Log in
                                         </span>
-                            <form method="POST">
-                                <label class="field a-field a-field_a1 page__field mt-4">
-                                    <input class="field__input a-field__input" placeholder="e.g. user@esi-sba.dz" required>
-                                    <span class="a-field__label-wrap">
-                                              <span class="a-field__label">Email</span>
-                                            </span>
-                                </label>
-                                <label class="field a-field a-field_a1 page__field">
-                                    <input class="field__input a-field__input" type="password" placeholder="*******" required>
-                                    <span class="a-field__label-wrap">
-                                                <span class="a-field__label">Password</span>
-                                              </span>
-                                </label>
-                                <small class="float-left ml-4 mb-3"><a href="#">mot de passe oublié?</a></small></br>
-                                <button class="btn float-right mr-4" type="submit">connexion</button>
-                            </form>
+                                        <form method="POST" action="{% url 'login' %}">
+                                            {% csrf_token %}
+                                            <label class="field a-field a-field_a1 page__field mt-4">
+                                                <input name="username" class="field__input a-field__input" placeholder="e.g. user@esi-sba.dz" required>
+                                                <span class="a-field__label-wrap">
+                                                      <span class="a-field__label">Username</span>
+                                                    </span>
+                                            </label>
+                                            <label class="field a-field a-field_a1 page__field">
+                                                <input name="password" class="field__input a-field__input" type="password" placeholder="*******" required>
+                                                <span class="a-field__label-wrap">
+                                                        <span class="a-field__label">Password</span>
+                                                      </span>
+                                            </label>
+                                            <small class="float-left ml-4 mb-3"><a href="#">mot de passe oublié?</a></small></br>
+                                            <button class="btn float-right mr-4" type="submit">login</button>
+                                        </form>
                         </div>
                         {% endif %}                 
                       <div class="carousel-inner">
@@ -206,60 +207,74 @@
         <div class="text-center mt-4" id="profile">
             <div class="notifications">
                 <a href="#" class="user">
-                  <span id="notification_count">3</span>
-                  <a class="nav-link right-search" id="notificationLink" href="#"><span class="fa fa-bell icons"
-                      style="position:relative; font-size: 1.5rem; top: 3px;"></span>
-                  </a>
-                  <div id="notificationContainer">
-                    <div id="notificationTitle" style="color: white">Notifications</div>
-                    <div id="notificationsBody"  style="overflow-y: scroll">
-                      <div class="element-notif">
-                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
-                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                        <a href="#">Link</a>
-                      </div>
-                      <div class="line"></div>
-                      <div class="element-notif">
-                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
-                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                        <a href="#">Link</a>
-                      </div>
-                      <div class="line"></div>
-                      <div class="element-notif">
-                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
-                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                        <a href="#">Link</a>
-                      </div>
-                      <div class="line"></div>
-                      <div class="element-notif">
-                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
-                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                        <a href="#">Link</a>
-                      </div>
-                      <div class="line"></div>
-                      <div class="element-notif">
-                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
-                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                        <a href="#">Link</a>
-                      </div>
-                      <div class="line"></div>
-                      <div class="element-notif">
-                        <img src="{% static "images/avatars/1.jpg"%}" class="avatar-notif" alt="">
-                        <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                        <a href="#">Link</a>
-                      </div>
-                      <div class="line"></div>
+                    <span id="notification_count">3</span>
+                    <a class="nav-link right-search" id="notificationLink" href="#"><span class="fa fa-bell icons"
+                                                                                          style="position:relative; font-size: 1.5rem; top: 3px;"></span>
+                    </a>
+                    <div id="notificationContainer">
+                        <div id="notificationTitle" style="color: white">Notifications</div>
+                        <div id="notificationsBody"  style="overflow-y: scroll">
+                            <div class="element-notif">
+                                <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
+                                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                                <a href="#">Link</a>
+                            </div>
+                            <div class="line"></div>
+                            <div class="element-notif">
+                                <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
+                                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                                <a href="#">Link</a>
+                            </div>
+                            <div class="line"></div>
+                            <div class="element-notif">
+                                <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
+                                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                                <a href="#">Link</a>
+                            </div>
+                            <div class="line"></div>
+                            <div class="element-notif">
+                                <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
+                                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                                <a href="#">Link</a>
+                            </div>
+                            <div class="line"></div>
+                            <div class="element-notif">
+                                <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
+                                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                                <a href="#">Link</a>
+                            </div>
+                            <div class="line"></div>
+                            <div class="element-notif">
+                                <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
+                                <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
+                                <a href="#">Link</a>
+                            </div>
+                            <div class="line"></div>
+                        </div>
+                        <div id="notificationFooter"><a href="#" style="color: white">See All</a></div>
                     </div>
-                    <div id="notificationFooter"><a href="#" style="color: white">See All</a></div>
-                  </div>
-              </div>
-              <a href="#" class="user">
+            </div>
+            <a href="#" class="user">
                 <span class="fa fa-envelope icons fa-lg" style="width:34px;"></span>
-              </a>
-              <a href="#" class="user">@i.benzeghli
+            </a>
+            <a href="#" class="user"> {% if user.is_authenticated %} 
+                {{user.username}} 
+                <img src="{{ user.profile.image.url }}" id="profile-avatar">
+                {% else %}
+                <script>
+                    $('#notificationLink').remove();
+                    $('#notification_count').remove();
+                    $('.fa-bell').remove();
+                    $('.fa-envelope').remove();
+                    
+                    
+                </script>
+                Guest 
+                <img src="{% static "images/avatars/1.png"%}" id="profile-avatar">
+                {% endif %}
                 &nbsp;
-                <img src="{% static "images/avatars/1.jpg"%}" id="profile-avatar">
-              </a>
+                
+            </a>
             </span>
         </div>
         <nav class="navbar navbar-default" role="inpage">
@@ -295,6 +310,7 @@
       <div class="row">
         <div class="col-12" id="topics">
         <div class="topics">
+            {% if user.is_authenticated and user == object.auteur %}
             <div class="btn-group float-right mt-4 mr-4" role="group" aria-label="trier">
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -307,6 +323,7 @@
                   </div>
                 </div>
               </div>
+            {% endif %}
               <br>
               <br>
               <br>
@@ -314,11 +331,12 @@
                   <div class="author float-left" style="width:15%;">
                     <ul class="mr-4 mt-4">
                       <li class="author-name">
-                        <a href="#">{{ object.auteur.username }}</a>
+                        <a href="#" style="position: absolute; margin-left:4%;">{{ object.auteur.username }}</a><br>
                       </li>
                       <li>
                         <img src="{{ object.auteur.profile.image.url }}" class="author-avatar" alt="">
-                        
+                        <small class="article-title" id="author-title" style="position: absolute; margin-left:4%;">
+                          {{ object.auteur.role }}</small>
                       </li>
                     </ul>
                   </div>
@@ -330,22 +348,37 @@
                     </div>
                     <hr>
                     <p class="article-content" id="post-content">{{ object.content }}</p>
-                    <span class="statics-post mt-4 float-right"><a href="#"><span class="fa fa-flag icons"  data-toggle="modal" data-target="#reportPop"></span></a> &nbsp;  <a href="#"><span class="fa fa-pencil icons"  data-toggle="modal" data-target="#editTopicPop"></span></a> &nbsp;</span></a></span>
+                    <span class="statics-post mt-4 float-right"><a href="#">
+                      {% if user.is_authenticated %}
+                        {% if user != object.auteur %}
+                            <a href="#"  data-toggle="modal" data-target="#reportPop">
+                              <span class="fa fa-flag icons"></span></a>
+                              {% endif %}
+                        {% if user == object.auteur %}
+                       <a href="#"><span class="fa fa-pencil icons"  data-toggle="modal" data-target="#editTopicPop"></span></a>
+                        &nbsp;</span></a>
+                       {% endif %}
+                      {% endif %}
+                      </span>
                   </div>
               </article>
                 <hr class="w-75">
                 <h4 class="icons">Comments</h4>
                 <div class="comments">
+                  {% if object.commentaires.count == 0 %}
+                    <span class="text-danger" style="font-size:18px; font-weight: bold;"> No Comments Available.</span>
+                  {% endif %}
                   {% for comment in object.commentaires.all %}
                   <article class="media content-section mr-4" style="background-color: #1a2035; border-style: hidden;">
                       <div class="author float-left" style="width:15%;">
                         <ul class="mr-4 mt-4">
                           <li class="author-name">
-                            <a href="#">{{ comment.commented_by.username }}</a>
+                            <a href="#" style="position: absolute; margin-left:4%;">{{ comment.commented_by.username }}</a><br>
                           </li>
                           <li>
                             <img src="{{ comment.commented_by.profile.image.url }}" class="author-avatar" alt="">
-                            <small class="article-title" id="author-title">{{ comment.commented_by.role }}</small>
+                            <small class="article-title" id="author-title" style="position: absolute; margin-left:3.8%;">
+                              {{ comment.commented_by.role }}</small>
                           </li>
                         </ul>
                       </div>
@@ -358,11 +391,19 @@
                         <br><br>
                         <p class="article-content comment-toparse">{{ comment.content }}</p>
                         <span class="statics-post mt-4 float-right">
+                         {% if user.is_authenticated %}
+                            {% if user != comment.commented_by %}
                           <a href="#"  data-toggle="modal" data-target="#reportPop">
-                            <span class="fa fa-flag icons"></span></a> &nbsp;  
+                            <span class="fa fa-flag icons"></span></a>
+                            {% endif %}
+                            &nbsp;  
+                            {% if user == comment.commented_by %}
                             <a href="#" data-toggle="modal" data-target="#editCommentPop{{comment.id}}"><span class="fa fa-pencil icons"></span></a> &nbsp;  
                             <a href="#" data-toggle="modal" data-target="#deletePop{{comment.id}}">
-                              <span class="fa fa-trash icons"></span></a></span>
+                              <span class="fa fa-trash icons"></span></a>
+                            {% endif %}
+                          {% endif %}
+                        </span>
                       </div>
                   </article>
                   
@@ -416,12 +457,14 @@
               </div>
             <hr class="w-75">
             <div style="margin:0 auto; width: 98%;">
-            <form method="post" action="{% url 'comment-new' object.id %}">
-                {% csrf_token %}
-                <textarea class="editor" name="content-comment"></textarea>
-                <br>
-                <button class="btn btn-danger float-right" type="submit" >Reply</button>
-            </form>
+              {% if user.is_authenticated %}
+                <form method="post" action="{% url 'comment-new' object.id %}">
+                    {% csrf_token %}
+                    <textarea class="editor" name="content-comment"></textarea>
+                    <br>
+                    <button class="btn btn-danger float-right" type="submit" >Reply</button>
+                </form>
+              {% endif %}
             </div>
             </div>
           </div>
@@ -539,25 +582,6 @@
   </div>
   </div>
   <br>
-    <div>
-      <nav aria-label="pagination">
-        <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item active">
-            <span class="page-link">
-              2
-              <span class="sr-only">(current)</span>
-            </span>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
       <hr>
       <div class="footer-bg">
           <div id="about-us">
