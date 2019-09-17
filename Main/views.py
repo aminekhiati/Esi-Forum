@@ -25,7 +25,7 @@ from django.views.generic import (
     DetailView,
     DeleteView
 )
-
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger,InvalidPage
 def get_current_users():
     active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
     user_id_list = []
@@ -244,7 +244,7 @@ def search(request):
 
 
 
-
+type_glob  = 'All'
 # Publications
 
 class PostListView(ListView):
@@ -256,31 +256,58 @@ class PostListView(ListView):
 
     def get_queryset(self):
         self.category = get_object_or_404(Category,name=self.kwargs['category'])
-        type_post = self.request.GET['type']
-        if type_post:
-            return Publication.objects.filter(category__name=self.category,section=type_post)
+        global type_glob
+        if type_glob != 'All':
+            return Publication.objects.filter(category__name=self.category,section=type_glob)
         else:
             return Publication.objects.filter(category__name=self.category)
     
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
-        type_post = self.request.GET['type']
-        if type_post:
+        global type_glob
+        try:
+           page=int(self.request.GET.get('page','1'))
+        except ValueError:
+           page=1
+        if type_glob != 'All':
+            posts = Publication.objects.filter(category__name=self.category,section=type_glob)
+            paginator=Paginator(posts, 4)
+            ###...get you page number
+            try:
+                posts = paginator.page(page)
+            except (EmptyPage, InvalidPage):
+                posts = paginator.page(paginator.num_pages)
             context.update({
-                'posts': Publication.objects.filter(category__name=self.category,section=type_post),
+                'posts': posts,
                 'category_in': self.category,
             })
         else:
+            posts = Publication.objects.filter(category__name=self.category)
+            paginator=Paginator(posts, 4)
+            try:
+                posts = paginator.page(page)
+            except (EmptyPage, InvalidPage):
+                posts = paginator.page(paginator.num_pages)
             context.update({
-                'posts': Publication.objects.filter(category__name=self.category),
+                'posts': posts,
                 'category_in': self.category,
             })
         return context
+    
+    
 
+
+
+def redirect_type(request,category):
+    global type_glob 
+    category_name = request.get_full_path().split('/')[1]
+    type_glob = request.GET['type']
+    return redirect('category', category=category_name)
 
 class PostDetailView(DetailView):
     model = Publication
     template_name = 'Main/viewPost.html'
+    
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):

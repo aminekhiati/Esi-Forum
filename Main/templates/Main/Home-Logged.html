@@ -78,23 +78,23 @@
                             <span class="fa fa-user icons"></span> Etudiants</a>
                         <!-- dropdown menu here-->
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" style="color:black;" href="#">1 CPI</a>
-                            <a class="dropdown-item" style="color:black;" href="#">2 CPI</a>
+                            <a class="dropdown-item" style="color:black;" href="{% url 'category' '1cpi' %}">1 CPI</a>
+                            <a class="dropdown-item" style="color:black;" href="{% url 'category' '2cpi' %}">2 CPI</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" style="color:black;" href="#">1 CS</a>
-                            <a class="dropdown-item" style="color:black;" href="#">SIW</a>
-                            <a class="dropdown-item" style="color:black;" href="#">ISI</a>
+                            <a class="dropdown-item" style="color:black;" href="{% url 'category' '1cs' %}">1 CS</a>
+                            <a class="dropdown-item" style="color:black;" href="{% url 'category' '2cs' %}">2 CS</a>
+                            <a class="dropdown-item" style="color:black;" href="{% url 'category' '3cs' %}">3 CS</a>
                         </div>
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fa fa-briefcase icons"></span> Enseignants</a>
+                    <a class="nav-link" href="{% url 'category' 'professors' %}"><span class="fa fa-briefcase icons"></span> Enseignants</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fa fa-graduation-cap icons"></span> Bacheliers</a>
+                    <a class="nav-link" href="{% url 'category' 'bachelors' %}"><span class="fa fa-graduation-cap icons"></span> Bacheliers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fa fa-users icons"></span> Clubs</a>
+                    <a class="nav-link" href="{% url 'category' 'clubs' %}"><span class="fa fa-users icons"></span> Clubs</a>
                 </li>
                 <li class="ml-1 nav-item float-right">
                     <form method="GET" action="{% url 'search' %}">
@@ -315,13 +315,16 @@
 
     {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'category' category_in.name %}?type=Article" name="articles"><span class="fa fa-newspaper icons"></span> Articles</a>
+                    <a class="nav-link" href="{%url 'redirect-type' category_in.name %}?type=All" name="all"><span class="fa fa-globe icons"></span>&nbsp; All Topics</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'category' category_in.name %}?type=Question" name="questions"><span class="fa fa-question-circle icons"></span> Questions</a>
+                    <a class="nav-link" href="{%url 'redirect-type' category_in.name %}?type=Article" name="articles"><span class="fa fa-newspaper icons"></span> Articles</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'category' category_in.name %}?type=Survey" name="surveys"><span class="fa fa-flag icons"></span> Surveys</a>
+                    <a class="nav-link" href="{%url 'redirect-type' category_in.name %}?type=Question" name="questions"><span class="fa fa-question-circle icons"></span> Questions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{%url 'redirect-type' category_in.name %}?type=Survey" name="surveys"><span class="fa fa-flag icons"></span> Surveys</a>
                 </li>
                 <li class="nav-item">
                     {% if user.is_authenticated %}
