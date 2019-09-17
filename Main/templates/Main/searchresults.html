@@ -177,7 +177,7 @@
 
         {% for pub in resutls %}
         <div class="element_search">
-            <a href="{% url 'post-detail' pub.id %}">
+            <a href="{% url 'post-detail' pub.category.name pub.id %}">
                 <h3>{{ pub.titre }} </h3>
             </a>
             <p class="post-toparse">{{ pub.content }} </br>

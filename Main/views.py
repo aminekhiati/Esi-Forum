@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message,Category
+from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message,Category,Tags
 from .forms import (
     SignUpForm,userUpdate,
     approveForm,listuserForm,
@@ -254,6 +254,29 @@ class PostListView(ListView):
     ordering = ['-date_de_publication']
     paginate_by = 4
 
+    def get_queryset(self):
+        self.category = get_object_or_404(Category,name=self.kwargs['category'])
+        type_post = self.request.GET['type']
+        if type_post:
+            return Publication.objects.filter(category__name=self.category,section=type_post)
+        else:
+            return Publication.objects.filter(category__name=self.category)
+    
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        type_post = self.request.GET['type']
+        if type_post:
+            context.update({
+                'posts': Publication.objects.filter(category__name=self.category,section=type_post),
+                'category_in': self.category,
+            })
+        else:
+            context.update({
+                'posts': Publication.objects.filter(category__name=self.category),
+                'category_in': self.category,
+            })
+        return context
+
 
 class PostDetailView(DetailView):
     model = Publication
@@ -263,12 +286,18 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Publication
     template_name = 'Main/Home-Logged.html'
-    fields = ['titre', 'content','section']
-
-
-    def form_valid(self, form):
-        form.instance.auteur = self.request.user
-        return super().form_valid(form)
+    #fields = ['titre', 'content','section']
+    
+    def post(self, request, *args, **kwargs):
+        category_name = request.get_full_path().split('/')[1]
+        post = Publication()
+        post.titre = request.POST['titre']
+        post.content = request.POST['content']
+        post.section = request.POST['section']
+        post.category = Category.objects.filter(name=category_name)[0]
+        post.auteur = request.user
+        post.save()
+        return redirect('post-detail', category=category_name, pk=post.id)
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -297,7 +326,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 #Comments
 
-def add_comment_to_post(request, pk):
+def add_comment_to_post(request, category ,pk):
     post = get_object_or_404(Publication, pk=pk)
     if request.method == "POST":
         #form = CommentForm(request.POST)
@@ -308,9 +337,9 @@ def add_comment_to_post(request, pk):
         comment.content = content
         comment.commented_by = request.user
         comment.save()
-        return redirect('post-detail', pk=post.pk)
+        return redirect('post-detail',category=post.category.name, pk=post.pk)
     
-    return redirect('post-detail', pk=post.pk)
+    return redirect('post-detail',category=post.category.name, pk=post.pk)
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Commentaire
@@ -328,17 +357,17 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 
 @login_required
-def comment_remove(request, pk1,pk2):
+def comment_remove(request, category,pk1,pk2):
     if request.method == "POST":
         comment = get_object_or_404(Commentaire, pk=pk2)
         if comment.commented_by == request.user:
             comment.delete()
-            return redirect('post-detail', pk=comment.publication.id)
+            return redirect('post-detail', category=comment.publication.category.name, pk=comment.publication.id)
         else:
-            return redirect('post-detail', pk=comment.publication.id)
+            return redirect('post-detail', category=comment.publication.category.name, pk=comment.publication.id)
 
 @login_required
-def comment_update(request, pk1,pk2):
+def comment_update(request,category,pk1,pk2):
     post = get_object_or_404(Publication, pk=pk1)
     if request.method == "POST":
         comment = get_object_or_404(Commentaire, pk=pk2)
@@ -348,9 +377,9 @@ def comment_update(request, pk1,pk2):
             comment.content = content
             comment.commented_by = request.user
             comment.save()
-            return redirect('post-detail', pk=post.pk)
+            return redirect('post-detail', category=comment.publication.category.name, pk=post.pk)
     
-    return redirect('post-detail', pk=post.pk)
+    return redirect('post-detail', category=comment.publication.category.name, pk=post.pk)
 
     
 class ReportListView(ListView):
@@ -374,7 +403,5 @@ class MessageDeleteView(DeleteView):
     success_url = '/reports/'
 
 
-def posts(request,category):
-    posts= Publication.objects.filter(Category__name=category)
-    context = {'posts':posts}
-    render(request,'Main/Home-Logged.html',context)
+def redirect_offtalk(request):
+    return redirect('category',category='offtalk',)

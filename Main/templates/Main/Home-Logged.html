@@ -315,13 +315,13 @@
 
     {% endif %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fa fa-newspaper icons"></span> Articles</a>
+                    <a class="nav-link" href="{% url 'category' category_in.name %}?type=Article" name="articles"><span class="fa fa-newspaper icons"></span> Articles</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fa fa-question-circle icons"></span> Questions</a>
+                    <a class="nav-link" href="{% url 'category' category_in.name %}?type=Question" name="questions"><span class="fa fa-question-circle icons"></span> Questions</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fa fa-flag icons"></span> Surveys</a>
+                    <a class="nav-link" href="{% url 'category' category_in.name %}?type=Survey" name="surveys"><span class="fa fa-flag icons"></span> Surveys</a>
                 </li>
                 <li class="nav-item">
                     {% if user.is_authenticated %}
@@ -339,7 +339,7 @@
         <div class="modal-lg modal-dialog" role="document">
             <div class="modal-content text-danger">
                 <div class="">
-                    <form method="post" action="{% url 'post-create' %}">
+                    <form method="post" action="{% url 'post-create' category_in.name %}">
                         {% csrf_token %}
                         <label class="field a-field a-field_a1 page__field modal-title ml-4 mt-2" id="newTopicLabel">
                             <input class="field__input a-field__input" name="titre" placeholder="TP5 Solution" required>
@@ -413,12 +413,12 @@
                                 <div class="media-body">
                                     <div class="article-metadata">
                                         <small class="float-right mt-4 metadata">{{ post.date_de_publication }}</small>
-                                        <h2><a class="article-title mt-4" href="{% url 'post-detail' post.id %}">{{ post.titre }}</a></h2>
+                                        <h2><a class="article-title mt-4" href="{% url 'post-detail' post.category.name post.id  %}">{{ post.titre }}</a></h2>
                                     </div>
                                     <hr>
                                     <p class="article-content post-toparse"> {{ post.content }}</p>
                                     <span class="statics-post"><span class="fa fa-eye icons"></span> {{ post.nb_vues }}    <span class="fa fa-comment icons"></span> {{ post.commentaires.count }}</span>
-                                    <a href="{% url 'post-detail' post.id %}" class="btn btn-outline-danger float-right">Read more</a>
+                                    <a href="{% url 'post-detail' post.category.name post.id %}" class="btn btn-outline-danger float-right">Read more</a>
                                 </div>
                             </article>
                         {% endfor %}

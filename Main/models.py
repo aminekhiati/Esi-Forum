@@ -62,7 +62,7 @@ class Utilisateur(AbstractUser):
 
 
 class Category(models.Model):
-    name = models.SlugField(choices=CATEGORY,default=1,max_length=30)
+    name = models.CharField(choices=CATEGORY,default=1,max_length=30)
     
     def __str__(self):
         return self.name
@@ -77,7 +77,7 @@ class Publication(models.Model) :
     titre = models.CharField(max_length=30)
     auteur = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='publications')
     category = models.ForeignKey(Category,on_delete =models.CASCADE,related_name="publications",related_query_name="category",default=1)
-    tags = models.ManyToManyField(Tags, related_name='posts',default="ok")
+    tags = models.ManyToManyField(Tags, related_name='posts',default=None)
     nb_vues =models.IntegerField(default=0)
     
 
@@ -85,7 +85,7 @@ class Publication(models.Model) :
         return self.titre
     
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
+        return reverse('post-detail', kwargs={'pk': self.pk, 'category': self.category.name})
 
     
 
