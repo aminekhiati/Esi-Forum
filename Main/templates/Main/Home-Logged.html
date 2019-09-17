@@ -401,7 +401,7 @@
                                 <div class="author float-left">
                                     <ul class="mr-4 mt-4">
                                         <li class="author-name">
-                                            <a href="#" style="position: absolute; margin-left:6%;">{{ post.auteur.username}}</a><br>
+                                            <a href="{% url 'userpage' %}" style="position: absolute; margin-left:6%;">{{ post.auteur.username}}</a><br>
                                         </li>
                                         <li>
                                             <img src="{{ post.auteur.profile.image.url }}" class="author-avatar" alt="">
@@ -422,6 +422,8 @@
                                     <p class="article-content post-toparse"> {{ post.content }}</p>
                                     <span class="statics-post"><span class="fa fa-eye icons"></span> {{ post.nb_vues }}    <span class="fa fa-comment icons"></span> {{ post.commentaires.count }}</span>
                                     <a href="{% url 'post-detail' post.category.name post.id %}" class="btn btn-outline-danger float-right">Read more</a>
+                                    <span class="statics-post"><a href={% url 'engpub' post.id %}><span class="fa fa-bookmark icons"></span> </a><span class="fa fa-eye icons"></span> {{ post.nb_vues }}    <span class="fa fa-comment icons"></span> {{ post.commentaires.count }}</span>
+                                    <a href="{% url 'post-detail' post.id %}" class="btn btn-outline-danger float-right">Read more</a>
                                 </div>
                             </article>
                         {% endfor %}
