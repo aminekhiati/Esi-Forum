@@ -106,6 +106,8 @@ def dashboard_editProfile(request):
                                                         "form":form
                                                         })
 
+
+
 @login_required(login_url='/home/')
 @user_passes_test(admin_check,login_url='/home/')
 def users(request):
@@ -372,3 +374,105 @@ class MessageDeleteView(DeleteView):
     template_name = 'Main/admin/MsgsReports.html'
     model = Message
     success_url = '/reports/'
+
+
+def add_message(request):
+    if request.method == "POST":
+        message = Message()
+        if request.user.is_authenticated:
+            email = request.user.email
+        else:
+            email = request.POST.get('email-message')
+        content = request.POST['Message-input']
+        message.message = content
+        message.sybject = 'Message'
+        message.email = email
+        message.save()
+
+    return redirect('home')
+
+
+
+userroleDashboard='all'
+usernameDashboard=''
+class UsersListView(ListView):
+    global usernameDashboard
+    template_name = 'Main/admin/Users.html'
+    context_object_name = 'users_list'
+    def get_context_data(self, **kwargs):
+        form = userUpdate()
+        formm =addmodForm()
+        context = super(UsersListView,self).get_context_data(**kwargs)
+        context['users_no_list'] = Utilisateur.objects.filter(profile__is_appoved =False)
+        context['form'] = form
+        context['formm'] = formm
+        return context
+        
+    def get_queryset(self):
+        print(usernameDashboard)
+        user=Utilisateur.objects.filter(profile__is_appoved =True)
+        if(userroleDashboard!='all'):
+            user=user.filter(role =userroleDashboard)
+        if(len(usernameDashboard)>1):
+            user=Utilisateur.objects.filter(username =usernameDashboard)
+            return  user.filter(profile__is_appoved =True)
+        else:
+            return user
+
+
+
+def approverUser(request,pk):
+    user=Profile.objects.filter(id=pk).update(is_appoved=True) 
+    return redirect('users')
+    
+def supprimerUser(request,pk):
+    Utilisateur.objects.filter(id=pk).delete()
+    return redirect('users')
+
+def updateUser(request,pk):   
+    user=Utilisateur.objects.filter(id=pk)
+    if request.method == 'POST':
+        form = userUpdate(request.POST)
+        
+        if form.is_valid(): 
+            
+            if(form.cleaned_data.get('firstname')):
+
+                user.update(first_name=form.cleaned_data.get('firstname'))
+            if(form.cleaned_data.get('lastname')):
+                user.update(last_name=form.cleaned_data.get('lastname'))
+            if(form.cleaned_data.get('username')):
+                
+                user.update(username=form.cleaned_data.get('username'))
+            if(form.cleaned_data.get('email')):
+                user.update(email=form.cleaned_data.get('email'))
+            if(form.cleaned_data.get('role')):
+                user.update(role=form.cleaned_data.get('role'))
+            if(form.cleaned_data.get('password')):      
+                user.update(password=form.cleaned_data.get('password'))
+            
+
+            
+    return redirect('users')
+
+
+def searchUser(request):
+    global usernameDashboard
+    if request.POST:
+        usernameDashboard= request.POST['username']
+        print(usernameDashboard)
+    return redirect('users')
+
+def selectrole(request):
+    global userroleDashboard
+    role=request.GET['role']
+    userroleDashboard=role;
+    print(userroleDashboard)
+    return redirect('users')
+
+def addmod(request):   
+    if request.method == 'POST':
+        formadd = addmodForm(request.POST)
+        if formadd.is_valid():
+            Utilisateur.objects.create(username=formadd.cleaned_data.get('username'), email=formadd.cleaned_data.get('email'),password=formadd.cleaned_data.get('password'),role="moderateur")          
+    return redirect('users')

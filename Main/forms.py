@@ -43,12 +43,30 @@ class SignUpForm(UserCreationForm):
 
 
 class userUpdate(forms.Form):
+    firstname=forms.CharField(required=False)
+    lastname=forms.CharField(required=False)
     username=forms.CharField(required=False)
     username1=forms.CharField(required=False)
-    role =forms.ChoiceField(choices = ROLE1, label="", initial='', widget=forms.Select(), required=False)
+    role =forms.ChoiceField(choices = ROLE1, widget=forms.Select(), required=False)
     password =forms.CharField(required=False)
     password1 =forms.CharField(required=False)
     email= forms.EmailField(required=False)
+    
+    def clean(self):
+        cd = self.cleaned_data
+        username=cd.get('username')
+        email=cd.get('email')
+        a_string = email[-10:]
+        print(a_string)
+        if cd.get('password') != cd.get('password1'):
+            self.add_error('password1', "passwords do not match !")
+        if  (Utilisateur.objects.filter(username=username).count()>0):
+            self.add_error('username', "username exist !")
+
+        if  (a_string!='esi-sba.dz'):
+            self.add_error('email', "email aint from school  !")
+        
+
 
 class approveForm(forms.Form):
     username=forms.CharField(required=True)
@@ -60,10 +78,24 @@ class deleteForm(forms.Form):
     username=forms.CharField(required=True)       
 
 class addmodForm(forms.Form):
-    username=forms.CharField(required=False)
-    password =forms.CharField(required=False)
-    password1 =forms.CharField(required=False)
-    email= forms.EmailField(required=False)
+    firstname=forms.CharField(required=True)
+    lastname=forms.CharField(required=True)
+    username=forms.CharField(required=True)
+    password =forms.CharField(required=True)
+    password1 =forms.CharField(required=True)
+    email= forms.EmailField(required=True)
+
+    def clean(self):
+        cd = self.cleaned_data
+        username=cd.get('username')
+        email=cd.get('email')
+        a_string = email[-10:]
+        print(a_string)
+        if cd.get('password') != cd.get('password1'):
+            self.add_error('password1', "passwords do not match !")
+        if  (Utilisateur.objects.filter(username=username).count()>0):
+            self.add_error('username', "username exist !")
+
 
 class adminUpdate(forms.Form):
     firstname=forms.CharField(required=False)
@@ -79,9 +111,7 @@ class adminUpdate(forms.Form):
         cd = self.cleaned_data
         if cd.get('password') != cd.get('password1'):
             self.add_error('passwor1', "passwords do not match !")
-
-        if cd.get('username') != "admin":
-            self.add_error('username', "passwords do not match !")
+       
         return cd
 
 class UserUpdateForm(forms.ModelForm):
@@ -91,6 +121,7 @@ class UserUpdateForm(forms.ModelForm):
         model = Utilisateur
         fields = (
             'first_name', 'last_name', 'username', 'email', 'password')
+            
 
 class ProfileUpdateForm(forms.ModelForm):
     nt = forms.CharField(max_length=10, required=False, label="Phone Number")
