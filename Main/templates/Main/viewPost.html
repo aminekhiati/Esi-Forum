@@ -314,7 +314,7 @@
       <div class="row">
         <div class="col-12" id="topics">
         <div class="topics">
-            {% if user.is_authenticated and user == object.auteur %}
+            {% if user.is_authenticated and user == object.auteur or user.role == 'admin' %}
             <div class="btn-group float-right mt-4 mr-4" role="group" aria-label="trier">
                 <div class="btn-group" role="group">
                   <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -358,8 +358,8 @@
                             <a href="#"  data-toggle="modal" data-target="#reportPop">
                               <span class="fa fa-flag icons"></span></a>
                               {% endif %}
-                        {% if user == object.auteur %}
-                       <a href="#"><span class="fa fa-pencil icons"  data-toggle="modal" data-target="#editTopicPop"></span></a>
+                        {% if user == object.auteur or user.role == 'admin' or user.role == 'moderateur' %}
+                       <a href="#"><span class="fa fa-pencil icons ml-2"  data-toggle="modal" data-target="#editTopicPop"></span></a>
                         &nbsp;</span></a>
                        {% endif %}
                       {% endif %}
@@ -401,7 +401,7 @@
                             <span class="fa fa-flag icons"></span></a>
                             {% endif %}
                             &nbsp;  
-                            {% if user == comment.commented_by %}
+                            {% if user == comment.commented_by or user.role == 'admin' or user.role == 'moderateur' %}
                             <a href="#" data-toggle="modal" data-target="#editCommentPop{{comment.id}}"><span class="fa fa-pencil icons"></span></a> &nbsp;  
                             <a href="#" data-toggle="modal" data-target="#deletePop{{comment.id}}">
                               <span class="fa fa-trash icons"></span></a>
@@ -546,6 +546,25 @@
             <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
+            <div class="ml-4 mt-4 float-right" style="margin-top: 5% !important;">
+              <strong style="color: white;" >Section :</strong> 
+                  <select class="selectpicker mr-4" name="section">
+                      {% if object.section == 'Article' %}
+                      <option selected>Article</option>
+                      <option value="Question">Question</option>
+                      <option value="Survey">Survey</option>
+                      {% elif object.section == 'Question' %}
+                      <option>Article</option>
+                      <option value="Question" selected>Question</option>
+                      <option value="Survey">Survey</option>
+                      {% elif object.section == 'Survey' %}
+                      <option>Article</option>
+                      <option value="Question">Question</option>
+                      <option value="Survey" selected>Survey</option>
+                      {% endif %}
+                  </select>
+                    
+              </div>
           </div>
           <div class="modal-body">
             <textarea class="editor" name="content">{{ object.content }}</textarea>

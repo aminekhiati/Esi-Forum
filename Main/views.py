@@ -261,16 +261,16 @@ class PostListView(ListView):
     model = Publication
     context_object_name = 'posts'
     template_name = 'Main/Home-Logged.html'
-    ordering = ['-date_de_publication']
+    ordering = ['-pk']
     paginate_by = 4
 
     def get_queryset(self):
         self.category = get_object_or_404(Category,name=self.kwargs['category'])
         global type_glob
         if type_glob != 'All':
-            return Publication.objects.filter(category__name=self.category,section=type_glob)
+            return Publication.objects.filter(category__name=self.category,section=type_glob).order_by('-pk')
         else:
-            return Publication.objects.filter(category__name=self.category)
+            return Publication.objects.filter(category__name=self.category).order_by('-pk')
     
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
@@ -280,7 +280,7 @@ class PostListView(ListView):
         except ValueError:
            page=1
         if type_glob != 'All':
-            posts = Publication.objects.filter(category__name=self.category,section=type_glob)
+            posts = Publication.objects.filter(category__name=self.category,section=type_glob).order_by('-pk')
             paginator=Paginator(posts, 4)
             ###...get you page number
             try:
@@ -292,7 +292,7 @@ class PostListView(ListView):
                 'category_in': self.category,
             })
         else:
-            posts = Publication.objects.filter(category__name=self.category)
+            posts = Publication.objects.filter(category__name=self.category).order_by('-pk')
             paginator=Paginator(posts, 4)
             try:
                 posts = paginator.page(page)
@@ -340,25 +340,28 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Publication
     template_name = 'Main/viewPost.html'
-    fields = ['titre', 'content']
+    fields = ['titre', 'content','section']
 
-
-    def form_valid(self, form):
-        form.instance.auteur = self.request.user
-        return super().form_valid(form)
 
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.auteur
+        if self.request.user.role=='admin' or self.request.user.role=='moderateur':
+            return True
+        else:
+            return self.request.user == post.auteur
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Publication
     success_url = '/'
 
+
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.auteur
+        if self.request.user.role=='admin' or self.request.user.role=='moderateur':
+            return True
+        else:
+            return self.request.user == post.auteur
 
 
 #Comments
@@ -384,20 +387,19 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ['titre', 'content']
 
 
-    def form_valid(self, form):
-        form.instance.auteur = self.request.user
-        return super().form_valid(form)
-
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.commented_by
+        if self.request.user.role=='admin' or self.request.user.role=='moderateur':
+            return True
+        else:
+            return self.request.user == post.commented_by
 
 
 @login_required
 def comment_remove(request, category,pk1,pk2):
     if request.method == "POST":
         comment = get_object_or_404(Commentaire, pk=pk2)
-        if comment.commented_by == request.user:
+        if comment.commented_by == request.user or request.user.role=='admin' or request.user.role=='moderateur':
             comment.delete()
             return redirect('post-detail', category=comment.publication.category.name, pk=comment.publication.id)
         else:
