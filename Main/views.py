@@ -201,6 +201,7 @@ def login_request(request):
         else:
             messages.info(request,"Invalid Syntaxe")
     form = AuthenticationForm()
+    redirect('home')
     return render(request,"Main/Home-Logged.html", {"form":form})
 
 
@@ -210,19 +211,14 @@ def loggedin (request):
 
 
 def editeProfile(request):
+    u_form = UserUpdateForm(instance=request.user)
+    p_form = ProfileUpdateForm()
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST,instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES)
         if u_form.is_valid() and p_form.is_valid():
-            print("============================================================")
             u_form.save()
-            p_form.save(commit=False)
-            return HttpResponse('User info changed !')
-
-
-    else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm()
+            p_form.save()
 
     context ={
         'u_form' : u_form,
@@ -242,10 +238,23 @@ def search(request):
     }
     return render(request,"Main/searchresults.html",context)
 
+@login_required()
+def userpage(request):
+    presults = Publication.objects.all()
+    cresults = Commentaire.objects.all()
+    contexte ={
+        'posts':presults,
+        'comments':cresults
+    }
+    return render(request,"Main/userpage.html",contexte)
 
 
-
+@login_required()
+def enrigstre_pub(request,pk):
+    request.user.pubs_eng.add(Publication.objects.get(id=pk))
+    return redirect('home')
 # Publications
+
 
 class PostListView(ListView):
     model = Publication

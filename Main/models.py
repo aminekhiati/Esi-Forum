@@ -47,18 +47,14 @@ class Tags(models.Model):
 class Utilisateur(AbstractUser):
     role = models.CharField(choices=ROLE,default='etudiant',max_length=10)
 
-
-
-
-
 class Publication(models.Model) :
-
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL,related_query_name='users',related_name='pubs_eng',default=None)
     date_de_publication = models.DateField(auto_now_add=True)
     date_de_modification= models.DateField(auto_now=True)
     section = models.CharField(max_length=30)
     content = models.TextField()
     titre = models.CharField(max_length=30)
-    auteur = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='publications')
+    auteur = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='publications',related_query_name='auteur')
     tags = models.ManyToManyField(Tags, related_name='posts',default="ok")
     nb_vues =models.IntegerField(default=0)
     
@@ -107,12 +103,6 @@ class Commentaire(models.Model):
         return self.publication.titre+ ' commentaire '+ str(self.pk)
     
 
-
-
-class Publication_archivee(models.Model):
-
-    def __str__(self):
-        return self.idpa 
 
 class Fichier_attachee (models.Model):
     punlication = models.ForeignKey(Publication,on_delete=models.CASCADE)
