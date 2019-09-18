@@ -128,14 +128,14 @@
                                                    style="float:left;width:80%;margin-bottom: 1vw;">
                                                 <input name='m' class="field__input a-field__input" type="text" placeholder="Username" value="" required>
                                                 <span class="a-field__label-wrap">
-                        <span class="a-field__label">Members</span>
+                        <span class="a-field__label">Users</span>
                       </span>
                                             </label>
 
                                         </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-danger">Rechercher</button>
+                                    <button type="submit" class="btn btn-danger">Search</button>
                                 </div>
                             </form>
                         </div>
@@ -154,7 +154,7 @@
         <p id="content-carousel">Espace D’étudiants de l’école supérieur d'informatique Sidi Bel Abbes</p>
 
         {% if not user.is_authenticated %}
-            <a  class="btn btn-sm" id="join-carousel" role="button" href="#">Join us</a>
+            <a  class="btn btn-sm" id="join-carousel" role="button" href="{% url 'signup' %}">Join us</a>
             <div id="login-carousel">
                         <span id="login-span-carousel">
                           <span class="fa fa-arrow-circle-right icons"></span> Log in
