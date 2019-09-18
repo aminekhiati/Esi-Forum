@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message,Category,Tags
+from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message,Category,Tags,Notification
 from .forms import (
     SignUpForm,userUpdate,
     approveForm,listuserForm,
@@ -239,14 +239,12 @@ def search(request):
     return render(request,"Main/searchresults.html",context)
 
 @login_required()
-def userpage(request):
-    presults = Publication.objects.all()
-    cresults = Commentaire.objects.all()
-    contexte ={
-        'posts':presults,
-        'comments':cresults
+def userpage(request,pk):
+    user = Utilisateur.objects.get(pk=pk)
+    context ={
+        'user':user
     }
-    return render(request,"Main/userpage.html",contexte)
+    return render(request,"Main/userpage.html",context)
 
 
 type_glob  = 'All'
@@ -274,6 +272,15 @@ class PostListView(ListView):
     
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
+        posts_all = Publication.objects.all()
+        comments_all = Commentaire.objects.all()
+        users_all = Utilisateur.objects.all()
+        students = users_all.filter(role='etudiant')
+        professors = users_all.filter(role='enseignant')
+        admins = users_all.filter(role='admin')
+        moderators = users_all.filter(role='moderateur')
+        #clubs = users_all.filter(role='club')
+        notifications = Notification
         global type_glob
         try:
            page=int(self.request.GET.get('page','1'))
@@ -290,6 +297,15 @@ class PostListView(ListView):
             context.update({
                 'posts': posts,
                 'category_in': self.category,
+                'notifications' : notifications,
+                'type_glob' : type_glob,
+                'posts_all' : posts_all,
+                'comments_all' : comments_all,
+                'users_all' : users_all,
+                'students' : students,
+                'professors' : professors,
+                'admins' : admins,
+                'moderators' : moderators,
             })
         else:
             posts = Publication.objects.filter(category__name=self.category).order_by('-pk')
@@ -301,6 +317,15 @@ class PostListView(ListView):
             context.update({
                 'posts': posts,
                 'category_in': self.category,
+                'notifications' : notifications,
+                'type_glob' : type_glob,
+                'posts_all' : posts_all,
+                'comments_all' : comments_all,
+                'users_all' : users_all,
+                'students' : students,
+                'professors' : professors,
+                'admins' : admins,
+                'moderators' : moderators,
             })
         return context
     
@@ -317,6 +342,17 @@ def redirect_type(request,category):
 class PostDetailView(DetailView):
     model = Publication
     template_name = 'Main/viewPost.html'
+    
+    def get_context_data(self, **kwargs):
+        global type_glob
+        notifications = Notification
+        post = self.get_object()
+        post.nb_vues = post.nb_vues + 1
+        post.save()
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        context['notifications'] = notifications
+        context['type_glob'] = type_glob
+        return context
     
 
 
@@ -369,14 +405,17 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 def add_comment_to_post(request, category ,pk):
     post = get_object_or_404(Publication, pk=pk)
     if request.method == "POST":
-        #form = CommentForm(request.POST)
-        
         comment = Commentaire()
+        notification = Notification()
+        notification.user_owner = post.auteur
         comment.publication = post
         content = request.POST['content-comment']
         comment.content = content
         comment.commented_by = request.user
         comment.save()
+        notification.comment = comment
+        if post.auteur != request.user:
+            notification.save()
         return redirect('post-detail',category=post.category.name, pk=post.pk)
     
     return redirect('post-detail',category=post.category.name, pk=post.pk)
@@ -444,3 +483,8 @@ class MessageDeleteView(DeleteView):
 
 def redirect_offtalk(request):
     return redirect('category',category='offtalk',)
+
+def clear_notifications(request,category):
+    request.user.notifications.all().delete()
+    return redirect('category',category='offtalk',)
+    

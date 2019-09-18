@@ -11,6 +11,7 @@ admin.site.register(Tags)
 admin.site.register(Report)
 admin.site.register(Message)
 admin.site.register(Category)
+admin.site.register(Notification)
 
 
 

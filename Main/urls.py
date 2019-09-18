@@ -21,7 +21,7 @@ urlpatterns = [
     path('logout/', views.logout_request, name='logout'),
     path('usersettings/', views.editeProfile, name='editprofile'),
     path('searchresults/',views.search, name='search'),
-    path('userpage/',views.userpage, name='userpage'),
+    path('userpage/<int:pk>',views.userpage, name='userpage'),
     path('engpub/<int:pk>',views.enrigstre_pub,name='engpub'),
     path('reports/',views.ReportListView.as_view(),name='reports'),
     path('reports/delete/<int:pk>',views.ReportDeleteView.as_view(),name='report-delete'),
@@ -36,5 +36,5 @@ urlpatterns = [
     path('<str:category>/post/<int:pk>/comment/new/', views.add_comment_to_post, name='comment-new'),
     path('<str:category>/post/<int:pk1>/comment/delete/<int:pk2>/', views.comment_remove, name='comment-delete'),
     path('<str:category>/post/<int:pk1>/comment/update/<int:pk2>/', views.comment_update, name='comment-update'),
-    
+    path('<str:category>/clear-notifications/', views.clear_notifications, name='clear-notifications')
 ]

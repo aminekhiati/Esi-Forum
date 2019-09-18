@@ -175,7 +175,7 @@
 {#                            <li>#}
 {#                                <a href="#">Topics</a></li>#}
                             <li>
-                                <a href="{% url 'userpage' %}">Replies</a></li>
+                                <a href="{% url 'userpage' request.user.id %}">Replies</a></li>
                             <li>
                                 <a href="#">Bookmarks</a></li>
                         </ul>

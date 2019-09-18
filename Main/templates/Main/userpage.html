@@ -167,15 +167,22 @@
                         <div class="all col-sm-10">
                             <ul style="display: block;">
                                 <li>
-                                    <a href="javascript:switchVisible1()">Replies</a></li>
+                                    <a href="javascript:switchVisible1()">Topics</a>
+                                </li>
                                 <li>
-                                    <a href="javascript:switchVisible2()">Bookmarks</a></li>
+                                    <a href="javascript:switchVisible1()">Replies</a>
+                                </li>
+                                {% if request.user == user %}
+                                <li>
+                                    <a href="javascript:switchVisible2()">Bookmarks</a>
+                                </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-10 content">
                         <div class="bookmarks" id="Div2">
-                            <h1>Here you can find the posts you saved</h1></br></br></br></br>
+                            <br><br><br><br>
                             <div class="box">
                                 <p style="margin-top:1.6vw ">Saved Posts</p>
                             </div>
@@ -186,7 +193,7 @@
                                         <th><span class="fa fa-comments icons"></th>
 
                                     </tr>
-                                    {% for post in request.user.pubs_eng.all %}
+                                    {% for post in user.pubs_eng.all %}
                                     <tr class="cursor" onclick="window.location.replace('#')">
                                         <td>{{ post.titre }}</td>
                                         <td>{{ post.commentaires.count }}</td>
@@ -202,7 +209,7 @@
                                 <div class=" element col-md-6"
                                     style="border-right:2px solid #ff7474 !important; overflow-x: hidden;">
                                     <h3 style="color: #ff7474">Comments</h3>
-                                                    {% for comment in comments %}
+                                                    {% for comment in user.commentes.all %}
 
                                                                 <div class="element col-sm-12">
                                                                         <img src="{{ user.profile.image.url }}" class="avatar" alt="">
@@ -216,7 +223,7 @@
                                 <div class=" element col-md-6"
                                     style="border-right:2px solid #ff7474 !important;">
                                     <h3 style="color: #ff7474">Posts</h3>
-                                    {% for post in posts %}
+                                    {% for post in user.publications.all %}
                                     <div class="element col-sm-12">
                                         <img src="{{ user.profile.image.url }}" class="avatar" alt="">
                                         <b style="color:white">{{ user.username }}</b><i style="color:white">&nbsp;&nbsp; a

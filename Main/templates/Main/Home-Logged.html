@@ -88,10 +88,10 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'category' 'professors' %}"><span class="fa fa-briefcase icons"></span> Enseignants</a>
+                    <a class="nav-link" href="{% url 'category' 'professors' %}"><span class="fa fa-briefcase icons"></span> Professors</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'category' 'bachelors' %}"><span class="fa fa-graduation-cap icons"></span> Bacheliers</a>
+                    <a class="nav-link" href="{% url 'category' 'bachelors' %}"><span class="fa fa-graduation-cap icons"></span> Bachelors</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'category' 'clubs' %}"><span class="fa fa-users icons"></span> Clubs</a>
@@ -183,7 +183,7 @@
                 <form method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
                     <label class="field a-field a-field_a1 page__field mt-4">
-                        <input name="username" class="field__input a-field__input" placeholder="e.g. user@esi-sba.dz" required>
+                        <input name="username" class="field__input a-field__input" placeholder="e.g. benzeghli" required>
                         <span class="a-field__label-wrap">
                               <span class="a-field__label">Username</span>
                             </span>
@@ -225,62 +225,40 @@
 <!-- End Menu-->
 
 <div class="container">
+        <span class="float-left text-danger mt-4 alert alert-danger" style="font-family: Iceberg, sans-serif; font-size:20px; font-weight: bold;">
+                [ {{ category_in.name.upper }} ]
+              </span><br>
     <div class="text-center mt-4" id="profile">
         <div class="notifications">
             <a href="#" class="user">
-                <span id="notification_count">3</span>
+                {% if request.user.notifications.count > 0 %}
+                <span id="notification_count">{{ request.user.notifications.count }}</span>
+                {% endif %}
                 <a class="nav-link right-search" id="notificationLink" href="#"><span class="fa fa-bell icons"
                                                                                       style="position:relative; font-size: 1.5rem; top: 3px;"></span>
                 </a>
                 <div id="notificationContainer">
                     <div id="notificationTitle" style="color: white">Notifications</div>
                     <div id="notificationsBody"  style="overflow-y: scroll">
+                        {% for notification in request.user.notifications.all %}
                         <div class="element-notif">
-                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
-                            <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                            <a href="#">Link</a>
+                            <img src="{{ notification.comment.commented_by.profile.image.url }}" class="avatar-notif mr-2" alt="">
+                            <b >{{ notification.comment.commented_by.username }}</b><i>&nbsp;a commenté votre publication</i><br>
+                            <a href="{% url 'post-detail' category_in.name notification.comment.publication.id %}" >{{ notification.comment.publication.titre }}</a>
                         </div>
                         <div class="line"></div>
-                        <div class="element-notif">
-                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
-                            <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                            <a href="#">Link</a>
-                        </div>
-                        <div class="line"></div>
-                        <div class="element-notif">
-                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
-                            <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                            <a href="#">Link</a>
-                        </div>
-                        <div class="line"></div>
-                        <div class="element-notif">
-                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
-                            <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                            <a href="#">Link</a>
-                        </div>
-                        <div class="line"></div>
-                        <div class="element-notif">
-                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
-                            <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                            <a href="#">Link</a>
-                        </div>
-                        <div class="line"></div>
-                        <div class="element-notif">
-                            <img src="{% static "images/avatars/1.png"%}" class="avatar-notif" alt="">
-                            <b >Karim Bourahla</b><i>&nbsp;a commenté votre publication</i><br>
-                            <a href="#">Link</a>
-                        </div>
-                        <div class="line"></div>
+                        {% endfor %}
                     </div>
-                    <div id="notificationFooter"><a href="#" style="color: white">See All</a></div>
+                    <div id="notificationFooter"><a href="{% url 'clear-notifications' category_in.name %}" style="color: white">Clear All</a></div>
                 </div>
         </div>
         <a href="#" class="user">
             <span class="fa fa-envelope icons fa-lg" style="width:34px;"></span>
         </a>
-        <a href="#" class="user"> {% if user.is_authenticated %} 
+        {% if user.is_authenticated %}
+        <a href="{% url 'userpage' request.user.id %}" class="user">  
             {{user.username}} 
-            <img src="{{ user.profile.image.url }}" id="profile-avatar">
+            <img src="{{ user.profile.image.url }}" id="profile-avatar"></a>
             {% else %}
             <script>
                 $('#notificationLink').remove();
@@ -290,7 +268,7 @@
                 
                 
             </script>
-            Guest 
+            <span style="font-weight:bold; color:white;">Guest</span> 
             <img src="{% static "images/avatars/1.png"%}" id="profile-avatar">
             {% endif %}
             &nbsp;
@@ -303,10 +281,19 @@
     <nav class="navbar navbar-default" role="inpage">
         <div class="navbar">
             <ul class="nav nav-pills text-center">
-                <li class="nav-item">
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#newTopic">
-                        <span class="fa fa-plus-square icons"></span> New Topic</button>
-                </li>
+                {% if category_in.name == 'professors' %}
+                    {% if request.user.role == 'enseignant' or request.user.role == 'admin' or request.user.role == 'moderateur' %}
+                    <li class="nav-item">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#newTopic">
+                            <span class="fa fa-plus-square icons"></span> New Topic</button>
+                    </li>
+                    {% endif %}
+                {% else %}
+                    <li class="nav-item">
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#newTopic">
+                            <span class="fa fa-plus-square icons"></span> New Topic</button>
+                    </li>
+                {% endif %}
     {% else %}
 
     <nav class="navbar navbar-default" role="inpage">
@@ -315,20 +302,36 @@
 
     {% endif %}
                 <li class="nav-item">
+                    {% if type_glob == 'All' %}
+                    <a class="nav-link ml-2 active" href="{%url 'redirect-type' category_in.name %}?type=All" name="all"><span class="fa fa-globe icons"></span>&nbsp; All Topics</a>
+                    {% else %}
                     <a class="nav-link" href="{%url 'redirect-type' category_in.name %}?type=All" name="all"><span class="fa fa-globe icons"></span>&nbsp; All Topics</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
+                    {% if type_glob == 'Article' %}
+                    <a class="nav-link ml-2 active" href="{%url 'redirect-type' category_in.name %}?type=Article" name="articles"><span class="fa fa-newspaper icons"></span> Articles</a>
+                    {% else %}
                     <a class="nav-link" href="{%url 'redirect-type' category_in.name %}?type=Article" name="articles"><span class="fa fa-newspaper icons"></span> Articles</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
+                    {% if type_glob == 'Question' %}
+                    <a class="nav-link ml-2 active" href="{%url 'redirect-type' category_in.name %}?type=Question" name="questions"><span class="fa fa-question-circle icons"></span> Questions</a>
+                    {% else %}
                     <a class="nav-link" href="{%url 'redirect-type' category_in.name %}?type=Question" name="questions"><span class="fa fa-question-circle icons"></span> Questions</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
+                    {% if type_glob == 'Survey' %}
+                    <a class="nav-link ml-2 mr-2 active" href="{%url 'redirect-type' category_in.name %}?type=Survey" name="surveys"><span class="fa fa-flag icons"></span> Surveys</a>
+                    {% else %}
                     <a class="nav-link" href="{%url 'redirect-type' category_in.name %}?type=Survey" name="surveys"><span class="fa fa-flag icons"></span> Surveys</a>
+                    {% endif %}
                 </li>
                 <li class="nav-item">
                     {% if user.is_authenticated %}
-                    <form action='logout/'>
+                    <form action="{% url 'logout' %}">
                         <button class="btn btn-danger">Log out</button>
                     </form>
                     {% endif %}
@@ -380,35 +383,21 @@
         <div class="row">
             <div class="col-8 float-left" id="topics">
                 <div class="topics">
-                    <div class="btn-group float-right mt-4 mr-4" role="group" aria-label="trier">
-                        <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                <img src="{% static "images/icons/baseline_settings_white_18dp.png"%}" class="mb-1" width="24px" height="24px"
-                                     alt=""> filter
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item" href="#">most views</a>
-                                <a class="dropdown-item" href="#">most replies</a>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <br>
+                    
                     <div class="topic-placement">
                         {% for post in posts %}
                             <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
                                 <div class="author float-left">
                                     <ul class="mr-4 mt-4">
                                         <li class="author-name">
-                                            <a href="{% url 'userpage' %}" style="position: absolute; margin-left:6%;">{{ post.auteur.username}}</a><br>
+                                            <a href="{% url 'userpage' post.auteur.id %}" style="position: absolute; margin-left:6%;">{{ post.auteur.username}}</a><br>
                                         </li>
                                         <li>
                                             <img src="{{ post.auteur.profile.image.url }}" class="author-avatar" alt="">
                                         </li>
                                         <li>
                                             <small class="article-title" id="author-title" style="position: absolute; margin-left:6%;">
-                                                {{ post.auteur.role }}</small>
+                                                {{ post.auteur.role.capitalize }}</small>
                                         </li>
                                     </ul>
                                 </div>
@@ -420,8 +409,10 @@
                                     </div>
                                     <hr>
                                     <p class="article-content post-toparse"> {{ post.content }}</p>
-                                    <a href={% url 'engpub' post.id %}><span class="fa fa-bookmark icons"></span> </a>
-                                    <span class="statics-post"><span class="fa fa-eye icons"></span> {{ post.nb_vues }}    <span class="fa fa-comment icons"></span> {{ post.commentaires.count }}</span>
+                                    {% if request.user.is_authenticated %}
+                                    <a href={% url 'engpub' post.id %}><span class="fa fa-bookmark icons mr-2"></span> </a>
+                                    {% endif %}
+                                    <span class="statics-post"><span class="fa fa-eye icons"></span> {{ post.nb_vues }}    <span class="fa fa-comment icons ml-2"></span> {{ post.commentaires.count }}</span>
                                     <a href="{% url 'post-detail' post.category.name post.id %}" class="btn btn-outline-danger float-right">Read more</a>
 
                                 </div>
@@ -452,21 +443,48 @@
                             <span class="title"><img src="{% static "images/icons/baseline_assessment_white_18dp.png"%}"> Statistics</span>
                         </div>
                         <div class="card-body" style="background-color: #1a2035; color: white;">
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                card's content.</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                card's content.</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                card's content.</p>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                                card's content.</p>
+                            <p class="card-text">
+                                <span class="fa fa-newspaper icons mr-1 ml-1"></span>
+                                <strong> Posts : <span class="text-info">{{ posts_all.count }}</span>
+                                </strong>
+                            </p>
+                            <p class="card-text">
+                                <span class="fa fa-comment icons mr-1 ml-1"></span>
+                                <strong> Comments : <span class="text-info">{{ comments_all.count }}</span>
+                                </strong>
+                            </p>
+                            <p class="card-text">
+                                <span class="fa fa-shield icons mr-1 ml-1"></span>
+                                <strong> Staffs : <span class="text-info">{{ admins.count|add:moderators.count }}</span>
+                                </strong>
+                            </p>
+                            <p class="card-text">
+                                <span class="fa fa-user icons mr-1 ml-1"></span>
+                                <strong> Users : <span class="text-info">{{ users_all.count }}</span>
+                                </strong>
+                            </p>
+                            <p class="card-text">
+                                <span class="fa fa-graduation-cap icons"></span>
+                                <strong> Students : <span class="text-info">{{ students.count }}</span>
+                                </strong>
+                            </p>
+                            <p class="card-text">
+                                <span class="fa fa-briefcase icons mr-1"></span>
+                                <strong> Professors : <span class="text-info">{{ professors.count }}</span>
+                                </strong>
+                            </p>
+                            <p class="card-text">
+                                <span class="fa fa-users icons mr-1"></span>
+                                <strong> Clubs : <span class="text-info">X</span>
+                                </strong>
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div><br><br>
 {% if is_paginated %}
 <nav aria-label="pagination">
     <ul class="pagination justify-content-center">
@@ -498,32 +516,26 @@
                     </li>
             {% endif %}
     </ul>
-</nav>
+</nav><br><br>
 {% endif %}
 <hr>
 <div class="footer-bg">
-    <div id="about-us">
-        <h3 class="mt-3 mb-3">About us</h3>
-        <ul>
-            <li><a href="#">Islam</a></li>
-            <li><a href="#">Karim</a></li>
-            <li><a href="#">Katia</a></li>
-            <li><a href="#">Fatima</a></li>
-            <li><a href="#">Hamouda</a></li>
-            <li><a href="#">Othman</a></li>
-        </ul>
+    <div id="about-us" style="margin-right:13%;">
+        <h3 class="mt-3 mb-3" style="font-family: Iceberg">ABOUT US</h3><br>
+        <p style="max-width: 600px;">L'objectif principal du projet est de créer une plateforme professionnelle  permettant la communication entre les étudiants, 
+            <br>professeurs et administration et contribuer à la diffusion du savoir et des connaissances pour assurer la bonne formation et le développement des étudiants.</p>
     </div>
     <div id="contact-us">
-        <h3 class="mt-3 mb-3">Contact Us</h3>
+        <h3 class="mt-3 mb-3" style="font-family: Iceberg">CONTACT US</h3><br>
         <p><img src="{% static "images/icons/address.png"%}" width="24px" height="24px"> 26 Ft bibo , Algeria</p>
         <p><img src="{% static "images/icons/mail.png"%}" width="24px" height="24px"> n.benzeghli@esi-sba.dz</p>
         <p><img src="{% static "images/icons/phone.png"%}" width="24px" height="24px"> (213) 555479987</p>
     </div>
     <div id="contact-form">
-        <h3 class="mt-3">CONTACT FORM</h3>
+        <h3 class="mt-3" style="font-family: Iceberg">CONTACT FORM</h3><br>
         <form method="POST">
-            <input type="text" class="form-control mb-2" placeholder="Email">
-            <textarea name="message" placeholder="Your Message here" class="md-textarea form-control"></textarea>
+            <input type="text" style="background: transparent; color:white;" class="form-control mb-2" placeholder="Email">
+            <textarea name="message" style="background: transparent; color:white;" placeholder="Your Message here" class="md-textarea form-control"></textarea>
             <button type="button" class="btn btn-primary btn-sm float-right mt-1"><img src="{% static "images/icons/send-mail.png"%}"
                                                                                        width="24px" height="24px"> Send</button>
         </form>

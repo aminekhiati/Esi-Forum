@@ -81,6 +81,8 @@ class Publication(models.Model) :
     tags = models.ManyToManyField(Tags, related_name='posts',default=None)
     nb_vues =models.IntegerField(default=0)
     
+    class Meta:
+        ordering = ['-pk']
 
     def __str__(self):
         return self.titre
@@ -150,3 +152,9 @@ class Message(models.Model):
     sybject = models.TextField(null=True,blank=True)
 
 
+class Notification(models.Model):
+    comment = models.ForeignKey(Commentaire,on_delete =models.CASCADE,related_name="notifications",related_query_name="comment")
+    user_owner = models.ForeignKey(Utilisateur,on_delete =models.CASCADE,related_name="notifications",related_query_name="user_owner",default=None)
+
+    def __str__(self):
+        return 'Commentaire '+str(self.pk)

@@ -105,7 +105,7 @@
 		height: 100px;
 		margin: 0 !important;
 	}
-	
+
 	.topics {
 		margin: 0 !important;
 	}
@@ -208,6 +208,7 @@ label {
 .navbar[role="inpage"] li a:hover {
 	color: #3585c1;
 }
+
 
 .author {
 	width: 30%;
@@ -342,10 +343,7 @@ a.article-title:hover {
 
 .footer-bg h3 {
 	margin-top: 10%;
-	font-family: Rosario;
 	font-weight: bold;
-	border-bottom-color: white;
-	border-bottom-style: solid;
 }
 
 .notifications {
