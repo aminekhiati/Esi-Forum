@@ -62,7 +62,7 @@ def signup(request):
             #user = authenticate(username=username, password=raw_password)
             #login(request, user)
             utilisateur.save()
-            return HttpResponse('success')
+            return redirect('home')
     else:
         form = SignUpForm()
     return render(request, 'Main/registration.html', {'form': form})
@@ -76,11 +76,16 @@ def dashboard(request):
     nbr_user=Utilisateur.objects.all().count()-1
     nbr_topic=Publication.objects.all().count()
     admin_pubs=Publication.objects.filter(auteur__role='admin')
+    reportcnt=Report.objects.all()
+    messagecnt=Message.objects.all()
     return render(request, 'Main/admin/Dashboard.html', {"nbr_user":nbr_user,
                                                          "nbr_topic":nbr_topic,
                                                          "pubs_populaie":pubs_populaie,
                                                          "admin_pubs":admin_pubs,
-                                                         "nbr_online":queryset.count()
+                                                         "nbr_online":queryset.count(),
+                                                         "reportcnt":reportcnt,
+                                                         "messagecnt":messagecnt
+
                                                         })
 
 @login_required(login_url='/home/')

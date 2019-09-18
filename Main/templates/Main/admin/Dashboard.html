@@ -26,15 +26,27 @@
                         </div>
                     </div>
     </div>
-                
+     {% if reportcnt or  messagecnt%}               
     <div class="row ml-2">
                     <div class="col-4">
                         <div class="admin-notif  text-center">
                             <span class="fa fa-exclamation-circle icons admin-notif-spn"></span>
-                            You have 2 messages and 3 reports.
+                            {% if  messagecnt%}
+                                You have {{messagecnt.count}} <a href="{%url 'reports'%}"> messages</a>
+                            {% endif %}
+                            {% if reportcnt and  messagecnt%}
+                                    and  
+                            {% endif %}
+                            {% if reportcnt %}
+                                      {{reportcnt.count}} <a href="{%url 'reports'%}">reports</a>
+                            {% endif %}
+                            
+                             
                         </div>
                     </div>
     </div>
+    {% else %}<br><br><br>
+    {% endif %}
 
     <div class="row ml-4 mt-4">
                     <div class="col-md-8 col-center">

@@ -33,9 +33,9 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <img src="{% static "images/slide/slide1.jpg" %} " class="img-responsive fit-image">
+                <img src="{% static "images/slide/IMG_2834.JPG" %} " class="img-responsive fit-image">
             </div>
-
+            
         
             <div class="col-md-6">
             
@@ -61,6 +61,7 @@
                 <span class="fa fa-user icons" id="ic"></span>
                 <label class="field a-field a-field_a1 page__field" style="width:84%">
                     {% render_field  form.username  class="field__input a-field__input" placeholder="username" %}
+                    <h1>{{form.username.error}}</h1>
                     <span class="a-field__label-wrap">
                         <span class="a-field__label">Userame</span>
                     </span>

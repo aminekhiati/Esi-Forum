@@ -33,7 +33,7 @@
                                         {% render_field form.firstname class="field__input a-field__input" type="text" placeholder="Firs Name" value="" %}
                                         
                                         <span class="a-field__label-wrap">
-                                        <span class="a-field__label">{{admin.user.firstnsame}}</span>
+                                        <span class="a-field__label">{{admin.user.first_nsame}}</span>
                                         </span>
                                     </label>
                                     
@@ -41,7 +41,7 @@
                                             {% render_field form.lastname class="field__input a-field__input" type="text" placeholder="Last Name" value="" %}
 
                                             <span class="a-field__label-wrap">
-                                            <span class="a-field__label">{{admin.user.lastname}}</span>
+                                            <span class="a-field__label">{{admin.user.last_name}}</span>
                                             </span>
                                     </label>
                                     {% render_field  form.username1  type="hidden" value="" id="usernameadminprofile" %}
@@ -58,7 +58,7 @@
                     </div>
                     <div class="col-4 mt-4">
                         <div class="usr-pic">
-                            <img src="{% static 'images/avatars/1.jpg' %} ">
+                            <img src=" {{admin.image.url}}  ">
                         </div>
                         <div class="tab text-center">
                             <br> <br>

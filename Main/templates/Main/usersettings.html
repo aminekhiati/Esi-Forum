@@ -161,7 +161,7 @@
         </div>
         <div class="col-lg-12">
             <div class="row">
-                <div class="col-lg-2 col-md-2 sidebar" style="display: block;">
+                <div class="col-lg-3 col-md-2 sidebar" style="display: block;margin-top:1.8%">
                     <img src="{{ user.profile.image.url }}" class="profile-pic" alt="">
                     <h3>{{ user.first_name }} {{ user.profile.surname }}</h3>
                     <h5>{{ user.last_name}}</h5>
@@ -181,98 +181,110 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-sm-10 content">
+                <div class="col-sm-9 content" style="overflow:hidden">
                     <form action="#" method="post">
                         {% csrf_token %}
                         <div class="tab mt-4">
-                            <div class="float-left text-center ml-4">
-                            {% if user.profile.image %}
-                                <img src="{{ user.profile.image.url }}" id="img-prof" class="avatar-setting">
-                            {% else %}
-                                <img src="{% static "images/avatars/1.jpg" %}" id="img-prof" class="profile-pic" alt="">
-                            {% endif %}
-                                <br>
+                            
+                            <div class="float-right text-center ml-4" style="margin-top:-2.2%; ">
 
+                                <br>
+                                <label class="field a-field a-field_a1 page__field float-left">
+                                    <input class="field__input a-field__input" placeholder="First Name" value="">
+                                    <span class="a-field__label-wrap">
+                                        <span class="a-field__label">First Name</span>
+                                        <span class="fa fa-address-card float-right mt-2 mr-3 icons"></span>
+                                    </span>
+                                </label>
+                                <br><br><br>
+                                <label class="field a-field a-field_a1 page__field float-left">
+                                    <input class="field__input a-field__input" placeholder="Last Name" value="">
+                                    <span class="a-field__label-wrap">
+                                        <span class="a-field__label">Last Name</span>
+                                        <span class="fa fa-address-card float-right mt-2 mr-3 icons"></span>
+                                    </span>
+                                </label>
+                                <br>
+                                <label class="field a-field a-field_a1 page__field float-left">
+                                    <input class="field__input a-field__input" placeholder="Your phone number" value="">
+                                    <span class="a-field__label-wrap">
+                                        <span class="a-field__label">Phone</span>
+                                        <span class="fa fa-phone float-right mt-2 mr-3 icons"></span>
+                                    </span>
+                                </label><br><br>
+                                <span class="float-left mt-4">
+                                    Promo :
+                                    <select class="selectpicker">
+                                        <option selected value="1">1 CPI</option>
+                                        <option value="2">2 CPI</option>
+                                        <option value="3">1 CS</option>
+                                        <option value="4">SIW</option>
+                                        <option value="5">ISI</option>
+                                    </select>
+                                </span>
+
+                            </div>
+                            <div class="float-left mr-4 text-center">
+
+                                <img src="images/avatars/1.jpg" id="img-prof" class="avatar-setting">
+                                <br>
                                 <form class="mt-2">
                                     <div class="custom-file" id="customFile">
-                                        <input name="image" type="file" onchange="readURL(this);" class="custom-file-input"
-                                               id="exampleInputFile"
-                                               aria-describedby="fileHelp">
+                                        <input type="file" onchange="readURL(this);" class="custom-file-input"
+                                            id="exampleInputFile" aria-describedby="fileHelp">
                                         <label class="custom-file-label" for="exampleInputFile">
                                             Upload avatar
                                         </label>
                                     </div>
                                 </form>
-                                <br>
-                                <label class="field a-field a-field_a1 page__field float-left">
-
-                                    {% render_field u_form.first_name  name="firstname" class="field__input a-field__input" value="" %}
-
-                                    <span class="a-field__label-wrap">
-                                                    <span class="a-field__label">First Name</span>
-                                                    <span class="fa fa-address-card float-right mt-2 mr-3 icons"></span>
-                                                </span>
-                                </label>
                                 <br><br><br>
-                                <label class="field a-field a-field_a1 page__field float-left">
-                                    {% render_field u_form.last_name   name="lastname" class="field__input a-field__input" value="" %}
-                                    <span class="a-field__label-wrap">
-                                                    <span class="a-field__label">Last Name</span>
-                                                </span>
-                                </label>
-                                <br>
-                                <label class="field a-field a-field_a1 page__field float-left">
-                                    {% render_field p_form.nt   name="nt" class="field__input a-field__input" value="" %}
-                                    <span class="a-field__label-wrap">
-                                                    <span class="a-field__label">Phone</span>
-                                                    <span class="fa fa-phone float-right mt-2 mr-3 icons"></span>
-                                                </span>
-                                </label><br><br>
-                                <span class="float-left mt-4">
-                                                Promo :
-                                                  {% render_field p_form.promo %}
-                                        </span>
+                                <span class="fa fa-user icons" id="ff"></span>
+                                
+                                        <div class="form-group">
+                                            <h6>Biography</h6>
+                                            <div class="fr-wrapper ml-4 show-placeholder">
+                                                <textarea class="fr-wrapper fr-box" rows="3" id="comment" style="background-color: inherit;border-color: #212529; color: white; width:100%"></textarea>
+                                            </div>
+                                        </div>
                             </div>
                             <div class="float-right mr-4 text-center">
-
                                 <label class="field a-field a-field_a1 page__field float-right">
-                                    {% render_field u_form.username name="username" class="field__input a-field__input" value="" %}
+                                    <input class="field__input a-field__input" placeholder="Username" value="">
                                     <span class="a-field__label-wrap">
-                                            <span class="a-field__label">Username</span>
-                                            <span class="fa fa-user float-right mt-2 mr-3 icons"></span>
-                                        </span>
-                                </label><br>
+                                        <span class="a-field__label">Username</span>
+                                        <span class="fa fa-user float-right mt-2 mr-3 icons"></span>
+                                    </span>
+                                </label><br>    
                                 <label class="field a-field a-field_a1 page__field float-right">
+                                    <input class="field__input a-field__input" placeholder="Your Email"
+                                        value="">
+                                    <span class="a-field__label-wrap">
+                                        <span class="a-field__label">Email</span>
+                                        <span class="fa fa-envelope float-right mt-2 mr-3 icons"></span>
                                     </span>
                                 </label><br>
                                 <label class="field a-field a-field_a1 page__field float-right">
-                                    {% render_field u_form.password name="password" class="field__input a-field__input" type="password" value="" %}
-
-
+                                    <input class="field__input a-field__input" type="password" placeholder="********"
+                                        value="">
                                     <span class="a-field__label-wrap">
-                                            <span class="a-field__label">New Password</span>
-                                            <span class="fa fa-lock float-right mt-2 mr-3 icons"></span>
-                                        </span>
+                                        <span class="a-field__label">New Password</span>
+                                        <span class="fa fa-lock float-right mt-2 mr-3 icons"></span>
+                                    </span>
                                 </label><br>
-                                    <input class="field__input a-field__input" type="password"
-                                           placeholder="********"
-                                           value="">
+                                <label class="field a-field a-field_a1 page__field float-right">
+                                    <input class="field__input a-field__input" type="password" placeholder="********"
+                                        value="">
                                     <span class="a-field__label-wrap">
-                                            <span class="a-field__label">Confirm Password</span>
-                                        </span>
-                                </label><br>
-                                <label class="float-left mt-2">
-                                    Biography <span class="fa fa-info-circle icons"></span><br>
-                                    <textarea  style="resize: none; background-color: #171c2f; color:white;" rows="3"></textarea>
-                                </label><br>
-                                
+                                        <span class="a-field__label">Confirm Password</span>
+                                    </span>
+                                </label>
                             </div>
                             <br><br><br><br><br><br><br><br><br><br><br>
-                            <br><br><br><br><br><br><hr>
-                            <button type="submit" class="btn btn-danger float-right" style="margin-bottom: 20%;">Update Profile</button>
-                            <br><br><br><br><br><br><br>
-                    </form>
-                </div>
+                            <hr>
+                            <button class="btn btn-danger float-right">Update Profile</button>
+                            <br>
+                        </div>
+                        </form>
                 <footer class="footer" style="margin-left:-100px;">
                     <a href="#" class="menu-item mr-4">ESI-SBA</a>
                     <a href="#" class="menu-item ml-4 mr-4">FORUM</a>
@@ -287,6 +299,19 @@
     </div>
 </div>
 </div>
+<style>
+                .form-control {
+                    position: relative;
+                    left: 3.5%;
+                    width: 100%;
+                }
+                #ff{
+    position: relative;
+    right: 2.6vw;
+    top:1.4vw;
+}
+
+            </style>
 </body>
 
 </html>
