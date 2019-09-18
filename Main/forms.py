@@ -51,6 +51,7 @@ class userUpdate(forms.Form):
     password =forms.CharField(required=False)
     password1 =forms.CharField(required=False)
     email= forms.EmailField(required=False)
+    image=forms.ImageField(required=False)
     
     def clean(self):
         cd = self.cleaned_data
@@ -66,6 +67,7 @@ class userUpdate(forms.Form):
         if  (a_string!='esi-sba.dz'):
             self.add_error('email', "email aint from school  !")
         
+
 
 
 class approveForm(forms.Form):
@@ -84,6 +86,7 @@ class addmodForm(forms.Form):
     password =forms.CharField(required=True)
     password1 =forms.CharField(required=True)
     email= forms.EmailField(required=True)
+    image=forms.ImageField(required=False)
 
     def clean(self):
         cd = self.cleaned_data
@@ -115,12 +118,14 @@ class adminUpdate(forms.Form):
         return cd
 
 class UserUpdateForm(forms.ModelForm):
-    mail = forms.EmailField()
+    email = forms.EmailField()
+    image=forms.ImageField()
+
 
     class Meta:
         model = Utilisateur
         fields = (
-            'first_name', 'last_name', 'username', 'email', 'password')
+            'first_name', 'last_name', 'username', 'email', 'password','image')
             
 
 class ProfileUpdateForm(forms.ModelForm):

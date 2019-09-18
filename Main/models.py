@@ -46,8 +46,11 @@ class Tags(models.Model):
 
 class Utilisateur(AbstractUser):
     role = models.CharField(choices=ROLE,default='etudiant',max_length=10)
-
-
+    banned=models.BooleanField(default=False)
+    mod = models.ForeignKey('self', on_delete=models.DO_NOTHING,related_name='mod-ban+',null=True)
+    subject=models.CharField(max_length=20,null=True)
+    date =models.DateField(auto_now_add=True,null=True)
+    duree=models.IntegerField(default=0,null=True)
 
 
 
@@ -135,3 +138,6 @@ class Message(models.Model):
     date =models.DateField(auto_now_add=True)
     message=models.TextField(null=True,blank=True)
     sybject = models.TextField(null=True,blank=True)
+
+
+

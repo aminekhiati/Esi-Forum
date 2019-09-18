@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message
+from django.conf import settings
+from datetime import datetime 
 from .forms import (
     SignUpForm,userUpdate,
     approveForm,listuserForm,
@@ -17,6 +19,8 @@ from django.forms.models import model_to_dict
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.sessions.models import Session
 from django.utils import timezone
+from django.utils.datastructures import MultiValueDictKeyError
+
 
 from django.views.generic import (
     CreateView,
@@ -25,7 +29,7 @@ from django.views.generic import (
     DetailView,
     DeleteView
 )
-
+import os
 def get_current_users():
     active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
     user_id_list = []
@@ -106,79 +110,6 @@ def dashboard_editProfile(request):
                                                         "form":form
                                                         })
 
-
-
-@login_required(login_url='/home/')
-@user_passes_test(admin_check,login_url='/home/')
-def users(request):
-    if request.method == 'POST' and 'update' in request.POST:
-        form = userUpdate(request.POST)
-        
-        if form.is_valid(): 
-            print('hhh')
-            if(form.cleaned_data.get('username1')):
-                if(form.cleaned_data.get('username')):
-                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(username=form.cleaned_data.get('username'))
-                if(form.cleaned_data.get('email')):
-                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(email=form.cleaned_data.get('email'))
-                if(form.cleaned_data.get('password')):
-                    Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(password=form.cleaned_data.get('password'))
-                
-                Utilisateur.objects.filter(username=form.cleaned_data.get('username1')).update(role=form.cleaned_data.get('role'))
-
-            return HttpResponse('success')
-    if request.method=='POST' and 'approve' in request.POST:
-            formp =approveForm(request.POST)
-            if formp.is_valid():
-                
-                if(formp.cleaned_data.get('username')):
-                    print("ok")
-                    profile=Profile.objects.filter(user__username=formp.cleaned_data.get('username'))
-                    profile.update(is_appoved=True)
-    users=Profile.objects.filter(is_appoved=True) 
-    if request.method=='POST' and 'selectt' in request.POST:
-            forms =listuserForm(request.POST)
-            if forms.is_valid():              
-                if forms.cleaned_data.get('select') == 'All':
-                    users=Profile.objects.filter(is_appoved=True)
-                elif forms.cleaned_data.get('select') == 'enseignant':
-                    users=Profile.objects.filter(is_appoved=True).filter(user__role="enseignant")
-                elif forms.cleaned_data.get('select') == 'etudiant':
-                    users=Profile.objects.filter(is_appoved=True).filter(user__role="etudiant")
-                elif forms.cleaned_data.get('select') == 'moderateur':
-                    users=Profile.objects.filter(is_appoved=True).filter(user__role="moderateur")
-
-    if request.method=='POST' and 'delete' in request.POST:
-            formd =deleteForm(request.POST)
-            if formd.is_valid():              
-               Utilisateur.objects.filter(username=formd.cleaned_data.get('username')).delete()
-
-    if request.method == 'POST' and 'addmod' in request.POST:
-        formadd = addmodForm(request.POST)
-        if formadd.is_valid():
-            Utilisateur.objects.create(username=formadd.cleaned_data.get('username'), email=formadd.cleaned_data.get('email'),password=formadd.cleaned_data.get('password'),role="moderateur")
-            
-            
-    formadd=addmodForm(request.POST)
-    formdelete=deleteForm()
-    formselect=listuserForm()
-    formusers = userUpdate() 
-    formuserno=approveForm()
-    nbstd=Utilisateur.objects.filter(role="etudiant").count()
-    nbprof=Utilisateur.objects.filter(role="enseignant").count()
-    nbpmod=Utilisateur.objects.filter(role="moderateur").count()
-    usersNo=Profile.objects.filter(is_appoved=False)
-    return render(request, 'Main/admin/Users.html', {"usersNo":usersNo,
-                                                     "users":users,
-                                                      "formusers":formusers,
-                                                      "formuserno":formuserno,
-                                                      "formselect":formselect,
-                                                      "formdelete":formdelete,
-                                                      "formadd":formadd,
-                                                      "nbstd":nbstd,
-                                                      "nbprof":nbprof,
-                                                      "nbpmod":nbpmod,
-                                                        })    
 
 def logout_request(request):
     logout(request)
@@ -395,6 +326,9 @@ def add_message(request):
 
 userroleDashboard='all'
 usernameDashboard=''
+
+#@login_required(login_url='/home/')
+#@user_passes_test(admin_check,login_url='/home/')
 class UsersListView(ListView):
     global usernameDashboard
     template_name = 'Main/admin/Users.html'
@@ -404,13 +338,14 @@ class UsersListView(ListView):
         formm =addmodForm()
         context = super(UsersListView,self).get_context_data(**kwargs)
         context['users_no_list'] = Utilisateur.objects.filter(profile__is_appoved =False)
+        context['users_ban_list'] = Utilisateur.objects.filter(banned =True)
         context['form'] = form
         context['formm'] = formm
         return context
         
     def get_queryset(self):
         print(usernameDashboard)
-        user=Utilisateur.objects.filter(profile__is_appoved =True)
+        user=Utilisateur.objects.filter(profile__is_appoved =True).filter(banned=False)
         if(userroleDashboard!='all'):
             user=user.filter(role =userroleDashboard)
         if(len(usernameDashboard)>1):
@@ -430,29 +365,59 @@ def supprimerUser(request,pk):
     return redirect('users')
 
 def updateUser(request,pk):   
-    user=Utilisateur.objects.filter(id=pk)
+    user=Utilisateur.objects.get(id=pk)
     if request.method == 'POST':
-        form = userUpdate(request.POST)
+        try:
+            print("okkk")
+            img = request.FILES['image']
+            img_extension = os.path.splitext(img.name)[1]
+            print(img.name)
+            print(settings.MEDIA_ROOT)
+            user_folder = settings.MEDIA_ROOT+'/profile_pics/'
+            print(user_folder)
+            if not os.path.exists(user_folder):
+                os.mkdir(user_folder)
+
+            img_save_path = user_folder+img.name
+            print(img_save_path )
+
+            with open(img_save_path, 'wb+') as f:
+                for chunk in img.chunks():
+                    f.write(chunk)
         
-        if form.is_valid(): 
+            user.profile.image= 'profile_pics/'+img.name
+            user.save()
+        except :
+            pass
+        user=Utilisateur.objects.filter(id=pk)
+        username =request.POST.get('username')
+        if username:
+            user.update(username=username)
             
-            if(form.cleaned_data.get('firstname')):
+        firstname =request.POST.get('firstname')
+        if firstname:
+            user.update(first_name=firstname)
+        
+        lastname =request.POST.get('lastname')
+        if lastname:
+            user.update(lastname=lastname)
+        
+        email =request.POST.get('email')
+        if email:
+            user.update(email=email)
+         
+        role =request.POST.get('role')
+        if role:
+            user.update(role=role)
 
-                user.update(first_name=form.cleaned_data.get('firstname'))
-            if(form.cleaned_data.get('lastname')):
-                user.update(last_name=form.cleaned_data.get('lastname'))
-            if(form.cleaned_data.get('username')):
-                
-                user.update(username=form.cleaned_data.get('username'))
-            if(form.cleaned_data.get('email')):
-                user.update(email=form.cleaned_data.get('email'))
-            if(form.cleaned_data.get('role')):
-                user.update(role=form.cleaned_data.get('role'))
-            if(form.cleaned_data.get('password')):      
-                user.update(password=form.cleaned_data.get('password'))
-            
+        password =request.POST.get('password')
+        if password:
+            user.update(password=password)
+        
+               
+        
+           
 
-            
     return redirect('users')
 
 
@@ -471,8 +436,86 @@ def selectrole(request):
     return redirect('users')
 
 def addmod(request):   
+
     if request.method == 'POST':
-        formadd = addmodForm(request.POST)
-        if formadd.is_valid():
-            Utilisateur.objects.create(username=formadd.cleaned_data.get('username'), email=formadd.cleaned_data.get('email'),password=formadd.cleaned_data.get('password'),role="moderateur")          
+        user=Utilisateur()
+        password =request.POST.get('password')
+        password1 =request.POST.get('password1')
+
+        if password:
+            if password==password1:
+                username =request.POST.get('username')
+                if username:
+                    user.username=username
+            
+                firstname =request.POST.get('firstname')
+                if firstname:
+                    user.first_name=firstname
+        
+                lastname =request.POST.get('lastname')
+                if lastname:
+                    user.lastname=lastname
+        
+                email =request.POST.get('email')
+                if email:
+                    user.email=email
+         
+                role =request.POST.get('role')
+                if role:
+                    user.role=role
+                user.save()
+
+        
+    
+        try:
+            print("okkk")
+            img = request.FILES['image']
+            img_extension = os.path.splitext(img.name)[1]
+            print(img.name)
+            print(settings.MEDIA_ROOT)
+            user_folder = settings.MEDIA_ROOT+'/profile_pics/'
+            print(user_folder)
+            if not os.path.exists(user_folder):
+                os.mkdir(user_folder)
+
+            img_save_path = user_folder+img.name
+            print(img_save_path )
+
+            with open(img_save_path, 'wb+') as f:
+                for chunk in img.chunks():
+                    f.write(chunk)
+        
+            user.profile.image= 'profile_pics/'+img.name
+            user.save()
+        except :
+            pass
+
+                 
+    return redirect('users')
+
+def unban(request,pk):   
+    user=Utilisateur.objects.filter(id=pk)
+    for us in user:
+        us.banned=False
+        us.mod=None
+        us.subject=None
+        us.date=None
+        us.duree=0
+        us.save()
+
+    return redirect('users')
+
+def ban(request,pk):   
+    user=Utilisateur.objects.filter(id=pk)
+    if request.method == 'POST':
+        reason =request.POST['reason']
+        duree =request.POST['duree']
+        for us in user:
+            us.banned=True
+            us.mod=request.user
+            us.subject=reason
+            us.date=datetime.now()
+            us.duree=duree
+            us.save()
+
     return redirect('users')

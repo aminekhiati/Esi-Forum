@@ -120,7 +120,7 @@
                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                all active users </span>
                         </div>
-                        <div class="tab">
+                        <div class="tab" style="height:auto">
                             <table>
                                 <tr>
                                     <th></th>
@@ -133,7 +133,7 @@
                                 {% for user in users_list  %}
                                   <tr>
                                     <td>
-                                        <img src='' class="usr-tab">
+                                        <img src="{{ user.profile.image.url }}" class="usr-tab">
                                     </td>
                                     <td>{{user.username}} </td>
                                     <td>{{user.email}}</td>
@@ -141,8 +141,8 @@
                                     <td>{{user.publications.count}}</td>
                                     <td>{{user.commentes.count}}</td>
                                     <td><a href="#" role="button" data-toggle="modal" data-target="#editUser{{user.id}}"><span class="fa fa-pen icons mr-4"></span></a>
-                                        <a href="#" role="button" data-toggle="modal" data-target="#banPop"><span class="fa fa-ban icons mr-4"></span></a>
-                                        <a href="" role="button" data-toggle="modal" data-target="#deletePop"><span class="fa fa-trash icons mr-4"></span></a></td>
+                                        <a href="#" role="button" data-toggle="modal" data-target="#banPop{{user.id}}"><span class="fa fa-ban icons mr-4"></span></a>
+                                        <a href="" role="button" data-toggle="modal" data-target="#deletePop{{user.id}}"><span class="fa fa-trash icons mr-4"></span></a></td>
                                 </tr>
                                 <div class="modal fade" id="editUser{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="editUserLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
@@ -155,12 +155,13 @@
                                         </div>
                                         <div class="modal-body">
                                                 <div class="float-left text-center ml-4">
-                                                        <img src="../images/avatars/1.jpg" class="avatar-setting">
+                                                        <img src="{{user.profile.image.url }}" class="avatar-setting">
                                                         <br>
-                                                        <form class="mt-2" method="POST" action="{% url 'updateuseradmin' user.id %}">
+                                                        <form class="mt-2" method="POST" enctype="multipart/form-data" action="{% url 'updateuseradmin' user.id %}">
                                                         {% csrf_token %}
                                                                 <div class="custom-file" id="customFile">
-                                                                    <input type="file" class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp">
+                                                                    {% render_field  form.image  class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp" value="{{user.profile.image}}" %}
+                                                                   
                                                                     <label class="custom-file-label" for="exampleInputFile">
                                                                         Upload avatar
                                                                     </label>
@@ -233,26 +234,8 @@
                                       </div>
                                     </div>
                                   </div>
-                                  <div class="modal fade" id="deletePop" tabindex="-1" role="dialog" aria-flabelledby="deletePopLabel" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                          <div class="modal-content">
-                                            <div class="modal-header">
-                                              <h5 class="modal-title" id="deletePopLabel">Alert</h5>
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                              </button>
-                                            </div>
-                                            <div class="modal-body text-danger">
-                                              Are you sure you want to delete this user?
-                                            </div>
-                                            <div class="modal-footer">
-                                              <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                              <a href="{% url 'supprime' user.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
-                                            </div>
-                                          </div>
-                                        </div>
-                                   </div>
-                                      <div class="modal fade" id="banPop" tabindex="-1" role="dialog" aria-labelledby="banPopLabel" aria-hidden="true">
+                                  
+                                      <div class="modal fade" id="banPop{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="banPopLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                               <div class="modal-content">
                                                 <div class="modal-header">
@@ -263,169 +246,39 @@
                                                 </div>
                                                 <div class="modal-body text-danger text-center">
                                                   Are you sure you want to ban this user?
+                                                  <form method="POST" action='{%url 'ban' user.id %}'>
+                                                  {% csrf_token %}
                                                   <label class="field a-field a-field_a1 page__field">
-                                                      <input class="field__input a-field__input"  placeholder="Insulting people" value="">
+                                                      <input type="text"  name="reason" class="field__input a-field__input"  placeholder="Insulting people" value="" required>
                                                       <span class="a-field__label-wrap">
                                                           <span class="a-field__label">Reason</span>
                                                           <span class="fa fa-question float-right mt-2 mr-3 icons"></span>
                                                       </span>
                                                   </label>
                                                   <label class="field a-field a-field_a1 page__field">
-                                                      <input class="field__input a-field__input" id="bantime" placeholder="15 (Hour)" value="">
+                                                      <input type="number" name="duree" class="field__input a-field__input" id="bantime" placeholder="15 (Hour)" value="" required>
                                                       <span class="a-field__label-wrap">
                                                           <span class="a-field__label">Ban Time</span>
                                                           <span class="fa fa-clock float-right mt-2 mr-3 icons"></span>
                                                       </span>
                                                   </label> 
+                                                  
                                                   <br>
-                                                  <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-                                                  <label class="custom-control-label" style="margin-right: 35%;" for="defaultUnchecked">Permanently</label>
+                                                 
+                                                  
                                                 </div>
                                                 <div class="modal-footer">
                                                   <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                                  <button type="button" class="btn btn-danger">Ban</button>
+                                                  <button type="submit" class="btn btn-danger">Ban</button>
                                                 </div>
+                                                </form>
                                               </div>
                                             </div>
                                           </div>
                                           
                         </div>
                         </div>
-                                {% endfor %}
-                               
-                               
-                            </table>
-                            
-                            
-                    
-                </div>
-                <div class="row ml-4" style="margin-top:4%;">
-                    <div class="col-md-10 mt-4 col-center">
-                            <div class="float-right">
-                                    <div class="row"> 
-                                        <div class="col" style="width:800px;">
-                                                                <div class="dropdown ">
-                                                                <button class="btn-new float-right mb-4 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="position:relative;top:70px">
-                                                                  Role
-                                                                </button>
-                                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                                  <a class="dropdown-item" href="{% url 'selectrole' %}?role=all">All</a>
-                                                                  <a class="dropdown-item" href="{% url 'selectrole' %}?role=etudiant">Students</a>
-                                                                  <a class="dropdown-item" href="{% url 'selectrole' %}?role=enseignant">Professors</a>
-                                                                  <a class="dropdown-item" href="{% url 'selectrole' %}?role=admin">Admins</a>
-                                                                  <a class="dropdown-item" href="{% url 'selectrole'  %}?role=moderateur">Moderators</a>
-                                                                </div>
-                                                              </div>
-                                                            
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>
-                        <div class="box">
-                            <p>Banned Users</p>
-                            <span class="table-caption">
-                                all banned users </span>
-                        </div>
-                        <div class="tab" style="width:900px">
-                            <table>
-                                <tr>
-                                    <th></th>
-                                    <th>Username</th>
-                                    <th>Email</th>
-                                    <th>Type</th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../images/avatars/1.jpg" class="usr-tab">
-                                    </td>
-                                    <td>bondbenz </td>
-                                    <td>n.benzeghli@esi-sba.dz</td>
-                                    <td>Student</td>
-                                  
-                                    <td><a href="#" role="button" data-toggle="modal" data-target="#banInfoPop"><span class="fa fa-info-circle icons mr-4"></span></a>
-                                        <a href="#" role="button" data-toggle="modal" data-target="#banRemove"><span class="fa fa-trash icons mr-4"></span></a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../images/avatars/1.jpg" class="usr-tab">
-                                    </td>
-                                    <td>bondbenz </td>
-                                    <td>n.benzeghli@esi-sba.dz</td>
-                                    <td>Student</td>
-                                  
-                                    <td><a href="#" role="button" data-toggle="modal" data-target="#banInfoPop"><span class="fa fa-info-circle icons mr-4"></span></a>
-                                        <a href="#" role="button" data-toggle="modal" data-target="#banRemove"><span class="fa fa-trash icons mr-4"></span></a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <img src="../images/avatars/1.jpg" class="usr-tab">
-                                    </td>
-                                    <td>bondbenz </td>
-                                    <td>n.benzeghli@esi-sba.dz</td>
-                                    <td>Student</td>
-                                  
-                                    <td><a href="#" role="button" data-toggle="modal" data-target="#banInfoPop"><span class="fa fa-info-circle icons mr-4"></span></a>
-                                        <a href="#" role="button" data-toggle="modal" data-target="#banRemove"><span class="fa fa-trash icons mr-4"></span></a></td>
-                                </tr>
-                            </table>
-                            <nav aria-label="pagination" class="mt-4" style="margin: 0 auto;">
-                                <ul class="pagination justify-content-center">
-                                  <li class="page-item">
-                                    <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                  </li>
-                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                  <li class="page-item active">
-                                    <span class="page-link">
-                                      2
-                                      <span class="sr-only">(current)</span>
-                                    </span>
-                                  </li>
-                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                  <li class="page-item">
-                                    <a class="page-link" href="#">Next</a>
-                                  </li>
-                                </ul>
-                              </nav>
-                                      <div class="modal fade" id="banInfoPop" tabindex="-1" role="dialog" aria-labelledby="banInfoPopLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                              <div class="modal-content">
-                                                <div class="modal-header">
-                                                  <h5 class="modal-title" id="banInfoPopLabel">Ban Information</h5>
-                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                  </button>
-                                                </div>
-                                                <div class="modal-body text-danger text-center">
-                                                  <label>
-                                                    Banned by : Bond Benz
-                                                  </label>
-                                                  <br>
-                                                  <label class="field a-field a-field_a1 page__field">
-                                                      <input class="field__input a-field__input"  placeholder="Insulting people" value="insluting people" disabled>
-                                                      <span class="a-field__label-wrap">
-                                                          <span class="a-field__label">Reason</span>
-                                                          <span class="fa fa-question float-right mt-2 mr-3 icons"></span>
-                                                      </span>
-                                                  </label>
-                                                  <label class="field a-field a-field_a1 page__field">
-                                                      <input class="field__input a-field__input" id="bantime" placeholder="15 (Hour)" value="15" disabled>
-                                                      <span class="a-field__label-wrap">
-                                                          <span class="a-field__label">Ban Time</span>
-                                                          <span class="fa fa-clock float-right mt-2 mr-3 icons"></span>
-                                                      </span>
-                                                  </label> 
-                                                  <br>
-                                                  <input type="checkbox" class="custom-control-input" id="defaultUnchecked" disabled>
-                                                  <label class="custom-control-label" style="margin-right: 35%;" for="defaultUnchecked">Permanently</label>
-                                                </div>
-                                                <div class="modal-footer">
-                                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                                  <button type="button" class="btn btn-danger">Ban</button>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="modal fade" id="deletePop" tabindex="-1" role="dialog" aria-labelledby="deletePopLabel" aria-hidden="true">
+                        <div class="modal fade" id="deletePop{{user.id}}" tabindex="-1" role="dialog" aria-labelledby="deletePopLabel" aria-hidden="true">
                                               <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                   <div class="modal-header">
@@ -439,15 +292,94 @@
                                                   </div>
                                                   <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                                    <button type="button" class="btn btn-danger">Delete</button>
+                                                    <button type="button" class="btn btn-danger"><a href="{%url 'supprime' user.id %}">Delete<a></button>
                                                   </div>
                                                 </div>
                                               </div>
                                             </div>                 
                         </div>
-                    </div>
+                                {% endfor %}
+                               
+                               
+                            </table>
+                            
+                            
+                    
                 </div>
-                <div class="modal fade" id="banRemove" tabindex="-1" role="dialog" aria-labelledby="banRemoveLabel" aria-hidden="true">
+                <br><br>
+                {% if users_ban_list %}
+                <div class="row ml-4" style="margin-top:4%;">
+                    
+                        <div class="box">
+                            <p>Banned Users</p>
+                            <span class="table-caption">
+                                all banned users </span>
+                        </div>
+                        <div class="tab" style="width:900px">
+                        
+                        
+                        
+                        
+                            <table>
+                                <tr>
+                                    <th></th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Type</th>
+                                </tr>
+                                {% for userb in users_ban_list %}
+                                  <tr>
+                                    <td>
+                                        <img src="{{userb.profile.image.url }}" class="usr-tab">
+                                    </td>
+                                    <td>{{userb.username}} </td>
+                                    <td>{{userb.email}}</td>
+                                    <td>{{userb.role}}</td>
+                                  
+                                    <td><a href="#" role="button" data-toggle="modal" data-target="#banInfoPop{{userb.id}}"><span class="fa fa-info-circle icons mr-4"></span></a>
+                                        <a href="#" role="button" data-toggle="modal" data-target="#banRemove{{userb.id}}"><span class="fa fa-trash icons mr-4"></span></a></td>
+                                </tr>
+                                <div class="modal fade" id="banInfoPop{{userb.id}}" tabindex="-1" role="dialog" aria-labelledby="banInfoPopLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                              <div class="modal-content">
+                                                <div class="modal-header">
+                                                  <h5 class="modal-title" id="banInfoPopLabel">Ban Information</h5>
+                                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                  </button>
+                                                </div>
+                                                <div class="modal-body text-danger text-center">
+                                                  <label>
+                                                    Banned by : {{userb.mod.username}}
+                                                  </label>
+                                                  <br>
+                                                  <label class="field a-field a-field_a1 page__field">
+                                                      <input class="field__input a-field__input"  placeholder="Insulting people" value='{{userb.subject}}' disabled>
+                                                      <span class="a-field__label-wrap">
+                                                          
+                                                          <span class="fa fa-question float-right mt-2 mr-3 icons"></span>
+                                                      </span>
+                                                  </label>
+                                                  <label class="field a-field a-field_a1 page__field">
+                                                      <input class="field__input a-field__input" id="bantime" placeholder="15 (Hour)" value={{userb.duree}} disabled>
+                                                      <span class="a-field__label-wrap">
+                                                          <span class="a-field__label">Ban Time</span>
+                                                          <span class="fa fa-clock float-right mt-2 mr-3 icons"></span>
+                                                      </span>
+                                                  </label> 
+                                                  <br>
+                                                  <input type="checkbox" class="custom-control-input" id="defaultUnchecked" disabled>
+                                                  
+                                                </div>
+                                                
+                                              </div>
+                                            </div>
+                                          </div>
+                                          
+                    </div>
+                    </div>
+
+                    <div class="modal fade" id="banRemove{{userb.id}}" tabindex="-1" role="dialog" aria-labelledby="banRemoveLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -461,11 +393,20 @@
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                          <button type="button" class="btn btn-danger">Unban</button>
+                          <button type="button" class="btn btn-danger"><a href='{% url 'unban' userb.id %}'>Unban</a></button>
                         </div>
                       </div>
                     </div>
                   </div>
+                                {% endfor %}
+                                
+                                
+                            </table>
+                            {% endif %}
+                            
+                                      
+                
+                
                 <div class="modal fade" id="modPop" tabindex="-1" role="dialog" aria-labelledby="modPopLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
@@ -481,18 +422,18 @@
                                   <div class="float-left text-center ml-4">
                                           <img src="../images/avatars/1.jpg" class="avatar-setting">
                                           <br>
-                                          <form class="mt-2">
-                                          
+                                          <form class="mt-2" method="POST" action="{%url 'addmod' %}">
+                                          {% csrf_token %}
                                                   <div class="custom-file" id="customFile">
+                                                      {% render_field  formm.image  class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp" %}
                                                      
-                                                      <input type="file" class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp">
                                                       <label class="custom-file-label" for="exampleInputFile">
                                                           Upload avatar
                                                       </label>
                                                   </div>
-                                              </form>
-                                              <form class="mt-2" method="POST" action="{%url 'addmod' %}">
-                                              {% csrf_token %}
+                                              
+                                              
+                                              
                                               <br>
                                               <label class="field a-field a-field_a1 page__field float-left">
                                                    {% render_field  formm.firstname  class="field__input a-field__input"  placeholder="First name" value="" %}
@@ -500,7 +441,7 @@
                                                   <span class="a-field__label-wrap">
                                                       <span class="a-field__label">First Name</span>
                                                       <span class="fa fa-address-card float-right mt-2 mr-3 icons"></span>
-                                                  </span>150px
+                                                  </span>
                                               </label>
                                               <br>
                                               <label class="field a-field a-field_a1 page__field float-left">
@@ -557,4 +498,5 @@
                         
                       </div>
                   </div>
+                  <br><br><br>
                {% endblock content %}  
