@@ -283,7 +283,7 @@ class PostListView(ListView):
         popular_topics = Publication.objects.all().order_by('-nb_vues')
         popular_cleared = []
         i = 0
-        while i<6 and i<len(popular_cleared):
+        while i<6 and i<len(popular_topics):
             popular_cleared.append(popular_topics[i])
             i = i +1
 

@@ -429,7 +429,7 @@
                         </div>
                         <div class="card-body" style="background-color: #1a2035; color: white;">
                             {% for popular in popular_cleared %}
-                            <p class="card-text"><strong>Topic {{popular.id}} :</strong> <a href="{% url 'post-detail' category_in.name popular.id %}" class="mr-2 ml-2">
+                            <p class="card-text"><strong>Topic :</strong> <a href="{% url 'post-detail' category_in.name popular.id %}" class="mr-2 ml-2">
                                 {{popular.titre}} </a> | <span class="ml-2 fa fa-eye icons"> {{popular.nb_vues}} </span></p>
                             {% empty %}
                             <p class="card-text"><strong>No Posts.</strong></p>
