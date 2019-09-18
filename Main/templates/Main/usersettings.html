@@ -149,9 +149,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#"><span class="fa fa-envelope icons"/></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><span class="fa fa-cog icons"/></a>
-                        </li>
+{#                        <li class="nav-item">#}
+{#                            <a class="nav-link" href="#"><span class="fa fa-cog icons"/></a>#}
+{#                        </li>#}
 
 
 
@@ -170,12 +170,12 @@
                     <div class="line"></div>
                     <div class="all col-sm-10">
                         <ul style="display: block;">
+{#                            <li>#}
+{#                                <a href="#">ALL</a></li>#}
+{#                            <li>#}
+{#                                <a href="#">Topics</a></li>#}
                             <li>
-                                <a href="#">ALL</a></li>
-                            <li>
-                                <a href="#">Topics</a></li>
-                            <li>
-                                <a href="#">Replies</a></li>
+                                <a href="{% url 'userpage' request.user.id %}">Replies</a></li>
                             <li>
                                 <a href="#">Bookmarks</a></li>
                         </ul>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 
 <head>
@@ -6,20 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Esi Forums - Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/user.css">
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="{% static "css/user.css"%}">
+    <link rel="stylesheet" href="{% static "css/bootstrap.css"%}">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Iceberg" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    <script src="https://co de.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="{% static "js/bootstrap.min.js"%}"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="js/responsive.js"></script>
+    <script src="{% static "js/responsive.js"%}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $("#notificationLink").click(function () {
@@ -38,7 +39,7 @@
             });
 
         });
-        
+
     </script>
 
 
@@ -57,32 +58,35 @@
                     <div class="navbar">
                         <ul class="nav nav-pills" id="homemenu">
                             <li class="nav-item">
-                                <a class="nav-link" id="active" href="#" >
-                                   <span class="fa fa-home icons"></span> Accueill</a>
+                                <a class="nav-link" id="active" href="#">
+                                    <span class="fa fa-home icons"></span> Accueill</a>
                             </li>
                             <li class="nav-item">
-                            <div class="dropdown show">
-                                <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <span class="fa fa-user icons"></span> Etudiants</a>
-                                <!-- dropdown menu here-->
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown show">
+                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="fa fa-user icons"></span> Etudiants</a>
+                                    <!-- dropdown menu here-->
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                         <a class="dropdown-item" style="color:black;" href="#">1 CPI</a>
                                         <a class="dropdown-item" style="color:black;" href="#">2 CPI</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" style="color:black;" href="#">1 CS</a>
                                         <a class="dropdown-item" style="color:black;" href="#">SIW</a>
                                         <a class="dropdown-item" style="color:black;" href="#">ISI</a>
+                                    </div>
                                 </div>
-                            </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#"><span class="fa fa-briefcase icons"></span> Enseignants</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><span class="fa fa-graduation-cap icons"></span> Bacheliers</a>
-                           </li>
+                                <a class="nav-link" href="#"><span class="fa fa-graduation-cap icons"></span>
+                                    Bacheliers</a>
+                            </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" style="margin-right:25vw !important;"><span class="fa fa-users icons"></span> Clubs</a>
+                                <a class="nav-link" href="#" style="margin-right:25vw !important;"><span
+                                        class="fa fa-users icons"></span> Clubs</a>
                             </li>
                             <li class="nav-item">
                                 <span id="notification_count">3</span>
@@ -91,172 +95,149 @@
                                 </a>
                                 <div id="notificationContainer">
                                     <div id="notificationTitle">Notifications</div>
-                                    <div id="notificationsBody" class="notifications" style="overflow-y: scroll;" >
+                                    <div id="notificationsBody" class="notifications" style="overflow-y: scroll;">
                                         <div class="element-notif">
-                                            <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                                            <img src="{% static "images/avatars/sample.png"%}" class="avatar-notif" alt="">
                                             <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
                                                 a
                                                 commenté
                                                 votre publication</i><br>
-                                                <a href="#">Link</a>
+                                            <a href="#">Link</a>
                                         </div>
                                         <div class="line"></div>
                                         <div class="element-notif">
-                                            <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
+                                            <img src="{% static "images/avatars/sample.png"%}" class="avatar-notif" alt="">
                                             <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
                                                 a
                                                 commenté
                                                 votre publication</i><br>
-                                                <a href="#">Link</a>
-                                        </div>
-                                        <div class="line"></div>
-
-                                        <div class="element-notif">
-                                            <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                            <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                a
-                                                commenté
-                                                votre publication</i><br>
-                                                <a href="#">Link</a>
+                                            <a href="#">Link</a>
                                         </div>
                                         <div class="line"></div>
 
-                                        <div class="element-notif">
-                                            <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                            <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                a
-                                                commenté
-                                                votre publication</i><br>
-                                                <a href="#">Link</a>
-                                        </div>
-                                        <div class="line"></div>
 
-                                        <div class="element-notif">
-                                            <img src="images/avatars/1.jpg" class="avatar-notif" alt="">
-                                            <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                a
-                                                commenté
-                                                votre publication</i><br>
-                                                <a href="#">Link</a>
-                                        </div>
 
                                     </div>
                                     <div id="notificationFooter"><a href="#">See All</a></div>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><span class="fa fa-envelope icons"></a>
+                                <a class="nav-link" href="#" data-toggle="modal" data-target="#banPop"><span
+                                        class="fa fa-ban icons"></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><span class="fa fa-cog icons"></a>
+                                <a class="nav-link" href="{% url 'editprofile' %}"><span class="fa fa-cog icons"></a>
                             </li>
 
 
-                            
+
                         </ul>
-                    </div>                    
+                    </div>
                 </nav>
+            </div>
+            <div class="modal fade" id="banPop" tabindex="-1" role="dialog" aria-labelledby="banPopLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="banPopLabel">Alert</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body text-danger">
+                            Are you sure you want to ban this user?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-danger">Ban</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-lg-2 col-md-2 sidebar" style="display: block;">
-                        <img src="images/avatars/1.jpg" class="profile-pic" alt="">
-                        <h3>Name Surname</h3>
-                        <h5>Etudiant 1CS</h5>
+                        <img src="{{ user.profile.image.url }}" class="profile-pic" alt="">
+                        <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                        <h5>Etudiant {{ user.profile.promo }}</h5>
                         <h6>Bio :</h6>
-                        <p>qjfgfjqgs fhqsgfjqs gfqsfk qhksffsqfk gqfkqsgf fgqjg fjqgfjqsgfjq fqj hgfsgfqjsf
-                            fqjhsgfjqsf</p>
+                        <p>{{ user.profile.bio }}</p>
                         <div class="line"></div>
                         <div class="all col-sm-10">
                             <ul style="display: block;">
                                 <li>
-                                    <a href="javascript:switchVisible1()">Replies</a></li>
+                                    <a href="javascript:switchVisible1()">Topics</a>
+                                </li>
                                 <li>
-                                    <a href="javascript:switchVisible2()">Bookmarks</a></li>
+                                    <a href="javascript:switchVisible1()">Replies</a>
+                                </li>
+                                {% if request.user == user %}
+                                <li>
+                                    <a href="javascript:switchVisible2()">Bookmarks</a>
+                                </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
                     <div class="col-sm-10 content">
                         <div class="bookmarks" id="Div2">
-                            <h1>Here you can find the posts you saved</h1></br></br></br></br>
-                            <a href="#"><h3>Title of the post</h3></a>
-                            <a href="#"><h3>Title of the post</h3></a>
-                            <a href="#"><h3>Title of the post</h3></a>
-                            <a href="#"><h3>Title of the post</h3></a>
+                            <br><br><br><br>
+                            <div class="box">
+                                <p style="margin-top:1.6vw ">Saved Posts</p>
+                            </div>
+                            <div class="tab">
+                                <table>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th><span class="fa fa-comments icons"></th>
+
+                                    </tr>
+                                    {% for post in user.pubs_eng.all %}
+                                    <tr class="cursor" onclick="window.location.replace('#')">
+                                        <td>{{ post.titre }}</td>
+                                        <td>{{ post.commentaires.count }}</td>
+
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
 
                         </div>
-                        <div class="card-content" id="Div1" style="overflow-y: scroll;">
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
+                        <div class="card-content" id="Div1">
+                            <div class="row" style="height: inherit; overflow-x: hidden;">
+                                <div class=" element col-md-6"
+                                    style="border-right:2px solid #ff7474 !important; overflow-x: hidden;">
+                                    <h3 style="color: #ff7474">Comments</h3>
+                                                    {% for comment in user.commentes.all %}
+
+                                                                <div class="element col-sm-12">
+                                                                        <img src="{{ user.profile.image.url }}" class="avatar" alt="">
+                                                                        <b style="color:white">{{ user.username }}</b><i style="color:white">&nbsp;&nbsp; a
+                                                                    commenter <strong><a href="{% url 'post-detail' comment.publication.category.name comment.publication.id %}"/> {{ comment.publication.titre }}</strong>  </i><br>
+                                                                        <i class="fas fa-external-link-alt icons"></i>
+                                                                        <a href={% url 'post-detail' comment.publication.category.name comment.publication.id %}>Link</a>
+                                                                    </div>
+                                                    {% endfor %}
+                                </div>
+                                <div class=" element col-md-6"
+                                    style="border-right:2px solid #ff7474 !important;">
+                                    <h3 style="color: #ff7474">Posts</h3>
+                                    {% for post in user.publications.all %}
+                                    <div class="element col-sm-12">
+                                        <img src="{{ user.profile.image.url }}" class="avatar" alt="">
+                                        <b style="color:white">{{ user.username }}</b><i style="color:white">&nbsp;&nbsp; a
+                                            publier <strong><a href="{% url 'post-detail' post.category.name post.id %}"/> {{ post.titre }}</strong></i><br>
+                                        <i class="fas fa-external-link-alt icons"></i>
+                                        <a href={% url 'post-detail' post.category.name post.id %}>Link</a>
+                                    </div>
+                                    {% endfor %}
+                                </div>
                             </div>
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
-                            </div>
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
-                            </div>
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
-                            </div>
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
-                            </div>
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
-                            </div>
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
-                            </div>
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
-                            </div>
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
-                            </div>
-                            <div class="element col-sm-10">
-                                <img src="images/avatars/1.jpg" class="avatar" alt="">
-                                <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp; a commenté
-                                    votre publication</i><br>
-                                <i class="fas fa-external-link-alt icons"></i>
-                                <a href="#">Link</a>
-                            </div>
-                        
+
+
+
+
 
                             <footer class="footer">
                                 <a href="#" class="menu-item mr-4">ESI-SBA</a>
@@ -275,19 +256,27 @@
             </div>
         </div>
         <script type="text/javascript">function switchVisible2() {
-            if (document.getElementById('Div1')) {       
+                if (document.getElementById('Div1')) {
                     document.getElementById('Div1').style.display = 'none';
                     document.getElementById('Div2').style.display = 'block';
-                
-            }}
+
+                }
+            }
             function switchVisible1() {
-            if (document.getElementById('Div2')) {       
+                if (document.getElementById('Div2')) {
                     document.getElementById('Div2').style.display = 'none';
                     document.getElementById('Div1').style.display = 'block';
-                
+
+                }
             }
-}
-</script>
+        </script>
+        <style>
+            .modal-content {
+                background: #171c2f !important;
+                font-family: 'Ubuntu', sans-serif;
+            }
+
+        </style>
 </body>
 
 </html>

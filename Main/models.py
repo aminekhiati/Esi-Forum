@@ -25,6 +25,19 @@ PROMO = (
         ('3cs', '3CS'),
     )
 
+CATEGORY = (
+        ('offtalk', 'OffTalk'),
+        ('professors', 'Professors'),
+        ('clubs', 'Clubs'),
+        ('bachelors', 'Bachelors'),
+        ('1cpi', '1CPI'),
+        ('2cpi', '2CPI'),
+        ('1cs', '1CS'),
+        ('2cs', '2CS'),
+        ('3cs', '3CS'),
+    
+)
+
 
 
 class Tags(models.Model):
@@ -54,23 +67,34 @@ class Utilisateur(AbstractUser):
 
 
 
-class Publication(models.Model) :
+class Category(models.Model):
+    name = models.CharField(choices=CATEGORY,default=1,max_length=30)
+    
+    def __str__(self):
+        return self.name
 
+
+class Publication(models.Model) :
+    users = models.ManyToManyField(settings.AUTH_USER_MODEL,related_query_name='users',related_name='pubs_eng',default=None)
     date_de_publication = models.DateField(auto_now_add=True)
     date_de_modification= models.DateField(auto_now=True)
     section = models.CharField(max_length=30)
     content = models.TextField()
     titre = models.CharField(max_length=30)
-    auteur = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='publications')
-    tags = models.ManyToManyField(Tags, related_name='posts',default="ok")
+    auteur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='publications',
+                           related_query_name='auteur')
+    category = models.ForeignKey(Category,on_delete =models.CASCADE,related_name="publications",related_query_name="category",default=1)
+    tags = models.ManyToManyField(Tags, related_name='posts',default=None)
     nb_vues =models.IntegerField(default=0)
     
+    class Meta:
+        ordering = ['-pk']
 
     def __str__(self):
         return self.titre
     
     def get_absolute_url(self):
-        return reverse('post-detail', kwargs={'pk': self.pk})
+        return reverse('post-detail', kwargs={'pk': self.pk, 'category': self.category.name})
 
     
 
@@ -111,12 +135,6 @@ class Commentaire(models.Model):
     
 
 
-
-class Publication_archivee(models.Model):
-
-    def __str__(self):
-        return self.idpa 
-
 class Fichier_attachee (models.Model):
     punlication = models.ForeignKey(Publication,on_delete=models.CASCADE)
     commentaire = models.ForeignKey(Commentaire,on_delete=models.CASCADE)
@@ -140,4 +158,9 @@ class Message(models.Model):
     sybject = models.TextField(null=True,blank=True)
 
 
+class Notification(models.Model):
+    comment = models.ForeignKey(Commentaire,on_delete =models.CASCADE,related_name="notifications",related_query_name="comment")
+    user_owner = models.ForeignKey(Utilisateur,on_delete =models.CASCADE,related_name="notifications",related_query_name="user_owner",default=None)
 
+    def __str__(self):
+        return 'Commentaire '+str(self.pk)

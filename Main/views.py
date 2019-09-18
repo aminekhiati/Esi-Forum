@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message
-from django.conf import settings
-from datetime import datetime 
+from .models import Publication,Profile,Utilisateur,Commentaire,Report,Message,Category,Tags,Notification
 from .forms import (
     SignUpForm,userUpdate,
     approveForm,listuserForm,
@@ -30,6 +28,7 @@ from django.views.generic import (
     DeleteView
 )
 import os
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger,InvalidPage
 def get_current_users():
     active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
     user_id_list = []
@@ -139,6 +138,7 @@ def login_request(request):
         else:
             messages.info(request,"Invalid Syntaxe")
     form = AuthenticationForm()
+    redirect('home')
     return render(request,"Main/Home-Logged.html", {"form":form})
 
 
@@ -148,19 +148,14 @@ def loggedin (request):
 
 
 def editeProfile(request):
+    u_form = UserUpdateForm(instance=request.user)
+    p_form = ProfileUpdateForm()
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST,instance=request.user)
         p_form = ProfileUpdateForm(request.POST, request.FILES)
         if u_form.is_valid() and p_form.is_valid():
-            print("============================================================")
             u_form.save()
-            p_form.save(commit=False)
-            return HttpResponse('User info changed !')
-
-
-    else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm()
+            p_form.save()
 
     context ={
         'u_form' : u_form,
@@ -180,75 +175,196 @@ def search(request):
     }
     return render(request,"Main/searchresults.html",context)
 
+@login_required()
+def userpage(request,pk):
+    user = Utilisateur.objects.get(pk=pk)
+    context ={
+        'user':user
+    }
+    return render(request,"Main/userpage.html",context)
 
 
-
+type_glob  = 'All'
+@login_required()
+def enrigstre_pub(request,pk):
+    request.user.pubs_eng.add(Publication.objects.get(id=pk))
+    return redirect('home')
 # Publications
+
 
 class PostListView(ListView):
     model = Publication
     context_object_name = 'posts'
     template_name = 'Main/Home-Logged.html'
-    ordering = ['-date_de_publication']
+    ordering = ['-pk']
     paginate_by = 4
 
+    def get_queryset(self):
+        self.category = get_object_or_404(Category,name=self.kwargs['category'])
+        global type_glob
+        if type_glob != 'All':
+            return Publication.objects.filter(category__name=self.category,section=type_glob).order_by('-pk')
+        else:
+            return Publication.objects.filter(category__name=self.category).order_by('-pk')
+    
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        posts_all = Publication.objects.all()
+        comments_all = Commentaire.objects.all()
+        users_all = Utilisateur.objects.all()
+        students = users_all.filter(role='etudiant')
+        professors = users_all.filter(role='enseignant')
+        admins = users_all.filter(role='admin')
+        moderators = users_all.filter(role='moderateur')
+        #clubs = users_all.filter(role='club')
+        popular_topics = Publication.objects.all().order_by('-nb_vues')
+        popular_cleared = []
+        i = 0
+        while i<6 and i<len(popular_topics):
+            popular_cleared.append(popular_topics[i])
+            i = i +1
+
+        notifications = Notification
+        global type_glob
+        try:
+           page=int(self.request.GET.get('page','1'))
+        except ValueError:
+           page=1
+        if type_glob != 'All':
+            posts = Publication.objects.filter(category__name=self.category,section=type_glob).order_by('-pk')
+            paginator=Paginator(posts, 4)
+            ###...get you page number
+            try:
+                posts = paginator.page(page)
+            except (EmptyPage, InvalidPage):
+                posts = paginator.page(paginator.num_pages)
+            context.update({
+                'posts': posts,
+                'category_in': self.category,
+                'notifications' : notifications,
+                'type_glob' : type_glob,
+                'posts_all' : posts_all,
+                'comments_all' : comments_all,
+                'users_all' : users_all,
+                'students' : students,
+                'professors' : professors,
+                'admins' : admins,
+                'moderators' : moderators,
+                'popular_cleared' : popular_cleared,
+            })
+        else:
+            posts = Publication.objects.filter(category__name=self.category).order_by('-pk')
+            paginator=Paginator(posts, 4)
+            try:
+                posts = paginator.page(page)
+            except (EmptyPage, InvalidPage):
+                posts = paginator.page(paginator.num_pages)
+            context.update({
+                'posts': posts,
+                'category_in': self.category,
+                'notifications' : notifications,
+                'type_glob' : type_glob,
+                'posts_all' : posts_all,
+                'comments_all' : comments_all,
+                'users_all' : users_all,
+                'students' : students,
+                'professors' : professors,
+                'admins' : admins,
+                'moderators' : moderators,
+                'popular_cleared' : popular_cleared,
+            })
+        return context
+    
+    
+
+
+
+def redirect_type(request,category):
+    global type_glob 
+    category_name = request.get_full_path().split('/')[1]
+    type_glob = request.GET['type']
+    return redirect('category', category=category_name)
 
 class PostDetailView(DetailView):
     model = Publication
     template_name = 'Main/viewPost.html'
+    
+    def get_context_data(self, **kwargs):
+        global type_glob
+        notifications = Notification
+        post = self.get_object()
+        post.nb_vues = post.nb_vues + 1
+        post.save()
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        context['notifications'] = notifications
+        context['type_glob'] = type_glob
+        return context
+    
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Publication
     template_name = 'Main/Home-Logged.html'
-    fields = ['titre', 'content']
-
-
-    def form_valid(self, form):
-        form.instance.auteur = self.request.user
-        return super().form_valid(form)
+    #fields = ['titre', 'content','section']
+    
+    def post(self, request, *args, **kwargs):
+        category_name = request.get_full_path().split('/')[1]
+        post = Publication()
+        post.titre = request.POST['titre']
+        post.content = request.POST['content']
+        post.section = request.POST['section']
+        post.category = Category.objects.filter(name=category_name)[0]
+        post.auteur = request.user
+        post.save()
+        return redirect('post-detail', category=category_name, pk=post.id)
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Publication
     template_name = 'Main/viewPost.html'
-    fields = ['titre', 'content']
+    fields = ['titre', 'content','section']
 
-
-    def form_valid(self, form):
-        form.instance.auteur = self.request.user
-        return super().form_valid(form)
 
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.auteur
+        if self.request.user.role=='admin' or self.request.user.role=='moderateur':
+            return True
+        else:
+            return self.request.user == post.auteur
 
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Publication
     success_url = '/'
 
+
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.auteur
+        if self.request.user.role=='admin' or self.request.user.role=='moderateur':
+            return True
+        else:
+            return self.request.user == post.auteur
 
 
 #Comments
 
-def add_comment_to_post(request, pk):
+def add_comment_to_post(request, category ,pk):
     post = get_object_or_404(Publication, pk=pk)
     if request.method == "POST":
-        #form = CommentForm(request.POST)
-        
         comment = Commentaire()
+        notification = Notification()
+        notification.user_owner = post.auteur
         comment.publication = post
         content = request.POST['content-comment']
         comment.content = content
         comment.commented_by = request.user
         comment.save()
-        return redirect('post-detail', pk=post.pk)
+        notification.comment = comment
+        if post.auteur != request.user:
+            notification.save()
+        return redirect('post-detail',category=post.category.name, pk=post.pk)
     
-    return redirect('post-detail', pk=post.pk)
+    return redirect('post-detail',category=post.category.name, pk=post.pk)
 
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Commentaire
@@ -256,27 +372,26 @@ class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     fields = ['titre', 'content']
 
 
-    def form_valid(self, form):
-        form.instance.auteur = self.request.user
-        return super().form_valid(form)
-
     def test_func(self):
         post = self.get_object()
-        return self.request.user == post.commented_by
+        if self.request.user.role=='admin' or self.request.user.role=='moderateur':
+            return True
+        else:
+            return self.request.user == post.commented_by
 
 
 @login_required
-def comment_remove(request, pk1,pk2):
+def comment_remove(request, category,pk1,pk2):
     if request.method == "POST":
         comment = get_object_or_404(Commentaire, pk=pk2)
-        if comment.commented_by == request.user:
+        if comment.commented_by == request.user or request.user.role=='admin' or request.user.role=='moderateur':
             comment.delete()
-            return redirect('post-detail', pk=comment.publication.id)
+            return redirect('post-detail', category=comment.publication.category.name, pk=comment.publication.id)
         else:
-            return redirect('post-detail', pk=comment.publication.id)
+            return redirect('post-detail', category=comment.publication.category.name, pk=comment.publication.id)
 
 @login_required
-def comment_update(request, pk1,pk2):
+def comment_update(request,category,pk1,pk2):
     post = get_object_or_404(Publication, pk=pk1)
     if request.method == "POST":
         comment = get_object_or_404(Commentaire, pk=pk2)
@@ -286,9 +401,9 @@ def comment_update(request, pk1,pk2):
             comment.content = content
             comment.commented_by = request.user
             comment.save()
-            return redirect('post-detail', pk=post.pk)
+            return redirect('post-detail', category=comment.publication.category.name, pk=post.pk)
     
-    return redirect('post-detail', pk=post.pk)
+    return redirect('post-detail', category=comment.publication.category.name, pk=post.pk)
 
     
 class ReportListView(ListView):
@@ -524,3 +639,10 @@ def ban(request,pk):
             us.save()
 
     return redirect('users')
+def redirect_offtalk(request):
+    return redirect('category',category='offtalk',)
+
+def clear_notifications(request,category):
+    request.user.notifications.all().delete()
+    return redirect('category',category='offtalk',)
+    

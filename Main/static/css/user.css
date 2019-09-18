@@ -147,7 +147,6 @@ background-color: #171c2f;
 	float:left;
 	height:768px;
 	z-index: 2;
-	overflow-y: scroll;
 
 }
 .wrapper {
@@ -163,8 +162,7 @@ margin: auto;
 border-radius: 50%;
 border: 2px solid #fff;
 z-index: 9;
-max-width: 100%;
-width: auto;
+width: 150;
 }
 
 .sidebar p {
@@ -190,7 +188,7 @@ width: auto;
 		margin: 30px;
 		height:500px;
 		border-radius: 10px;
-		overflow-y: scroll;
+
 }
 .avatar{
 	height: 50px;
@@ -232,6 +230,7 @@ margin-top: 10px;
 	margin-bottom: 10%;
 	color: white;
 }
+
 
 
 .sidebar-dash {
@@ -774,7 +773,7 @@ margin: auto;
 	  margin: 30px;
 	  height:500px;
 	  border-radius: 10px;
-	  overflow-y: scroll;
+	  overflow-y: auto;
 color: #ff7474;
 justify-items: center;
   }
