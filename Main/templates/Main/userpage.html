@@ -42,11 +42,11 @@
 
     </script>
 
-
-
-
-
-
+<style>
+.link-post:hover{
+    color: white !important;
+}
+</style>
 
 </head>
 
@@ -194,8 +194,9 @@
 
                                     </tr>
                                     {% for post in user.pubs_eng.all %}
-                                    <tr class="cursor" onclick="window.location.replace('#')">
-                                        <td>{{ post.titre }}</td>
+                                    <tr class="cursor">
+                                        <td><a class="link-post" style="color: white;" href="{% url 'post-detail' post.category.name post.id %}">{{ post.titre }}</a>
+                                        </td>
                                         <td>{{ post.commentaires.count }}</td>
 
                                     </tr>
