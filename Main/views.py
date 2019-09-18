@@ -280,6 +280,7 @@ class PostListView(ListView):
         admins = users_all.filter(role='admin')
         moderators = users_all.filter(role='moderateur')
         #clubs = users_all.filter(role='club')
+        popular_topics = Publication.objects.all().order_by('-nb_vues')
         notifications = Notification
         global type_glob
         try:
@@ -306,6 +307,7 @@ class PostListView(ListView):
                 'professors' : professors,
                 'admins' : admins,
                 'moderators' : moderators,
+                'popular_topics' : popular_topics,
             })
         else:
             posts = Publication.objects.filter(category__name=self.category).order_by('-pk')
@@ -326,6 +328,7 @@ class PostListView(ListView):
                 'professors' : professors,
                 'admins' : admins,
                 'moderators' : moderators,
+                'popular_topics' : popular_topics,
             })
         return context
     
