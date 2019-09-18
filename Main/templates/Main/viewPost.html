@@ -582,29 +582,27 @@
 <br>
 <hr>
 <div class="footer-bg">
-    <div id="about-us">
-        <h3 class="mt-3 mb-3">About us</h3>
-        <ul>
-            <li><a href="#">Islam</a></li>
-            <li><a href="#">Karim</a></li>
-            <li><a href="#">Katia</a></li>
-            <li><a href="#">Fatima</a></li>
-            <li><a href="#">Hamouda</a></li>
-            <li><a href="#">Othman</a></li>
-        </ul>
+    <div id="about-us" style="margin-right:13%;">
+        <h3 class="mt-3 mb-3" style="font-family: Iceberg">ABOUT US</h3><br>
+        <p style="max-width: 600px;">Our goal is to create a professional platform, a space where students and different organisms of the school  can communicate and share knowledge  freely.</p>
     </div>
     <div id="contact-us">
-        <h3 class="mt-3 mb-3">Contact Us</h3>
-        <p><img src="{% static "images/icons/address.png"%}" width="24px" height="24px"> 26 Ft bibo , Algeria</p>
-        <p><img src="{% static "images/icons/mail.png"%}" width="24px" height="24px"> n.benzeghli@esi-sba.dz</p>
-        <p><img src="{% static "images/icons/phone.png"%}" width="24px" height="24px"> (213) 555479987</p>
+        <h3 class="mt-3 mb-3" style="font-family: Iceberg">CONTACT US</h3><br>
+        <p><img src="{% static "images/icons/address.png"%}" width="24px" height="24px"> BP 73, 22016 Sidi Bel Abbés</p>
+        <p><img src="{% static "images/icons/mail.png"%}" width="24px" height="24px"> secretariat@esi-sba.dz</p>
+        <p><img src="{% static "images/icons/phone.png"%}" width="24px" height="24px"> (213) 48 74 94 52</p>
     </div>
     <div id="contact-form">
-        <h3 class="mt-3">CONTACT FORM</h3>
-        <form method="POST">
-            <input type="text" class="form-control mb-2" placeholder="Email">
-            <textarea name="message" placeholder="Your Message here" class="md-textarea form-control"></textarea>
-            <button type="button" class="btn btn-primary btn-sm float-right mt-1"><img src="{% static "images/icons/send-mail.png"%}"
+        <h3 class="mt-3" style="font-family: Iceberg">CONTACT FORM</h3><br>
+        <form method="POST" action="{% url 'message-new'  %}">
+        {% csrf_token %}
+            {% if  user.is_authenticated%}
+            <input type="text" style="background: transparent; color:white;" class="form-control mb-2" name="email-message" placeholder="Email" value='{{request.user.email}}' required disabled>
+            {% else %}
+            <input type="text" style="background: transparent; color:white;" class="form-control mb-2" name="email-message" placeholder="Email"  required >
+            {% endif %}
+            <textarea name="Message-input" style="background: transparent; color:white;" placeholder="Your Message here" class="md-textarea form-control"></textarea>
+            <button type="submit" class="btn btn-primary btn-sm float-right mt-1"><img src="{% static "images/icons/send-mail.png"%}"
                                                                                        width="24px" height="24px"> Send</button>
         </form>
     </div>
