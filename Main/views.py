@@ -281,6 +281,12 @@ class PostListView(ListView):
         moderators = users_all.filter(role='moderateur')
         #clubs = users_all.filter(role='club')
         popular_topics = Publication.objects.all().order_by('-nb_vues')
+        popular_cleared = []
+        i = 0
+        while i<6 and i<len(popular_cleared):
+            popular_cleared.append(popular_topics[i])
+            i = i +1
+
         notifications = Notification
         global type_glob
         try:
@@ -307,7 +313,7 @@ class PostListView(ListView):
                 'professors' : professors,
                 'admins' : admins,
                 'moderators' : moderators,
-                'popular_topics' : popular_topics,
+                'popular_cleared' : popular_cleared,
             })
         else:
             posts = Publication.objects.filter(category__name=self.category).order_by('-pk')
@@ -328,7 +334,7 @@ class PostListView(ListView):
                 'professors' : professors,
                 'admins' : admins,
                 'moderators' : moderators,
-                'popular_topics' : popular_topics,
+                'popular_cleared' : popular_cleared,
             })
         return context
     
