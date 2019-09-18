@@ -385,6 +385,7 @@
                 <div class="topics">
                     
                     <div class="topic-placement">
+                        {% if posts|length > 0 %}
                         {% for post in posts %}
                             <article class="media content-section mt-4 mr-4" style="background-color: #1a2035; border-style: hidden;">
                                 <div class="author float-left">
@@ -418,6 +419,9 @@
                                 </div>
                             </article>
                         {% endfor %}
+                        {% else %}
+                        <h3 class="text-danger"> No Posts available in this section.</h3>
+                        {% endif %}
                     </div>
                 </div>
             </div>
