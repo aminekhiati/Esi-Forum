@@ -169,11 +169,27 @@ def search(request):
     query =request.GET.get('q')
     essai = Publication.objects.all()
     results = Publication.objects.filter(Q(titre__contains=query))
+
     context ={
         'essai':essai,
         'resutls':results
-    }
+            }
     return render(request,"Main/searchresults.html",context)
+
+def search2(request):
+    query =request.GET.get('m')
+    essai = Utilisateur.objects.all()
+    results = Utilisateur.objects.filter(Q(username__contains=query))
+
+    context ={
+        'essai':essai,
+        'resutls':results
+            }
+    return render(request,"Main/searchresults2.html",context)
+
+
+
+
 
 @login_required()
 def userpage(request,pk):

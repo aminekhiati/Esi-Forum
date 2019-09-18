@@ -11,22 +11,22 @@
     <link rel="stylesheet" href="{% static "css/bootstrap.css"%}">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Iceberg" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
     <script src="{% static "js/bootstrap.min.js"%}"></script>
     <script src="{% static "js/responsive.js"%}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet"
-        type="text/css" />
+          type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.25.0/codemirror.min.css">
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_editor.pkgd.min.css" rel="stylesheet"
-        type="text/css" />
+          type="text/css" />
     <link href="https://cdn.jsdelivr.net/npm/froala-editor@2.9.5/css/froala_style.min.css" rel="stylesheet"
-        type="text/css" />
+          type="text/css" />
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -116,62 +116,46 @@
                                     <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
+                            <form method="GET" action="{% url 'search2' %}">
+
                                 </div>
                                 <div class="modal-body">
-                                    <div class="col-md-12">
-                                        <label class="field a-field a-field_a1 page__field reg"
-                                               style="float:left;width:80%;margin-bottom: 1vw;">
-                                            <input class="field__input a-field__input" type="text" placeholder="Mots clés" value="" required>
-                                            <span class="a-field__label-wrap">
-                            <span class="a-field__label">Mots clés</span>
-                          </span>
-                                        </label>
-                                        <div class="custom-control custom-checkbox"
-                                             style=" position:relative;margin-bottom: 1vw;float: left;">
-                                            <input type="checkbox" class="custom-control-input" id="defaultUnchecked">
-                                            <label class="custom-control-label" for="defaultUnchecked">Recherche dans l'archive</label>
+                                        <div class="col-md-12">
+                                            <label class="field a-field a-field_a1 page__field reg"
+                                                   style="float:left;width:80%;margin-bottom: 1vw;">
+                                                <input name='m' class="field__input a-field__input" type="text" placeholder="Username" value="" required>
+                                                <span class="a-field__label-wrap">
+                        <span class="a-field__label">Members</span>
+                      </span>
+                                            </label>
+                                            {% comment %} <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                                        <input class="field__input a-field__input" type="text" placeholder="Tag" value="">
+                                        <span class="a-field__label-wrap">
+{#                        <span class="a-field__label">Tag</span>
+                      </span>
+                                    </label>{% endcomment %}
+
                                         </div>
-                                        <select class="selectpicker" style="float:left;width:80%; margin-bottom: 1vw;">
-                                            <option value="0" selected>Postes</option>
-                                            <option value="1">Membres</option>
-                                        </select>
-                                        <select class="selectpicker" style="float:left;width:80%;">
-                                            <option value="0" selected="selected">N'importe quelle date</option>
-                                            <option value="1">Hier</option>
-                                            <option value="7">Il y a une semaine</option>
-                                            <option value="14">Il y a 2 semaines</option>
-                                            <option value="30"> Il y a un mois</option>
-                                            <option value="90">Il y a 3 mois</option>
-                                            <option value="180">Il y a 6 mois</option>
-                                            <option value="365">Il y a une année</option>
-                                        </select>
-                                        <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
-                                            <input class="field__input a-field__input" type="text" placeholder="Tag" value="">
-                                            <span class="a-field__label-wrap">
-                            <span class="a-field__label">Tag</span>
-                          </span>
-                                        </label>
-    
-                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger">Rechercher</button>
+                                    <button type="submit" class="btn btn-danger">Rechercher</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-                </ul>
-                <ul class="navbar-nav ml-auto">
-    
-                </ul>
-            </div>
-    
-        </nav>
-    </div>
-    <div class="search_results">
-        <h1><b>Search results </b></h1>
+                </div>
+            </ul>
+            <ul class="navbar-nav ml-auto">
 
-        {% for pub in resutls %}
+            </ul>
+        </div>
+
+    </nav>
+</div>
+<div class="search_results">
+    <h1><b>Search results </b></h1>
+
+    {% for pub in resutls %}
         <div class="element_search">
             <a href="{% url 'post-detail' pub.category.name pub.id %}">
                 <h3>{{ pub.titre }} </h3>
@@ -180,17 +164,17 @@
             </p>
             <div class="line"></div>
         </div>
-        {% endfor %}
+    {% endfor %}
 
-    </div>
+</div>
 <script>
-  
+
     var posts = document.getElementsByClassName("post-toparse");
     for(var i=0;i<posts.length; i++){
         post = posts.item(i);
         post.innerHTML = post.textContent;
     }
-        
+
 </script>
 </body>
 

@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from django.contrib.auth import views as auth_views
 from .views import (
     PostListView,
     PostDetailView,
@@ -30,6 +31,7 @@ urlpatterns = [
     path('usersettings/', views.editeProfile, name='editprofile'),
     path('searchresults/',views.search, name='search'),
     path('userpage/<int:pk>',views.userpage, name='userpage'),
+    path('searchresults2/',views.search2, name='search2'),
     path('engpub/<int:pk>',views.enrigstre_pub,name='engpub'),
     path('reports/',views.ReportListView.as_view(),name='reports'),
     path('reports/delete/<int:pk>',views.ReportDeleteView.as_view(),name='report-delete'),
