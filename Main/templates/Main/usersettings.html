@@ -85,7 +85,7 @@
                                         <a class="nav-link" href="{% url 'category' 'bachelors' %}"><span class="fa fa-graduation-cap icons"></span> Bachelors</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" style="margin-right:45vw !important;" href="{% url 'category' 'clubs' %}"><span class="fa fa-users icons"></span> Clubs</a>
+                                        <a class="nav-link" style="margin-right:30vw !important;" href="{% url 'category' 'clubs' %}"><span class="fa fa-users icons"></span> Clubs</a>
                                     </li>
                             <li class="nav-item">
                                     {% if request.user.notifications.count > 0 %}
@@ -177,11 +177,11 @@
                             </div>
                             <div class="float-left mr-4 text-center">
 
-                                <img src="{{ user.profile.image.url }}" id="img-prof" class="avatar-setting">
+                                <img src="{{ user.profile.image.url }}" id="blah" class="avatar-setting">
                                 <br>
                                 
                                     <div class="custom-file" id="customFile">
-                                        <input type="file" name="image" class="custom-file-input"  
+                                        <input type="file" name="image" onchange="readURL(this);" class="custom-file-input"  
                                             id="exampleInputFile" aria-describedby="fileHelp">
                                         <label class="custom-file-label" for="exampleInputFile">
                                             Upload avatar

@@ -70,7 +70,7 @@ def signup(request):
             utilisateur.save()
             return redirect('home')
         else:
-            return redirect('http://127.0.0.1:8000/signup?msg=Erreur Message')
+            return redirect('http://127.0.0.1:8000/signup?msg=Email%20Invalid%20Ou%20Username%20Exist!')
         
     else:
         form = SignUpForm()
@@ -311,7 +311,7 @@ class PostListView(ListView):
         professors = users_all.filter(role='enseignant')
         admins = users_all.filter(role='admin')
         moderators = users_all.filter(role='moderateur')
-        #clubs = users_all.filter(role='club')
+        clubs = users_all.filter(role='clubs')
         popular_topics = Publication.objects.all().order_by('-nb_vues')
         popular_cleared = []
         i = 0
@@ -346,6 +346,7 @@ class PostListView(ListView):
                 'admins' : admins,
                 'moderators' : moderators,
                 'popular_cleared' : popular_cleared,
+                'clubs' : clubs,
             })
         else:
             posts = Publication.objects.filter(category__name=self.category).order_by('-pk')
@@ -367,6 +368,7 @@ class PostListView(ListView):
                 'admins' : admins,
                 'moderators' : moderators,
                 'popular_cleared' : popular_cleared,
+                'clubs' : clubs
             })
         return context
     

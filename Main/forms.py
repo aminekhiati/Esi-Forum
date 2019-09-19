@@ -5,6 +5,8 @@ from .models import Utilisateur,Profile,Commentaire
 ROLE = (
         ('etudiant', 'Etudiant'),
         ('enseignant', 'Enseignant'),
+        ('clubs', 'Clubs'),
+        
     )
 
 ROLE1=(
@@ -39,6 +41,20 @@ class SignUpForm(UserCreationForm):
     bio =forms.CharField(widget=forms.Textarea,required=False)
     role =forms.ChoiceField(choices = ROLE, label="", initial='', widget=forms.Select(), required=True)
     promo= forms.ChoiceField(choices = PROMO, label="", initial='', widget=forms.Select(), required=True)
+
+    def clean(self):
+        cd = self.cleaned_data
+        username=cd.get('username')
+        email=cd.get('email')
+        a_string = email[-10:]
+        print(a_string)
+        if cd.get('password') != cd.get('password1'):
+            self.add_error('password1', "passwords do not match !")
+        if  (Utilisateur.objects.filter(username=username).count()>0):
+            self.add_error('username', "username exist !")
+
+        if  (a_string!='esi-sba.dz'):
+            self.add_error('email', "email aint from school  !")
 
     class Meta:
         model = Utilisateur

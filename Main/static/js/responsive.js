@@ -1,3 +1,16 @@
+function readURL(input) {
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('#blah')
+              .attr('src', e.target.result)
+      };
+
+      reader.readAsDataURL(input.files[0]);
+  }
+}
+
 $(window).on('resize', function() {
     var win = $(this);
     if (win.width() < 600) {
@@ -24,18 +37,6 @@ $(window).on('resize', function() {
   });
 
 
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            $('#img-prof')
-                .attr('src', e.target.result)
-        };
-
-        reader.readAsDataURL(input.files[0]);
-    }
-}
 
 
     

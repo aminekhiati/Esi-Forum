@@ -2,6 +2,19 @@
 {% load widget_tweaks %}
 {% load static %}
 {%block content%}
+<script>
+function readURL(input) {
+  if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+          $('.blah')
+              .attr('src', e.target.result)
+      };
+
+      reader.readAsDataURL(input.files[0]);
+  }
+}</script>
                 <div class="row ml-4">
                         <div class="col-4">
                                 <div id="members">
@@ -155,12 +168,12 @@
                                         </div>
                                         <div class="modal-body">
                                                 <div class="float-left text-center ml-4">
-                                                        <img src="{{user.profile.image.url }}" class="avatar-setting">
+                                                        <img src="{{user.profile.image.url }}" class="avatar-setting blah">
                                                         <br>
                                                         <form class="mt-2" method="POST" enctype="multipart/form-data" action="{% url 'updateuseradmin' user.id %}">
                                                         {% csrf_token %}
                                                                 <div class="custom-file" id="customFile">
-                                                                    {% render_field  form.image  class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp" value="{{user.profile.image}}" %}
+                                                                    {% render_field  form.image  class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp" value="{{user.profile.image}}" onchange="readURL(this);" %}
                                                                    
                                                                     <label class="custom-file-label" for="exampleInputFile">
                                                                         Upload avatar
@@ -226,7 +239,7 @@
                                                 </div>
                                         </div>
                                         <div class="modal-footer">
-                                          <div class="float-left text-danger mr-4">form.password.errors</div>
+                                          <div class="float-left text-danger mr-4"></div>
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                           <button type="submit" class="btn btn-danger">Save</button>
                                         </div>
@@ -426,12 +439,12 @@
                           
                           <div class="modal-body">
                                   <div class="float-left text-center ml-4">
-                                          <img src="../images/avatars/1.jpg" class="avatar-setting">
+                                          <img src="{% static "images/avatars/1.png"%}" class="avatar-setting blah">
                                           <br>
                                           <form class="mt-2" method="POST" action="{%url 'addmod' %}">
                                           {% csrf_token %}
                                                   <div class="custom-file" id="customFile">
-                                                      {% render_field  formm.image  class="custom-file-input" id="exampleInputFile" aria-describedby="fileHelp" %}
+                                                      {% render_field  formm.image  class="custom-file-input" id="exampleInputFile"  onchange="readURL(this);" aria-describedby="fileHelp" %}
                                                      
                                                       <label class="custom-file-label" for="exampleInputFile">
                                                           Upload avatar
@@ -495,7 +508,7 @@
                                   </div>
                           </div>
                           <div class="modal-footer">
-                            <div class="float-left text-danger mr-4">Error Message here!</div>
+                            <div class="float-left text-danger mr-4"></div>
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-danger">Add</button>
                             </form>

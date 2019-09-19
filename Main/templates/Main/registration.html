@@ -41,14 +41,14 @@
             <div class="reg">
                 <span class="fa fa-user icons" id="ic"></span>
                 <label class="field a-field a-field_a1 page__field" style="width:40%">
-                    {% render_field  form.first_name  class="field__input a-field__input" placeholder="First Name" %}
+                    {% render_field  form.first_name  class="field__input a-field__input" placeholder="Mohamed" %}
                     <span class="a-field__label-wrap">
                         <span class="a-field__label">First Name</span>
                     </span>
                 </label>
 
                 <label class="field a-field a-field_a1 page__field" style="width:40%">
-                    {% render_field  form.last_name  class="field__input a-field__input" placeholder="Last Name" %}
+                    {% render_field  form.last_name  class="field__input a-field__input" placeholder="Ali" %}
                     <span class="a-field__label-wrap">
                         <span class="a-field__label">Last Name</span>
                     </span>
@@ -58,10 +58,10 @@
             <div class="reg">
                 <span class="fa fa-user icons" id="ic"></span>
                 <label class="field a-field a-field_a1 page__field" style="width:84%">
-                    {% render_field  form.username  class="field__input a-field__input" placeholder="username" %}
+                    {% render_field  form.username  class="field__input a-field__input" placeholder="mohamed" %}
                     <h1>{{form.username.error}}</h1>
                     <span class="a-field__label-wrap">
-                        <span class="a-field__label">Userame</span>
+                        <span class="a-field__label">Username</span>
                     </span>
                 </label>
             </div>
@@ -69,7 +69,7 @@
             <div class="reg">
                 <span class="fa fa-envelope icons" id="ic"></span>
                 <label class="field a-field a-field_a1 page__field" style="width:84%">
-                    {% render_field  form.email  class="field__input a-field__input" placeholder="Email" %}
+                    {% render_field  form.email  class="field__input a-field__input" placeholder="email@esi-sba.dz" %}
                     <span class="a-field__label-wrap">
                         <span class="a-field__label">Email</span>
                     </span>
@@ -79,7 +79,7 @@
             <div class="reg">
                 <span class="fa fa-phone-square icons" id="ic"></span>
                 <label class="field a-field a-field_a1 page__field" style="width:84%">
-                    {% render_field  form.phone_number  class="field__input a-field__input" placeholder="Phone Number" %}
+                    {% render_field  form.phone_number  class="field__input a-field__input" placeholder="0659660099" %}
                     <span class="a-field__label-wrap">
                         <span class="a-field__label">Phone Number</span>
                     </span>
@@ -152,7 +152,7 @@ function displayPromo() {
         
         var x = document.getElementById("mySelect").value;
         console.log(x)
-        if(x=="enseignant") 
+        if(x=="enseignant" || x=="clubs") 
             document.getElementById("promo").style.display = "none";
         else  document.getElementById("promo").style.display = "";
 }
