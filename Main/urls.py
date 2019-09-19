@@ -47,5 +47,8 @@ urlpatterns = [
     path('<str:category>/post/<int:pk>/comment/new/', views.add_comment_to_post, name='comment-new'),
     path('<str:category>/post/<int:pk1>/comment/delete/<int:pk2>/', views.comment_remove, name='comment-delete'),
     path('<str:category>/post/<int:pk1>/comment/update/<int:pk2>/', views.comment_update, name='comment-update'),
-    path('<str:category>/clear-notifications/', views.clear_notifications, name='clear-notifications')
+    path('<str:category>/clear-notifications/', views.clear_notifications, name='clear-notifications'),
+    path('<str:category>/post/<int:pk>/report_post/', views.add_report_post, name='report-post'),
+    path('<str:category>/post/<int:pk>/report_comment/', views.add_report_comment, name='report-comment'),
+    
 ]

@@ -55,78 +55,61 @@
         <div class="row">
             <div class="col-md-12">
                 <nav class="navbar navbar-default py-0 mt-2 " role="navigation">
-                    <div class="navbar">
-                        <ul class="nav nav-pills" id="homemenu">
-                            <li class="nav-item">
-                                <a class="nav-link" id="active" href="#">
-                                    <span class="fa fa-home icons"></span> Accueill</a>
-                            </li>
-                            <li class="nav-item">
-                                <div class="dropdown show">
-                                    <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="fa fa-user icons"></span> Etudiants</a>
-                                    <!-- dropdown menu here-->
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" style="color:black;" href="#">1 CPI</a>
-                                        <a class="dropdown-item" style="color:black;" href="#">2 CPI</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" style="color:black;" href="#">1 CS</a>
-                                        <a class="dropdown-item" style="color:black;" href="#">SIW</a>
-                                        <a class="dropdown-item" style="color:black;" href="#">ISI</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><span class="fa fa-briefcase icons"></span> Enseignants</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#"><span class="fa fa-graduation-cap icons"></span>
-                                    Bacheliers</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" style="margin-right:25vw !important;"><span
-                                        class="fa fa-users icons"></span> Clubs</a>
-                            </li>
-                            <li class="nav-item">
-                                <span id="notification_count">3</span>
-                                <a class="nav-link " id="notificationLink" href="#"><span
-                                        class="fa fa-bell icons"></span>
-                                </a>
-                                <div id="notificationContainer">
-                                    <div id="notificationTitle">Notifications</div>
-                                    <div id="notificationsBody" class="notifications" style="overflow-y: scroll;">
-                                        <div class="element-notif">
-                                            <img src="{% static "images/avatars/sample.png"%}" class="avatar-notif" alt="">
-                                            <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                a
-                                                commenté
-                                                votre publication</i><br>
-                                            <a href="#">Link</a>
+                        <div class="navbar">
+                                <ul class="nav nav-pills" id="homemenu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="active" href="{% url 'home' %}">
+                                            <span class="fa fa-home icons"></span> Home</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <div class="dropdown show">
+                                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                <span class="fa fa-user icons"></span> Students</a>
+                                            <!-- dropdown menu here-->
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '1cpi' %}">1 CPI</a>
+                                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '2cpi' %}">2 CPI</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '1cs' %}">1 CS</a>
+                                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '2cs' %}">2 CS</a>
+                                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '3cs' %}">3 CS</a>
+                                            </div>
                                         </div>
-                                        <div class="line"></div>
-                                        <div class="element-notif">
-                                            <img src="{% static "images/avatars/sample.png"%}" class="avatar-notif" alt="">
-                                            <b style="color:white">Karim Bourahla</b><i style="color:white">&nbsp;&nbsp;
-                                                a
-                                                commenté
-                                                votre publication</i><br>
-                                            <a href="#">Link</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'category' 'professors' %}"><span class="fa fa-briefcase icons"></span> Professors</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'category' 'bachelors' %}"><span class="fa fa-graduation-cap icons"></span> Bachelors</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" style="margin-right:45vw !important;" href="{% url 'category' 'clubs' %}"><span class="fa fa-users icons"></span> Clubs</a>
+                                    </li>
+                            <li class="nav-item">
+                                    {% if request.user.notifications.count > 0 %}
+                                    <span id="notification_count">{{ request.user.notifications.count }}</span>
+                                    {% endif %}
+                                    <a class="nav-link right-search" id="notificationLink" href="#"><span class="fa fa-bell icons"
+                                                                                                          style="position:relative; font-size: 1.5rem; top: 3px;"></span>
+                                    </a>
+                                    <div id="notificationContainer">
+                                        <div id="notificationTitle" style="color: white">Notifications</div>
+                                        <div id="notificationsBody"  style="overflow-y: scroll">
+                                            {% for notification in request.user.notifications.all %}
+                                            <div class="element-notif">
+                                                <img src="{{ notification.comment.commented_by.profile.image.url }}" class="avatar-notif mr-2" alt="">
+                                                <b >{{ notification.comment.commented_by.username }}</b><i>&nbsp;a commenté votre publication</i><br>
+                                                <a href="{% url 'post-detail' notification.comment.publication.category.name notification.comment.publication.id %}" >{{ notification.comment.publication.titre }}</a>
+                                            </div>
+                                            <div class="line"></div>
+                                            {% endfor %}
                                         </div>
-                                        <div class="line"></div>
-
-
-
+                                        <div id="notificationFooter"><a href="{% url 'clear-notifications' 'offtalk' %}" style="color: white">Clear All</a></div>
                                     </div>
-                                    <div id="notificationFooter"><a href="#">See All</a></div>
-                                </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="modal" data-target="#banPop"><span
-                                        class="fa fa-ban icons"></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'editprofile' %}"><span class="fa fa-cog icons"></a>
+                                <a class="nav-link" href="{% url 'editprofile' %}"><span class="fa fa-cog icons" style="position:relative; font-size: 1.5rem; top: 3px;"></a>
                             </li>
 
 
@@ -135,36 +118,16 @@
                     </div>
                 </nav>
             </div>
-            <div class="modal fade" id="banPop" tabindex="-1" role="dialog" aria-labelledby="banPopLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="banPopLabel">Alert</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body text-danger">
-                            Are you sure you want to ban this user?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                            <button type="button" class="btn btn-danger">Ban</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-lg-2 col-md-2 sidebar" style="display: block;">
+                        <div class="col-lg-2 col-md-2 sidebar" style="display: block;margin-left:0.95%">
                         <img src="{{ user.profile.image.url }}" class="profile-pic" alt="">
                         <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                         <h5>Etudiant {{ user.profile.promo }}</h5>
                         <h6>Bio :</h6>
                         <p>{{ user.profile.bio }}</p>
                         <div class="line"></div>
-                        <div class="all col-sm-10">
+                        <div class="all col-sm-8">
                             <ul style="display: block;">
                                 <li>
                                     <a href="javascript:switchVisible1()">Topics</a>
@@ -180,7 +143,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-10 content">
+                    <div class="col-sm-9 content">
                         <div class="bookmarks" id="Div2">
                             <br><br><br><br>
                             <div class="box">
@@ -221,8 +184,7 @@
                                                                     </div>
                                                     {% endfor %}
                                 </div>
-                                <div class=" element col-md-6"
-                                    style="border-right:2px solid #ff7474 !important;">
+                                <div class=" element col-md-6">
                                     <h3 style="color: #ff7474">Posts</h3>
                                     {% for post in user.publications.all %}
                                     <div class="element col-sm-12">

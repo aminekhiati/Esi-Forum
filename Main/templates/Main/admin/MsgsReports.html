@@ -48,7 +48,7 @@
                             <a href="{%url 'edituser'%}" class="menu-item"> Profile</a></li>
                         <li>
                             <span class="fa fa-envelope icons"></span>
-                            <a href="{%url 'reports'%}"class="reports"> Msgs & Reports</a></li>
+                            <a href="{%url 'reports'%}" class="menu-item"> Msgs & Reports</a></li>
                     </ul>
                 </div>
             </div>
@@ -78,7 +78,7 @@
                                 <div id="members">
                                     <small class="float-left mt-1 ml-1">Messages</small>
                                     <div class="text-dash">
-                                50 <span class="fa fa-envelope"></span>
+                                {{messages_list|length}} <span class="fa fa-envelope"></span>
                                 </div>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                                 <div id="total-topics">
                                     <small class="float-left mt-1 ml-1">Reports</small>
                                     <div class="text-dash">
-                                302 <span class="fa fa-sticky-note"></span>
+                                {{reports_list|length}} <span class="fa fa-sticky-note"></span>
                                 </div>
                             </div>
                         </div>
@@ -181,7 +181,7 @@
                                     <div class="modal-dialog" role="document">
                                       <div class="modal-content">
                                         <div class="modal-header">
-                                          <h5 class="modal-title" id="reportPopLabel">Insulting</h5>
+                                          <h5 class="modal-title" id="reportPopLabel">{{report.sybject}}</h5>
                                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                           </button>
@@ -196,8 +196,8 @@
                                           Reason : 
                                           <p>{{report.reason}}</p>
                                           <hr>
-                                          Profile <a href="#" ><span class="fa fa-external-link-alt icons"></span></a>&nbsp; | &nbsp;
-                                          Topic <a href="#" ><span class="fa fa-external-link-alt icons"></span></a>
+                                          Profile <a href="{% url 'userpage' report.user_reported.id %}" ><span class="fa fa-external-link-alt icons"></span></a>&nbsp; | &nbsp;
+                                          Topic <a href="{% url 'post-detail' report.topic.category.name report.topic.id %}" ><span class="fa fa-external-link-alt icons"></span></a>
                                         </div>
                                         <div class="modal-footer">
                                           <form method="POST" action="{% url 'report-delete' report.id %}">

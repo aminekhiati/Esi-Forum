@@ -283,7 +283,7 @@
                     <span class="statics-post mt-4 float-right"><a href="#">
                       {% if user.is_authenticated %}
                           {% if user != object.auteur %}
-                              <a href="#"  data-toggle="modal" data-target="#reportPop">
+                              <a href="#"  data-toggle="modal" data-target="#reportPopTopic">
                               <span class="fa fa-flag icons"></span></a>
                           {% endif %}
                           {% if user == object.auteur or user.role == 'admin' or user.role == 'moderateur' %}
@@ -294,6 +294,41 @@
                             </span>
                         </div>
                     </article>
+                    <div class="modal fade" id="reportPopTopic" tabindex="-1" role="dialog" aria-labelledby="reportPopLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="reportPopLabel" style="color: white;">Alert</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-danger">
+                                    Are you sure you want to report {{object.auteur.username }}?
+                                    <br>
+                                    <form method="POST" action="{% url 'report-post' object.category.name object.id %}">
+                                        {% csrf_token %}
+                                    <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                                        <input class="field__input a-field__input" name="subject" type="text" placeholder="Reason" value="">
+                                        <span class="a-field__label-wrap">
+                                      <span class="a-field__label">Subject</span>
+                                    </span>
+                                    </label><br>
+                                    <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                                        <input class="field__input a-field__input" name="reason" type="text" placeholder="Reason" value="">
+                                        <span class="a-field__label-wrap">
+                                      <span class="a-field__label">Reason</span>
+                                    </span>
+                                    </label>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    <button type="button submit" class="btn btn-danger">Report</button>
+                                </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
                     <hr class="w-75">
                     <h4 class="icons">Comments</h4>
                     <div class="comments">
@@ -325,7 +360,7 @@
                                     <span class="statics-post mt-4 float-right">
                          {% if user.is_authenticated %}
                              {% if user != comment.commented_by %}
-                                 <a href="#"  data-toggle="modal" data-target="#reportPop">
+                                 <a href="#"  data-toggle="modal" data-target="#reportPopTopic{{comment.id}}">
                             <span class="fa fa-flag icons"></span></a>
                             {% endif %}
                             &nbsp;  
@@ -338,7 +373,41 @@
                         </span>
                                 </div>
                             </article>
-
+                            <div class="modal fade" id="reportPopTopic{{comment.id}}" tabindex="-1" role="dialog" aria-labelledby="reportPopLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="reportPopLabel" style="color: white;">Alert</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-danger">
+                                            Are you sure you want to report {{comment.commented_by.username }}?
+                                            <br>
+                                            <form method="POST" action="{% url 'report-post' object.category.name object.id %}">
+                                                {% csrf_token %}
+                                            <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                                                <input class="field__input a-field__input" name="subject" type="text" placeholder="Reason" value="">
+                                                <span class="a-field__label-wrap">
+                                            <span class="a-field__label">Subject</span>
+                                            </span>
+                                            </label><br>
+                                            <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
+                                                <input class="field__input a-field__input" name="reason" type="text" placeholder="Reason" value="">
+                                                <span class="a-field__label-wrap">
+                                              <span class="a-field__label">Reason</span>
+                                            </span>
+                                            </label>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                            <button type="button submit" class="btn btn-danger">Report</button>
+                                        </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="modal fade" id="deletePop{{comment.id}}" tabindex="-1" role="dialog" aria-labelledby="deletePopLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
@@ -435,32 +504,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="reportPop" tabindex="-1" role="dialog" aria-labelledby="reportPopLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="reportPopLabel" style="color: white;">Alert</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-danger">
-                    Are you sure you want to report this user?
-                    <br>
-                    <label class="field a-field a-field_a1 page__field" style="float:left;width:80%;">
-                        <input class="field__input a-field__input" type="text" placeholder="Reason" value="">
-                        <span class="a-field__label-wrap">
-                      <span class="a-field__label">Reason</span>
-                    </span>
-                    </label>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <button type="button" class="btn btn-danger">Report</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="modal fade" id="editTopicPop" tabindex="-1" role="dialog" aria-labelledby="editTopicLabel"
          aria-hidden="true">
         <div class="modal-lg modal-dialog" role="document">

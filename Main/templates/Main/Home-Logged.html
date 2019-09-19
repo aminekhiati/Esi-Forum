@@ -151,7 +151,7 @@
     </nav>
     <div id="carouselExampleControls" class="my-carousel carousel slide" data-ride="carousel">
         <p id="titre-carousel">ESI Community</p>
-        <p id="content-carousel">Espace D’étudiants de l’école supérieur d'informatique Sidi Bel Abbes</p>
+        <p id="content-carousel">High School of Computer Science Sidi Bel Abbes Space.</p>
 
         {% if not user.is_authenticated %}
             <a  class="btn btn-sm" id="join-carousel" role="button" href="{% url 'signup' %}">Join us</a>
@@ -173,8 +173,10 @@
                                 <span class="a-field__label">Password</span>
                               </span>
                     </label>
-                    <small class="float-left ml-4 mb-3"><a href="#">mot de passe oublié?</a></small></br>
+                    <small class="float-left ml-4 mb-3"><a href="#">forget password?</a></small></br>
                     <button class="btn float-right mr-4" type="submit">login</button>
+                    <span class="float-left mt-2 text-danger">{{request.GET.msg}}</span>
+                    
                 </form>
             </div>
         {% endif %}
