@@ -29,6 +29,7 @@ from django.views.generic import (
     DeleteView
 )
 import os
+from datetime import datetime
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger,InvalidPage
 def get_current_users():
     active_sessions = Session.objects.filter(expire_date__gte=timezone.now())
@@ -68,6 +69,9 @@ def signup(request):
             #login(request, user)
             utilisateur.save()
             return redirect('home')
+        else:
+            return redirect('http://127.0.0.1:8000/signup?msg=Erreur Message')
+        
     else:
         form = SignUpForm()
     return render(request, 'Main/registration.html', {'form': form})
@@ -145,15 +149,19 @@ def login_request(request):
             password = form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
+                if user.banned:
+                    return redirect('http://127.0.0.1:8000/offtalk/?msg=Banned%20User')
                 login(request, user)
                 messages.success(request, "Logged in successfully as {username}")
                 return redirect('home')
             else:
                 messages.info(request,"User dosn't exist")
+                return redirect('http://127.0.0.1:8000/offtalk/?msg=Invalid%20Login')
         else:
             messages.info(request,"Invalid Syntaxe")
+            return redirect('http://127.0.0.1:8000/offtalk/?msg=Invalid%20Login')
     form = AuthenticationForm()
-    redirect('home')
+    
     return render(request,"Main/Home-Logged.html", {"form":form})
 
 
@@ -240,11 +248,27 @@ def search(request):
     query =request.GET.get('q')
     essai = Publication.objects.all()
     results = Publication.objects.filter(Q(titre__contains=query))
+
     context ={
         'essai':essai,
         'resutls':results
-    }
+            }
     return render(request,"Main/searchresults.html",context)
+
+def search2(request):
+    query =request.GET.get('m')
+    essai = Utilisateur.objects.all()
+    results = Utilisateur.objects.filter(Q(username__contains=query))
+
+    context ={
+        'essai':essai,
+        'resutls':results
+            }
+    return render(request,"Main/searchresults2.html",context)
+
+
+
+
 
 @login_required()
 def userpage(request,pk):
@@ -483,6 +507,7 @@ class ReportListView(ListView):
     def get_context_data(self, **kwargs):
         context = super(ReportListView, self).get_context_data(**kwargs)
         context['messages_list'] = Message.objects.all()
+        context['banned_list'] = Utilisateur.objects.all().filter(banned=True)
         return context
     def get_queryset(self):
         return Report.objects.all()
@@ -490,12 +515,12 @@ class ReportListView(ListView):
 class ReportDeleteView(DeleteView):
     template_name = 'Main/admin/MsgsReports.html'
     model = Report
-    success_url = '/reports/'
+    success_url = '/dashboard/reports/'
 
 class MessageDeleteView(DeleteView):
     template_name = 'Main/admin/MsgsReports.html'
     model = Message
-    success_url = '/reports/'
+    success_url = '/dashboard/reports/'
 
 
 def add_message(request):
@@ -720,3 +745,31 @@ def clear_notifications(request,category):
     request.user.notifications.all().delete()
     return redirect('category',category='offtalk',)
     
+
+def add_report_post(request, category ,pk):
+    post = get_object_or_404(Publication, pk=pk)
+    if request.method == "POST":
+        report = Report()
+        report.from_user = request.user
+        report.sybject = request.POST['subject']
+        report.reason = request.POST['reason']
+        report.user_reported = post.auteur
+        report.topic = post
+        report.save()
+        return redirect('post-detail',category=post.category.name, pk=post.pk)
+    
+    return redirect('post-detail',category=post.category.name, pk=post.pk)
+
+def add_report_comment(request, category ,pk):
+    comment = get_object_or_404(Commentaire, pk=pk)
+    if request.method == "POST":
+        report = Report()
+        report.from_user = request.user
+        report.sybject = request.POST['subject']
+        report.reason = request.POST['reason']
+        report.user_reported = comment.commented_by
+        report.topic = comment
+        report.save()
+        return redirect('post-detail',category=comment.publication.category.name, pk=comment.publication.pk)
+    
+    return redirect('post-detail',category=comment.publication.category.name, pk=comment.publication.pk)
