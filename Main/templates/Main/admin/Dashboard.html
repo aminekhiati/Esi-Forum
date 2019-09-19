@@ -63,11 +63,13 @@
                                     <th><span class="fa fa-eye icons"></th>
                                 </tr>
                                 {% for post in pubs_populaie %}
+                                
                                 <tr class="cursor" onclick="window.location.replace('#')">
-                                    <td>{{post}}</td>
+                                    <td><a href="{% url 'post-detail' post.category.name post.id %}"  class="menu-item">{{post}}</a></td>
                                     <td>{{post.commentaires.all.count}}</td>
                                     <td>{{post.nb_vues}}</td>
                                 </tr>
+                                
                                 {% endfor %}
                                 
                               

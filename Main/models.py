@@ -14,7 +14,8 @@ ROLE = (
         ('etudiant', 'Etudiant'),
         ('enseignant', 'Enseignant'),
         ('moderateur','Moderateur'),
-        ('admin','Admin')
+        ('admin','Admin'),
+        ('clubs','Clubs')
     )
 
 PROMO = (

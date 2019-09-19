@@ -11,7 +11,8 @@ ROLE1=(
     ('etudiant', 'Etudiant'),
     ('enseignant', 'Enseignant'),
     ('moderateur','Moderateur'),
-    ('admin','Admin')
+    ('admin','Admin'),
+    ('clubs','Clubs')
 )
 
 ROLE2=(
@@ -19,7 +20,8 @@ ROLE2=(
     ('etudiant', 'Etudiant'),
     ('enseignant', 'Enseignant'),
     ('moderateur','Moderateur'),
-    ('admin','Admin')
+    ('admin','Admin'),
+    ('clubs','Clubs')
     
 )
 

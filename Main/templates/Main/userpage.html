@@ -121,10 +121,7 @@
                                     <div id="notificationFooter"><a href="#">See All</a></div>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="modal" data-target="#banPop"><span
-                                        class="fa fa-ban icons"></a>
-                            </li>
+                            
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'editprofile' %}"><span class="fa fa-cog icons"></a>
                             </li>
@@ -157,8 +154,8 @@
             </div>
             <div class="col-lg-12">
                 <div class="row">
-                    <div class="col-lg-2 col-md-2 sidebar" style="display: block;">
-                        <img src="{{ user.profile.image.url }}" class="profile-pic" alt="">
+                    <div class="col-lg-3 col-md-2 sidebar" style="display: block;margin-top:2%">
+                        <img src="{{ user.profile.image.url }}" class="profile-pic" alt="" style="max-width:170px">
                         <h3>{{ user.first_name }} {{ user.last_name }}</h3>
                         <h5>Etudiant {{ user.profile.promo }}</h5>
                         <h6>Bio :</h6>
@@ -166,9 +163,7 @@
                         <div class="line"></div>
                         <div class="all col-sm-10">
                             <ul style="display: block;">
-                                <li>
-                                    <a href="javascript:switchVisible1()">Topics</a>
-                                </li>
+                                
                                 <li>
                                     <a href="javascript:switchVisible1()">Replies</a>
                                 </li>
@@ -180,8 +175,8 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-10 content">
-                        <div class="bookmarks" id="Div2">
+                    <div class="col-sm-9 content">
+                        <div class="bookmarks" id="Div2" style='overflow:hidden'>
                             <br><br><br><br>
                             <div class="box">
                                 <p style="margin-top:1.6vw ">Saved Posts</p>
@@ -271,6 +266,9 @@
             }
         </script>
         <style>
+        *{
+            font-family:'Iceberg sans-serif';
+        }
             .modal-content {
                 background: #171c2f !important;
                 font-family: 'Ubuntu', sans-serif;

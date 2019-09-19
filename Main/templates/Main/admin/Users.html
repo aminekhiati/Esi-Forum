@@ -7,7 +7,7 @@
                                 <div id="members">
                                     <small class="float-left mt-1 ml-1">Clubs</small>
                                     <div class="text-dash">
-                                5 <span class="fa fa-users"></span>
+                                {{clubs_all_list.count}} <span class="fa fa-users"></span>
                                 </div>
                             </div>
                         </div>
@@ -15,7 +15,7 @@
                                 <div id="total-topics">
                                     <small class="float-left mt-1 ml-1">Professors</small>
                                     <div class="text-dash">
-                                30 <span class="fa fa-user-tie"></span>
+                                {{enseignant_all_list.count}} <span class="fa fa-user-tie"></span>
                                 </div>
                             </div>
                         </div>
@@ -23,7 +23,7 @@
                             <div id="online">
                                 <small class="float-left mt-1 ml-1">Students</small>
                                 <div class="text-dash">
-                             780 <span class="fa fa-graduation-cap" style="font-size:31px;"></span>
+                             {{students_all_list.count}} <span class="fa fa-graduation-cap" style="font-size:31px;"></span>
                    </div>
                 </div>
                 </div>
@@ -135,7 +135,7 @@
                                     <td>
                                         <img src="{{ user.profile.image.url }}" class="usr-tab">
                                     </td>
-                                    <td>{{user.username}} </td>
+                                    <td><a href="{% url 'userpage' user.id %}">{{user.username}} </a></td>
                                     <td>{{user.email}}</td>
                                     <td>{{user.role}}</td>
                                     <td>{{user.publications.count}}</td>

@@ -6,6 +6,7 @@ from .forms import (
     deleteForm,addmodForm,adminUpdate,
     UserUpdateForm,ProfileUpdateForm,
     CommentForm)
+from django.conf import settings
 from django.http import HttpResponse
 from django.db.models import Count, F, Q
 from django.contrib.auth import login, authenticate,logout
@@ -40,10 +41,15 @@ def get_current_users():
 
 def admin_check(user):
     return user.role=="admin" or user.role=="moderateur"
+def admin_loged(user):
+    return user.is_authenticated
+    
 
 
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('home')
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -67,9 +73,15 @@ def signup(request):
     return render(request, 'Main/registration.html', {'form': form})
 
 
-@login_required(login_url='/home/')
-@user_passes_test(admin_check,login_url='/home/')
+
+
 def dashboard(request):
+
+    if not request.user.is_authenticated:
+        return redirect('home')
+    if  request.user.role!='admin' :
+        if request.user.role!='moderateur' :
+            return redirect('home')
     queryset = get_current_users()
     pubs_populaie=Publication.objects.annotate(num_c_v=(Count('publication')+F('nb_vues'))).order_by('num_c_v')[0:3]
     nbr_user=Utilisateur.objects.all().count()-1
@@ -87,9 +99,12 @@ def dashboard(request):
 
                                                         })
 
-@login_required(login_url='/home/')
-@user_passes_test(admin_check,login_url='/home/')
 def dashboard_editProfile(request):
+    if not request.user.is_authenticated:
+        return redirect('home')
+    if  request.user.role!='admin' :
+        if request.user.role!='moderateur' :
+            return redirect('home')
     form=adminUpdate()
     add = Profile.objects.filter(user__username=request.user)
     for ad in add:
@@ -148,18 +163,74 @@ def loggedin (request):
 
 
 def editeProfile(request):
-    u_form = UserUpdateForm(instance=request.user)
-    p_form = ProfileUpdateForm()
+    u_form = UserUpdateForm()
+    user=request.user
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST,instance=request.user)
-        p_form = ProfileUpdateForm(request.POST, request.FILES)
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
-            p_form.save()
+        try:
+           
+            img = request.FILES['image']
+            img_extension = os.path.splitext(img.name)[1]
+            
+            
+            user_folder = settings.MEDIA_ROOT+'/profile_pics/'
+            print('ok')
+            if not os.path.exists(user_folder):
+                os.mkdir(user_folder)
+            
+            img_save_path = user_folder+img.name
+     
 
+            with open(img_save_path, 'wb+') as f:
+                for chunk in img.chunks():
+                    f.write(chunk)
+            
+            user.profile.image= 'profile_pics/'+img.name
+           
+            user.save()
+        except :
+            pass
+        pk=user.pk
+        user=Utilisateur.objects.filter(id=pk)
+        username =request.POST.get('username')
+        if username:
+            user.update(username=username)
+            
+        firstname =request.POST.get('firstname')
+        if firstname:
+            user.update(first_name=firstname)
+        
+        lastname =request.POST.get('lastname')
+        if lastname:
+            user.update(last_name=lastname)
+        
+        email =request.POST.get('email')
+        if email:
+            user.update(email=email)
+
+        profile=request.user.profile
+        phone =request.POST.get('phone')
+        if phone:
+            profile.numero_telephone=phone
+
+        bio =request.POST.get('bio')
+        if bio:
+            profile.bio=bio
+
+        password =request.POST.get('password')
+        if password:
+            if password1:
+                if password==password1:
+                    user.update(password=password)
+        
+         
+
+        password =request.POST.get('password')
+        if password:
+            user.update(password=password)
+    user=request.user  
     context ={
         'u_form' : u_form,
-        'p_form' : p_form
+        'user' : user
     }
 
     return render(request,"Main/usersettings.html",context)
@@ -459,6 +530,9 @@ class UsersListView(ListView):
         context = super(UsersListView,self).get_context_data(**kwargs)
         context['users_no_list'] = Utilisateur.objects.filter(profile__is_appoved =False)
         context['users_ban_list'] = Utilisateur.objects.filter(banned =True)
+        context['students_all_list'] = Utilisateur.objects.filter(role ='etudiant')
+        context['enseignant_all_list'] = Utilisateur.objects.filter(role ='enseignant')
+        context['clubs_all_list'] = Utilisateur.objects.filter(role ='clubs')
         context['form'] = form
         context['formm'] = formm
         return context
