@@ -62,56 +62,57 @@
 <!--Begin Menu-->
 <div class="header">
     <nav class="navbar navbar-default py-0 mt-2" role="navigation">
-        <div class="navbar">
-            <ul class="nav nav-pills" id="homemenu">
-                <li class="nav-item">
-                    <a class="nav-link" id="active" href="#">
-                        <span class="fa fa-home icons"></span> Accueill</a>
-                </li>
-                <li class="nav-item">
-                    <div class="dropdown show">
-                        <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="fa fa-user icons"></span> Etudiants</a>
-                        <!-- dropdown menu here-->
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item" style="color:black;" href="#">1 CPI</a>
-                            <a class="dropdown-item" style="color:black;" href="#">2 CPI</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" style="color:black;" href="#">1 CS</a>
-                            <a class="dropdown-item" style="color:black;" href="#">SIW</a>
-                            <a class="dropdown-item" style="color:black;" href="#">ISI</a>
+            <div class="navbar">
+                <ul class="nav nav-pills" id="homemenu">
+                    <li class="nav-item">
+                        <a class="nav-link" id="active" href="{% url 'home' %}">
+                            <span class="fa fa-home icons"></span> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown show">
+                            <a class="btn dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-user icons"></span> Students</a>
+                            <!-- dropdown menu here-->
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '1cpi' %}">1 CPI</a>
+                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '2cpi' %}">2 CPI</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '1cs' %}">1 CS</a>
+                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '2cs' %}">2 CS</a>
+                                <a class="dropdown-item" style="color:black;" href="{% url 'category' '3cs' %}">3 CS</a>
+                            </div>
                         </div>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fa fa-briefcase icons"></span> Enseignants</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fa fa-graduation-cap icons"></span> Bacheliers</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><span class="fa fa-users icons"></span> Clubs</a>
-                </li>
-                <li class="ml-1 nav-item float-right">
-                    <form method="GET" action="{% url 'search' %}">
-                        <label class="field a-field a-field_a1 page__field pt-0 mr-4">
-                            <input  name ="q" class="field__input a-field__input" type="text" placeholder="Search" value="">
-                            <input type="submit" style="display: none;">
-                            <span class="a-field__label-wrap">
-                                <span class="fa fa-search float-right mt-2 mr-3"></span>
-                            </span>
-                        </label>
-                    </form>
-                </li>
-                <a href="#" data-toggle="modal" data-target="#advancedSearch"
-                   style="position: relative;top:0.9vw;color:lightcoral">Advanced</a>
-
-                <div class="modal fade" id="advancedSearch" tabindex="-1" role="dialog" aria-labelledby="hh"
-                     aria-hidden="false" data-backdrop="false">
-                    <div class="modal-lg modal-dialog" role="document">
-                        <div class="modal-content text-danger">
-                            <div class="">
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'category' 'professors' %}"><span class="fa fa-briefcase icons"></span> Professors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'category' 'bachelors' %}"><span class="fa fa-graduation-cap icons"></span> Bachelors</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'category' 'clubs' %}"><span class="fa fa-users icons"></span> Clubs</a>
+                    </li>
+                    <li class="ml-1 nav-item float-right">
+                        <form method="GET" action="{% url 'search' %}">
+                            <label class="field a-field a-field_a1 page__field pt-0 mr-4">
+                                <input  name ="q" class="field__input a-field__input" type="text" placeholder="Search" value="">
+                                <input type="submit" style="display: none;">
+                                <span class="a-field__label-wrap">
+                    <span class="fa fa-search float-right mt-2 mr-3"></span>
+                  </span>
+    
+                            </label>
+                        </form>
+                    </li>
+                    <a href="#" data-toggle="modal" data-target="#advancedSearch"
+                       style="position: relative;top:0.9vw;color:lightcoral">Advanced</a>
+    
+                    <div class="modal fade" id="advancedSearch" tabindex="-1" role="dialog" aria-labelledby="hh"
+                         aria-hidden="false" data-backdrop="false">
+                        <div class="modal-lg modal-dialog" role="document">
+                            <div class="modal-content text-danger">
+                                <div class="">
                                     <button type="button" class="close text-danger mt-2 mr-2" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>

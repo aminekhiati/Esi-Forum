@@ -233,8 +233,8 @@
                     <div id="notificationFooter"><a href="{% url 'clear-notifications' category_in.name %}" style="color: white">Clear All</a></div>
                 </div>
         </div>
-        <a href="#" class="user">
-            <span class="fa fa-envelope icons fa-lg" style="width:34px;"></span>
+        <a href="{% url 'editprofile' %}" class="user">
+            <span class="fa fa-cog icons fa-lg" style="width:34px;"></span>
         </a>
         {% if user.is_authenticated %}
         <a href="{% url 'userpage' request.user.id %}" class="user">  

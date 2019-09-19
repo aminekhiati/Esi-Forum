@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Esi Forums - Profile Settings</title>
+    <title>Esi Forums - {{request.user.username}} Settings</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static "css/user.css"%}">
     <link rel="stylesheet" href="{% static "css/bootstrap.css"%}">
@@ -110,7 +110,7 @@
                                     </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'editprofile' %}"><span class="fa fa-cog icons" style="position:relative; font-size: 1.5rem; top: 3px;"></a>
+                                <a class="nav-link" href="{% url 'userpage' request.user.id %}"><span class="fa fa-user icons" style="position:relative; font-size: 1.5rem; top: 3px;"></a>
                             </li>
 
 
@@ -130,14 +130,12 @@
                     <div class="line"></div>
                     <div class="all col-sm-10">
                         <ul style="display: block;">
-{#                            <li>#}
-{#                                <a href="#">ALL</a></li>#}
-{#                            <li>#}
-{#                                <a href="#">Topics</a></li>#}
+                            <li>
+                                <a href="{% url 'userpage' request.user.id %}">Topics</a></li>
                             <li>
                                 <a href="{% url 'userpage' request.user.id %}">Replies</a></li>
                             <li>
-                                <a href="#">Bookmarks</a></li>
+                                <a href="{% url 'userpage' request.user.id %}">Bookmarks</a></li>
                         </ul>
                     </div>
                 </div>
