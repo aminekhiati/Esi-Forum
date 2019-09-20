@@ -621,7 +621,7 @@ def updateUser(request,pk):
         
         lastname =request.POST.get('lastname')
         if lastname:
-            user.update(lastname=lastname)
+            user.update(last_name=lastname)
         
         email =request.POST.get('email')
         if email:
@@ -675,15 +675,12 @@ def addmod(request):
         
                 lastname =request.POST.get('lastname')
                 if lastname:
-                    user.lastname=lastname
+                    user.last_name=lastname
         
                 email =request.POST.get('email')
                 if email:
                     user.email=email
-         
-                role =request.POST.get('role')
-                if role:
-                    user.role=role
+                user.role = 'moderateur'
                 user.save()
 
         
